@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <!-- (1) 레이아웃을 적용하지않는화면-->
+    <definition name=".student" template="/WEB-INF/views/tilesSetting/baseLayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="style" value="/WEB-INF/views/tilesSetting/include/style.jsp"/>
+        <put-attribute name="header" value="/WEB-INF/views/tilesSetting/include/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/tilesSetting/include/footer.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/views/student/menu.jsp"/>
+    </definition>
+
+    <!-- (2) 레이아웃을 적용하는화면-->
+    <definition name=".professor" template="/WEB-INF/views/tilesSetting/baseLayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="style" value="/WEB-INF/views/tilesSetting/include/style.jsp"/>
+        <put-attribute name="header" value="/WEB-INF/views/tilesSetting/include/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/tilesSetting/include/footer.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/views/professor/menu.jsp"/>
+    </definition>
+	
+	<definition name=".admin" template="/WEB-INF/views/tilesSetting/baseLayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="style" value="/WEB-INF/views/tilesSetting/include/style.jsp"/>
+        <put-attribute name="header" value="/WEB-INF/views/tilesSetting/include/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/tilesSetting/include/footer.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/views/professor/menu.jsp"/>
+    </definition>
+    
+    <!-- (1) -->
+    <!--<definition name="/login/*" extends=".login">-->
+        <!--<put-attribute name="body" value="/WEB-INF/jsp/login/{1}.jsp" />-->
+    <!--</definition>-->
+
+    <!-- (2) -->
+    <definition name="student/*" extends=".student">
+        <put-attribute name="body" value="/WEB-INF/views/student/{1}.jsp" />
+    </definition>
+    <definition name="professor/*" extends=".professor">
+        <put-attribute name="body" value="/WEB-INF/views/professor/{1}.jsp" />
+    </definition>
+    <definition name="admin/*" extends=".professor">
+        <put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp" />
+    </definition>
+</tiles-definitions>
