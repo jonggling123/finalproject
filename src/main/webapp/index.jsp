@@ -40,21 +40,78 @@
 <link rel="stylesheet" type="text/css"
    href="${pageContext.request.contextPath}/res/Login_v3/css/main.css">
 <!--===============================================================================================-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/res/jquery-3.3.1.min"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function() {
 	$("#loginBtn").on("click", function() {
-		this.submit();
+		var form = $(this).closest("form");
+		$(form).submit();
 	})
+	
+	$("#findIdBtn").on("click", function(event) {
+// 		event.preventDefault();
+// 		let inputs = $(".findIdForm").find(":input");
+// 		let sendData = {};
+// 		$(inputs).each(function(index, input){
+// 			let prop = $(input).attr("name");
+// 			let value = $(input).val();
+// 			sendData[prop]=value;
+// 		});
+// 		console.log(sendData);
+// 		let jsonData = JSON.stringify(sendData);
+// 		console.log(jsonData);
+// 		$.ajax({
+// 			url : "${pageContext.request.contextPath }/findId",
+// 			method : "post",
+// 			data : jsonData,
+// 			contentType:"application/json;charset=UTF-8",
+// 			dataType : "json", // request header(Accept), response header(Content-Type)
+// 			success : function(resp) {
+// 				let boardList = resp.dataList;
+// 				let pagingHTML = resp.pagingHTML;
+// 				let trTags = [];
+// 				$(boardList).each(function(idx, board){
+// 					let tr = $("<tr>")
+// 									.append(
+// 										$("<td>").text(board.rnum)		
+// 										,$("<td>").text(board.bo_no)		
+// 										,$("<td>").append(
+// 													$("<a>").text(board.bo_title)
+// 															.attr("href", "${pageContext.request.contextPath }/board/boardView.do?what="+board.bo_no)
+// 												 )
+// 										,$("<td>").text(board.bo_writer)		 
+// 										,$("<td>").text(board.bo_date)		 
+// 										,$("<td>").text(board.bo_hit)		 
+// 									);
+// 					trTags.push(tr);
+// 				});
+// 				$("#listBody").html(trTags);
+// 				$('#pagingArea').html(resp.pagingHTML);
+// 			},
+// 			error : function(errorResp) {
+// 				console.log(errorResp.status);
+// 			}
+// 		});
+// 		return false;
+	})
+	
 })
 </script>
+<style>
+	body .findIdForm {
+	  display: none;
+	}
+	body .findPassForm {
+	  display: none;
+	}
+</style>
 </head>
 <body>
 
    <div class="limiter">
       <div class="container-login100"
          style="background-image: url('${pageContext.request.contextPath}/res/Login_v3/images/bg-02.jpg');">
-         <div class="wrap-login100">
+         <div class="wrap-login100 loginForm">
            <form class="login100-form validate-form" method="post" action="${pageContext.request.contextPath }/loginCheck">
                <span class="login100-form-logo"> <i
                   class="zmdi zmdi-landscape"></i>
@@ -85,20 +142,48 @@ $(function() {
                </div>
 
                <div class="text-center p-t-90">
-                  <a class="txt1" data-toggle="modal" data-target="#idModal"
-                     href="#"> 아이디찾기 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a class="txt1"
-                     data-toggle="modal" data-target="#passModal" href="#"> 비밀번호찾기
-                  </a>
+                  <a class="txt1 findId active"  href="#"> 아이디찾기 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a class="txt1 findPass"  href="#"> 비밀번호찾기  </a>
                </div>
             </form>
          </div>
-      </div>
-   </div>
+         
+         <!-- 아이디찾기 폼 -->
+         <div class="wrap-login100 findIdForm">
+<!--            <form class="login100-form validate-form"  -->
+<%--            method="post" action="${pageContext.request.contextPath }/findId" --%>
+<!--            > -->
+               <span class="login100-form-logo"> <i
+                  class="zmdi zmdi-landscape"></i>
+               </span> <span class="login100-form-title p-b-34 p-t-27"> 아이디찾기 </span>
 
+               <div class="wrap-input100 validate-input"
+                  data-validate="Enter username">
+                  <input class="input100" type="text" name="user_name"
+                     placeholder="이름"> <span class="focus-input100"
+                     data-placeholder="&#xf207;"></span>
+               </div>
 
-   <div id="dropDownSelect1"></div>
+               <div class="wrap-input100 validate-input"
+                  data-validate="Enter password">
+                  <input class="input100" type="password" name="user_hp"
+                     placeholder="전화번호"> <span class="focus-input100"
+                     data-placeholder="&#xf191;"></span>
+               </div>
 
-   <div id="idModal" class="modal fade modeless">
+               <div class="container-login100-form-btn">
+                  <button class="login100-form-btn" id="findIdBtn" data-toggle="modal" data-target="#idModal" >확인</button>
+                  <label class="label-checkbox100" for="ckb20" style="display: none;"></label>
+               </div>
+
+               <div class="text-center p-t-90">
+                  <a class="txt1 login"  href="#"> 로그인 </a>&nbsp;&nbsp;&nbsp;&nbsp; 
+                  <a class="txt1 findPass"  href="#"> 비밀번호찾기</a>
+               </div>
+<!--             </form> -->
+         </div>
+         
+        <div id="idModal" class="modal fade modeless">
       <div class="modal-dialog" style="width: 400px; height: 300px;">
          <div class="modal-content">
             <div class="modal-header">
@@ -131,43 +216,72 @@ $(function() {
       </div>
    </div>
 
-   <div id="passModal" class="modal fade modeless">
-      <div class="modal-dialog" style="width: 400px; height: 300px;">
-         <div class="modal-content">
-            <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal"
-                  aria-hidden="true">&times;</button>
-               <h4 class="modal-title">비밀번호 찾기</h4>
+			<!-- 비밀번호찾기 폼 -->
+         <div class="wrap-login100 findPassForm">
+           <form class="login100-form validate-form" method="post" action="${pageContext.request.contextPath }/findPass">
+               <span class="login100-form-logo"> <i
+                  class="zmdi zmdi-landscape"></i>
+               </span> <span class="login100-form-title p-b-34 p-t-27"> 비밀번호 찾기 </span>
 
-            </div>
-            <div class="modal-body">
-               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="data-table-list">
-                     <div class="basic-tb-hd">
-                        <span>이름 :</span><input id="stName" type="text" /><br /> <span>아이디
-                           :</span><input id="stName" type="password" /><br /> <span>전화번호
-                           :</span><input id="stPhone" type="text" />
-
-                     </div>
-                  </div>
-
+               <div class="wrap-input100 validate-input"
+                  data-validate="Enter username">
+                  <input class="input100" type="text" name="user_id"
+                     placeholder="아이디"> <span class="focus-input100"
+                     data-placeholder="&#xf207;"></span>
                </div>
-               <div class="modal-footer">
-                  <button type="button" id="ok" class="btn btn-default"
-                     data-success="modal">확인</button>
-                  <button type="button" id="cancel" class="btn btn-default"
-                     data-dismiss="modal">닫기</button>
+
+               <div class="wrap-input100 validate-input"
+                  data-validate="Enter password">
+                  <input class="input100" type="password" name="user_pass"
+                     placeholder="핸드폰번호"> <span class="focus-input100"
+                     data-placeholder="&#xf191;"></span>
                </div>
-            </div>
-            <!-- /.modal-content -->
+
+               <div class="container-login100-form-btn">
+                  <button class="login100-form-btn" id="findPassBtn">확인</button>
+                  <label class="label-checkbox100" for="ckb20" style="display: none;"></label>
+               </div>
+
+               <div class="text-center p-t-90">
+                  <a class="txt1 findId active"  href="#"> 아이디찾기 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a class="txt1 login"  href="#"> 로그인 </a>&nbsp;&nbsp;&nbsp;&nbsp; 
+               </div>
+            </form>
          </div>
-         <!-- /.modal-dialog -->
       </div>
    </div>
 
-   <!--===============================================================================================-->
-   <script
-      src="${pageContext.request.contextPath}/res/Login_v3/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+	$('.text-center .txt1').click(function(){
+	    if ($(this).hasClass('findId')) {
+	        $('.text-center .txt1').removeClass('active');
+	        $(this).addClass('active');
+	        $('.loginForm').hide();
+	        $('.findPassForm').hide();
+	        $('.findIdForm').show();
+	    }
+	    if ($(this).hasClass('findPass')) {
+	        $('.text-center .txt1').removeClass('active');
+	        $(this).addClass('active');
+	        $('.loginForm').hide();
+	        $('.findIdForm').hide();
+	        $('.findPassForm').show();
+	    }
+	    if ($(this).hasClass('login')) {
+	        $('.text-center .txt1').removeClass('active');
+	        $(this).addClass('active');
+	        $('.findIdForm').hide();
+	        $('.findPassForm').hide();
+	        $('.loginForm').show();
+	    }
+	});
+	$('.container .bg').mousemove(function(e){
+	    var amountMovedX = (e.pageX * -1 / 30);
+	    var amountMovedY = (e.pageY * -1 / 9);
+	    $(this).css('background-position', amountMovedX + 'px ' + amountMovedY + 'px');
+	});
+	</script>
+
    <!--===============================================================================================-->
    <script
       src="${pageContext.request.contextPath}/res/Login_v3/vendor/animsition/js/animsition.min.js"></script>

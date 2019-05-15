@@ -13,4 +13,5 @@ public interface IUserDao {
 	
 	List<UserVo> selectUserList();
 
+	public String findId(UserVo user);
 }

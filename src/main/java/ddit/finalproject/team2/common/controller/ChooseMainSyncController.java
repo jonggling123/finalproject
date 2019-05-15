@@ -3,15 +3,24 @@ package ddit.finalproject.team2.common.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import ddit.finalproject.team2.common.service.IUserFindService;
 import ddit.finalproject.team2.util.AuthConstants;
 import ddit.finalproject.team2.util.AuthorityUtil;
+import ddit.finalproject.team2.vo.UserVo;
 
 /**
  * @author 이종선
@@ -31,6 +40,8 @@ import ddit.finalproject.team2.util.AuthorityUtil;
 @Controller
 public class ChooseMainSyncController {
 
+	@Inject
+	IUserFindService findService;
 	/**
 	 * 권한에 따라 메인화면을 선택하는 command handler
 	 * @param response
@@ -64,5 +75,30 @@ public class ChooseMainSyncController {
 		mv.getModel().put("authority", authority);
 		
 		return mv;
+	}
+	
+	@PostMapping(value="/findId", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String findId(
+			@RequestParam(name="user_name") String user_name
+			, @RequestParam(name="user_hp") String user_hp
+			, Model model
+			, HttpServletResponse resp
+			) {
+		UserVo userVo = new UserVo();
+		userVo.setUser_name(user_name);
+		userVo.setUser_hp(user_hp);
+		
+		String user_id = null;
+		user_id = findService.findId(userVo);
+		
+		resp.setHeader("Pragma", "no-cache");
+		resp.setHeader("Cache-Control", "no-cache");
+		resp.addHeader("Cache-Control", "no-store");
+		resp.setDateHeader("Expires", 0);
+		
+		model.addAttribute("user_id", user_id);
+		
+		return "index";
 	}
 }
