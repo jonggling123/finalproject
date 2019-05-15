@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,20 +20,16 @@ import lombok.ToString;
 @ToString
 public class UserVo implements Serializable, UserDetails{
 	
-	private String user_pass;
-	private String user_name;
-	private String user_regno;
-	private String user_hp;
-	private String user_mail;
-	private String user_add1;
-	private String user_add2;
-	private String user_id;
-	private String user_profile_path;
-	private String user_authority;
-	
-	//dataTable에 동적으로 삽입될 태그
-	private String checkbox = "<input type='checkbox' class='checkbox' />";
-	private String button = "<button type='button' class='btn'>버튼</button>";
+	@NotNull private String user_pass;
+	@NotNull private String user_name;
+	@NotNull private String user_regno;
+	@NotNull private String user_hp;
+	@NotNull private String user_mail;
+	@NotNull private String user_add1;
+	@NotNull private String user_add2;
+	@NotNull private String user_id;
+	@NotNull private String user_profile_path;
+	@NotNull private String user_authority;
 	
 	private List<GrantedAuthority> authorities;
 	
