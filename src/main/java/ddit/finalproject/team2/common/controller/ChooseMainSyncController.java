@@ -3,6 +3,7 @@ package ddit.finalproject.team2.common.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ddit.finalproject.team2.common.service.IFaceIdService;
 import ddit.finalproject.team2.util.AuthConstants;
 import ddit.finalproject.team2.util.AuthorityUtil;
 
@@ -39,12 +41,16 @@ public class ChooseMainSyncController {
 	 * @return
 	 * @throws IOException
 	 */
+	@Inject
+	IFaceIdService faceIdService;
+	
 	@GetMapping("/chooseMain")
 	public ModelAndView chooseMain(HttpServletResponse response, Authentication authentication, ModelAndView mv) throws IOException{
 		int statusCode = 0;
 		String view = null;
 		String authority = null;
 		List<String> authorities = AuthorityUtil.getAuthorityList(authentication);
+		
 		if(statusCode!=0){
 			response.sendError(statusCode);
 		}else {
@@ -52,8 +58,18 @@ public class ChooseMainSyncController {
 				view = "admin/adminMain";
 				authority = "admin";
 			}else if(authorities.contains(AuthConstants.ROLE_STUDENT)){
-				view = "student/studentMain";
-				authority = "student";
+				
+				String userId = authentication.getName();
+				
+				if(!(faceIdService.getFaceId(userId))){
+					view = "student/createFaceId";
+					authority = "student";
+				}else{
+					
+					view = "student/studentMain";
+					authority = "student";
+				}
+				
 			}else {
 				view = "professor/professorMain";
 				authority = "professor";

@@ -6,7 +6,7 @@ import ddit.finalproject.team2.vo.StudentVo;
 
 @Repository
 public interface IStudentDao {
-	public String getFaceId(String userId);
+	public String selectFaceId(String userId);
 	
 	public int updateFaceId(StudentVo student);
 	
