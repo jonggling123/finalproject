@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ddit.finalproject.team2.common.service.IUserFindService;
-import ddit.finalproject.team2.common.service.IFaceIdService;
+import ddit.finalproject.team2.common.service.KJE_IFaceIdService;
 import ddit.finalproject.team2.util.AuthConstants;
 import ddit.finalproject.team2.util.AuthorityUtil;
 import ddit.finalproject.team2.vo.UserVo;
@@ -52,7 +52,7 @@ public class ChooseMainSyncController {
 	 * @throws IOException
 	 */
 	@Inject
-	IFaceIdService faceIdService;
+	KJE_IFaceIdService faceIdService;
 	
 	@GetMapping("/chooseMain")
 	public ModelAndView chooseMain(HttpServletResponse response, Authentication authentication, ModelAndView mv) throws IOException{
