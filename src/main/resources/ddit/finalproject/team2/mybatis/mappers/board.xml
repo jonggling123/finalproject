@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ddit.finalproject.team2.common.dao.IBoardDao">
+
+	<select id="selectBoardList" resultType="ddit.finalproject.team2.vo.BoardSubjectVo">
+		SELECT BOARD_NO, BOARD_TYPE, BOARD_DATE, BOARD_TITLE
+        , BOARD_HIT, USER_ID
+		FROM BOARD B INNER JOIN ATTEND T
+		ON(B.ATTEND_NO = T.ATTEND_NO)
+	</select>
+</mapper>

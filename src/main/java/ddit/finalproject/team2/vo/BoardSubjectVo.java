@@ -30,7 +30,11 @@ public class BoardSubjectVo implements Serializable{
 	private String attend_no;
 	private String lecture_code;
 	
+	private String user_id;
+	
 	private List<ReplyVo> replyList;
+	private int replycount;
+	
 	private int[] deleteAttachmentNos;
 	private List<AttachmentVo> attachmentList;
 	private List<AttachmentVo> savedAttachmentList;
@@ -39,6 +43,10 @@ public class BoardSubjectVo implements Serializable{
 	private String[] updatableList = new String[]{
 		".doc", ".hwp", ".pdf", ".xls", ".xlsx", ".jpg", ".jpeg", ".png", ".gif", ".zip"
 	};
+	
+	public void setBoard_title(String board_title){
+		this.board_title = "<a href='${pageContext.request.contextPath}/board/"+this.board_no+"'>"+board_title+"</a>";
+	}
 	
 	public void setBoard_files(MultipartFile[] board_files){
 		if(board_files==null) return;
