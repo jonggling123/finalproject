@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.common.controller.lecturepage;
+package ddit.finalproject.team2.common.controller.subjectpage;
 
 import java.util.List;
 
