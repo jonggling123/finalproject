@@ -31,6 +31,19 @@
         <put-attribute name="menu" value="/WEB-INF/views/professor/menu.jsp"/>
     </definition>
     
+    <definition name="newPage" template="/WEB-INF/views/tilesSetting/baseLayout.jsp">
+        <put-attribute name="style" value="/WEB-INF/views/tilesSetting/include/style.jsp"/>
+    	<put-attribute name="header" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/views/tilesSetting/include/footer.jsp" />
+    	<put-attribute name="menu" value=""/>
+    </definition>
+    
+    <definition name="lectureDetailPage" template="/WEB-INF/views/tilesSetting/baseLayout.jsp">
+        <put-attribute name="style" value="/WEB-INF/views/tilesSetting/include/style.jsp"/>
+    	<put-attribute name="header" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/views/tilesSetting/include/footer.jsp" />
+    	<put-attribute name="menu" value=""/>
+    </definition>
     <!-- (1) -->
     <!--<definition name="/login/*" extends=".login">-->
         <!--<put-attribute name="body" value="/WEB-INF/jsp/login/{1}.jsp" />-->
@@ -45,5 +58,11 @@
     </definition>
     <definition name="admin/*" extends=".professor">
         <put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp" />
+    </definition>
+    <definition name="new/*" extends="newPage">
+    	<put-attribute name="body" value="/WEB-INF/views/new/{1}.jsp"/>
+    </definition>
+    <definition name="new/*" extends="lectureDetailPage">
+    	<put-attribute name="body" value="/WEB-INF/views/new/{1}.jsp"/>
     </definition>
 </tiles-definitions>

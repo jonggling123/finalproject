@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ddit.finalproject.team2.common.service.IFaceIdService;
+import ddit.finalproject.team2.common.service.KJE_IFaceIdService;
 import ddit.finalproject.team2.vo.StudentVo;
 
 @Controller
@@ -17,7 +17,7 @@ import ddit.finalproject.team2.vo.StudentVo;
 public class faceIdCreateController {
 	
 	@Inject
-	IFaceIdService faceIdService;
+	KJE_IFaceIdService faceIdService;
 	
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody

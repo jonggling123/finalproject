@@ -5,14 +5,14 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import ddit.finalproject.team2.common.dao.IStudentDao;
+import ddit.finalproject.team2.common.dao.KJE_IStudentDao;
 import ddit.finalproject.team2.vo.StudentVo;
 
 @Service
-public class FaceIdServiceImpl implements IFaceIdService {
+public class KJE_FaceIdServiceImpl implements KJE_IFaceIdService {
 	
 	@Inject
-	IStudentDao studentDao;
+	KJE_IStudentDao studentDao;
 	
 	@Override
 	public int modifyFaceId(StudentVo student) {
