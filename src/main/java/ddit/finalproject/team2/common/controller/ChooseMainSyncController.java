@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -92,28 +95,23 @@ public class ChooseMainSyncController {
 		return mv;
 	}
 	
-	@PostMapping(value="/findId", produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/findId", produces="application/json; charset=UTF-8", method=RequestMethod.POST)
 	@ResponseBody
-	public String findId(
-			@RequestParam(name="user_name") String user_name
-			, @RequestParam(name="user_hp") String user_hp
-			, Model model
-			, HttpServletResponse resp
-			) {
-		UserVo userVo = new UserVo();
-		userVo.setUser_name(user_name);
-		userVo.setUser_hp(user_hp);
-		
+	public UserVo findId(@RequestBody UserVo userVo) throws Exception {
+		System.out.println(userVo.toString());
 		String user_id = null;
 		user_id = findService.findId(userVo);
+		UserVo uservo = new UserVo();
 		
-		resp.setHeader("Pragma", "no-cache");
-		resp.setHeader("Cache-Control", "no-cache");
-		resp.addHeader("Cache-Control", "no-store");
-		resp.setDateHeader("Expires", 0);
+		String ins = "";
+		for(int i=0; i<6; i++) {
+			ins += String.valueOf(((int)(Math.random()*9)));
+		}
+		System.out.println(ins);
 		
-		model.addAttribute("user_id", user_id);
-		
-		return "index";
+		uservo.setUser_mail(ins);
+		uservo.setUser_id(user_id);
+		System.out.println(user_id);
+		return uservo;
 	}
 }
