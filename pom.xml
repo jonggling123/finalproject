@@ -31,6 +31,20 @@
 		<org.slf4j-version>1.7.26</org.slf4j-version>
 		<org.springframework.security-version>4.2.12.RELEASE</org.springframework.security-version>
 	</properties>
+	
+	<dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-bom</artifactId>
+                
+                <version>1.11.327</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -257,5 +271,17 @@
     		<version>1.10.19</version>
     		<scope>test</scope>
     	</dependency>
+    	
+<!--     	클라우드 서비스 -->
+    	<dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <exclusions>
+             	<exclusion>
+             		<groupId>commons-codec</groupId>
+					<artifactId>commons-codec</artifactId>
+             	</exclusion>
+            </exclusions>
+        </dependency>
 	</dependencies>
 </project>
