@@ -60,9 +60,12 @@
     <!-- responsive CSS
         ============================================ -->
     <link rel="stylesheet" href="${pageContext.request.contextPath }/notika/css/responsive.css">
+    
+    <script src="${pageContext.request.contextPath}/notika/js/vendor/jquery-1.12.4.min.js"></script>
     <!-- modernizr JS
-        ============================================ -->
+        ============================================ -->   
     <script src="${pageContext.request.contextPath }/notika/js/vendor/modernizr-2.8.3.min.js"></script>
+    
     
 </head>
 <body>

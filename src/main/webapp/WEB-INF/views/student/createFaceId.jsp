@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
 <%--
 * [[개정이력(Modification Information)]]
 * 수정일                 수정자      수정내용
@@ -10,9 +9,7 @@
 * Copyright (c) 2019 by DDIT All right reserved
 *
  --%>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>CreateFaceId</title>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/webcam.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -115,9 +112,8 @@
 		form > input { margin-right: 15px; }
 		#results { float:right; margin:20px; padding:20px; border:1px solid; background:#ccc; }
 	</style>
-</head>
 
-<body>
+
 <div id="results">Your captured image will appear here...</div>
 	<h1>출석 확인을 위한 FaceId 생성 페이지입니다.</h1>
 	<h3>카메라정면을 바라보고 FaceId생성 버튼을 눌러주세요. </h3>
@@ -153,6 +149,3 @@
 	
 	<br/>
 	<br/>
-	
-</body>
-</html>

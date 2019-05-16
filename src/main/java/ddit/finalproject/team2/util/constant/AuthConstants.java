@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.util;
+package ddit.finalproject.team2.util.constant;
 
 public class AuthConstants {
 	public static final String ROLE_STUDENT = "ROLE_STUDENT";

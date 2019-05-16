@@ -19,7 +19,7 @@ import lombok.ToString;
 	, "attachmentList", "savedAttachmentList", "board_files"
 	, "updatableList"
 })
-public class BoardSubjectVo implements Serializable{
+public class Ljs_BoardSubjectVo implements Serializable{
 	private String board_no;
 	private String board_type;
 	private String board_attachmentcount;
@@ -44,8 +44,8 @@ public class BoardSubjectVo implements Serializable{
 		".doc", ".hwp", ".pdf", ".xls", ".xlsx", ".jpg", ".jpeg", ".png", ".gif", ".zip"
 	};
 	
-	public void setBoard_title(String board_title){
-		this.board_title = "<a href='${pageContext.request.contextPath}/board/"+this.board_no+"'>"+board_title+"</a>";
+	public void setBoard_title(String board_title, String board_no){
+		this.board_title = "<a href='${pageContext.request.contextPath}/board/"+board_no+"'>"+board_title+"</a>";
 	}
 	
 	public void setBoard_files(MultipartFile[] board_files){

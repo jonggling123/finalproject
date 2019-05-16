@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ddit.finalproject.team2.util.AuthConstants;
 import ddit.finalproject.team2.util.AuthorityUtil;
+import ddit.finalproject.team2.util.constant.AuthConstants;
 
 /**
  * @author 이종선
@@ -31,37 +31,68 @@ import ddit.finalproject.team2.util.AuthorityUtil;
 public class MainSyncController {
 
 	/**
-	 * 마이페이지 화면으로 이동하는 command handler
+	 * 성적조회 화면으로 이동하기 위한 command handler
 	 * @param mv
 	 * @param au
 	 * @return
 	 */
-	@GetMapping("myPage")
-	public ModelAndView goMyPage(ModelAndView mv, Authentication au){
+	@GetMapping("searchGrade")
+	public ModelAndView goGrade(ModelAndView mv, Authentication au){
 		List<String> authorities = AuthorityUtil.getAuthorityList(au);
 		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
-			mv.setViewName("student/mypage");
-		}else {
-			mv.setViewName("professor/myPage");
+			mv.setViewName("student/searchGrade");
+		}else{
+			mv.setViewName("professor/searchGrade");
 		}
 		mv.getModel().put("id", au.getName());
 		return mv;
 	}
 	
 	/**
-	 * 강의 화면으로 이동하는 command handler
+	 * 나의정보 화면으로 이동하기 위한 command handler
 	 * @param mv
 	 * @param au
 	 * @return
 	 */
-	@GetMapping("lecture")
-	public ModelAndView goLecture(ModelAndView mv, Authentication au){
+	@GetMapping("myInfo")
+	public ModelAndView goMyInfo(ModelAndView mv, Authentication au){
 		List<String> authorities = AuthorityUtil.getAuthorityList(au);
 		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
-			mv.setViewName("student/lecture");
-		}else {
-			mv.setViewName("professor/lecture");
+			mv.setViewName("student/myInfo");
+		}else{
+			mv.setViewName("professor/myInfo");
 		}
+		mv.getModel().put("id", au.getName());
+		return mv;
+	}
+	
+	/**
+	 * 일정 화면으로 이동하기 위한  command handler
+	 * @param mv
+	 * @param au
+	 * @return
+	 */
+	@GetMapping("schedule")
+	public ModelAndView goSchedule(ModelAndView mv, Authentication au){
+		List<String> authorities = AuthorityUtil.getAuthorityList(au);
+		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
+			mv.setViewName("student/schedule");
+		}else{
+			mv.setViewName("professor/schedule");
+		}
+		mv.getModel().put("id", au.getName());
+		return mv;
+	}
+	
+	/**
+	 * 학생용 수강과목 페이지로 이동하는 command handler
+	 * @param mv
+	 * @param au
+	 * @return
+	 */
+	@GetMapping("attendList")
+	public ModelAndView goAttendList(ModelAndView mv, Authentication au){
+		mv.setViewName("student/attendList");
 		mv.getModel().put("id", au.getName());
 		return mv;
 	}
@@ -111,8 +142,51 @@ public class MainSyncController {
 		return mv;
 	}
 	
+	@GetMapping("myLecture")
+	public ModelAndView goMyLecture(ModelAndView mv, Authentication au){
+		List<String> authorities = AuthorityUtil.getAuthorityList(au);
+		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
+			mv.setViewName("student/myLecture");
+		}else{
+			mv.setViewName("professor/myLecture");
+		}
+		mv.getModel().put("id", au.getName());
+		return mv;
+	}
+	
+	/**
+	 * 교수용 강의관리 페이지로 이동하는 command handler
+	 * @param mv
+	 * @param au
+	 * @return
+	 */
+	@GetMapping("lectureManagement")
+	public ModelAndView goLectureManagement(ModelAndView mv, Authentication au){
+		mv.setViewName("professor/lectureManagement");
+		mv.getModel().put("id", au.getName());
+		return mv;
+	}
+	
+	/**
+	 * 학생용 모든강의 페이지로 이동하는 command handler
+	 * @param mv
+	 * @param au
+	 * @return
+	 */
+	@GetMapping("allLecture")
+	public ModelAndView goAllLecture(ModelAndView mv, Authentication au){
+		mv.setViewName("student/allLecture");
+		mv.getModel().put("id", au.getName());
+		return mv;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * 교수용 과목관리 페이지로 이동하는 command handler
+	 * 이상엽 만든거 보고 수정해야함(0515)
 	 * @param mv
 	 * @param au
 	 * @return

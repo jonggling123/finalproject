@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ddit.finalproject.team2.common.dao.Ljs_IBoardDao">
+
+	<select id="selectBoardList" resultType="ddit.finalproject.team2.vo.Ljs_BoardSubjectVo">
+		SELECT BOARD_NO, BOARD_TYPE, BOARD_DATE, BOARD_TITLE
+        , BOARD_HIT, USER_ID
+		FROM BOARD B INNER JOIN ATTEND T
+		ON(B.ATTEND_NO = T.ATTEND_NO)
+	</select>
+	
+	<resultMap type="ddit.finalproject.team2.vo.Ljs_BoardSubjectVo" id="boardMap">
+		<id property="board_no" column="BOARD_NO"/>
+		<collection property="savedAttachmentList" autoMapping="true" ofType="ddit.finalproject.team2.vo.AttachmentVo">
+			<id property="attachment_no" column="ATTACHMENT_NO"/>
+		</collection>
+	</resultMap>
+	<select id="selectboard" parameterType="string" resultMap="boardMap">
+		SELECT A.BOARD_NO, BOARD_TYPE, BOARD_TITLE, BOARD_DATE
+		, BOARD_TITLE, BOARD_HIT, ATTEND_NO, BOARD_CONTENT
+		, ATTACHMENT_NO, FILE_NAME, FILE_PATH, FILE_SIZE
+		, FILE_ORDER, FILE_TYPE
+		FROM BOARD A LEFT OUTER JOIN ATTACHMENT B
+		ON(A.BOARD_NO = B.BOARD_NO)
+		WHERE A.BOARD_NO = #{board_no}
+	</select>
+	
+	<update id="incrementHit" parameterType="string">
+		UPDATE BOARD
+		SET BOARD_HIT = TO_NUMBER(BOARD_HIT) + 1
+		WHERE BOARD_NO = #{board_no}
+	</update>
+</mapper>

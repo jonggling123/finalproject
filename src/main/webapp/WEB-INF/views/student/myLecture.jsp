@@ -34,8 +34,8 @@
                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="breadcomb-wp">
                            <div class="breadcomb-ctn">
-                              <h2>모든강의</h2>
-                              <p>모든강의 조회 페이지 <span class="bread-ntd"></span></p>
+                              <h2>나의강의</h2>
+                              <p>나의강의 조회 페이지 <span class="bread-ntd"></span></p>
                            </div>
                         </div>
                      </div>
@@ -78,7 +78,7 @@
                                 </thead>
                                 <tbody>
 	                                <tr role="row" class="odd">
-	                                    <td class="sorting_1"><a href="#" onClick="javascript:openMine(this);">초급자바</a></td>
+	                                    <td class="sorting_1"><a href="${pageContext.request.contextPath }/subjectPage" onClick="javascript:openMine(this);">초급자바</a></td>
 	                                    <td>교양</td>
 	                                    <td>2</td>
 	                                    <td>65/70</td>

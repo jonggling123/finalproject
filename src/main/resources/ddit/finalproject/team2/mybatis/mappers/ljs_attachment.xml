@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ddit.finalproject.team2.common.dao.Ljs_IAttachmentDao">
+	<select id="selectAttacment" parameterType="string" resultType="ddit.finalproject.team2.vo.AttachmentVo">
+		SELECT * FROM ATTACHMENT
+		WHERE ATTACHMENT_NO = #{attachment_no}
+	</select>
+</mapper>

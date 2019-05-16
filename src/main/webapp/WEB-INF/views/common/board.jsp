@@ -1,38 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script type="text/javascript" src="${pageContext.request.contextPath }/res/js/jquery-3.3.1.min.js"></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/res/js/jquery-3.3.1.min.js"></script> --%>
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-<style>
-    .sangyup {
-       display: inline;
-        float:right;
-    }
-    .dataTables_wrapper .dataTables_filter {
-       width: 45%;
-   }
-    .dataTables_wrapper .dataTables_filter input, .dataTables_wrapper .dataTables_filter label {
-       width: 20%;
-       
-   }
-</style>
 <script type="text/javascript">
-	$('#data-table-basic').DataTable({
-        ajax: {
-            "type" : "get",
-               "url" : "${pageContext.request.contextPath}/board/list",
-                  "dataType": "JSON"
-               },
-              columns: [
-                         { data: "board_type" },
-                         { data: "board_no" },
-                         { data: "board_title" },
-                         { data: "replycount" },
-                         { data: "user_id" },
-                         { data: "board_date" },
-                         { data: "board_hit" }
-                     ]
-          });
+	$(function() {
+		$('#data-table-basic').DataTable({
+	        ajax: {
+	            "type" : "get",
+	               "url" : "${pageContext.request.contextPath}/board",
+	                  "dataType": "JSON"
+	               },
+	              columns: [
+	                         { data: "board_type" },
+	                         { data: "board_no" },
+	                         { data: "board_title" },
+	                         { data: "replycount" },
+	                         { data: "user_id" },
+	                         { data: "board_date" },
+	                         { data: "board_hit" }
+	                     ]
+	          });
+	});
 </script>
 
 	<!--    메뉴 소개 영역 -->

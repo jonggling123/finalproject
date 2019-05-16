@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ddit.finalproject.team2.util.AuthConstants;
 import ddit.finalproject.team2.util.AuthorityUtil;
+import ddit.finalproject.team2.util.constant.AuthConstants;
 
 /**
  * @author 이종선
@@ -70,20 +70,11 @@ public class SubjectPageSyncController {
 	
 	/**
 	 * 게시판 화면으로 이동하기 위한 command handler
-	 * @param mv
-	 * @param au
 	 * @return
 	 */
 	@GetMapping("board")
-	public ModelAndView goBoard(ModelAndView mv, Authentication au){
-		List<String> authorities = AuthorityUtil.getAuthorityList(au);
-		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
-			mv.setViewName("student/board");
-		}else{
-			mv.setViewName("professor/board");
-		}
-		mv.getModel().put("id", au.getName());
-		return mv;
+	public String goBoard(){
+		return "common/board";
 	}
 	
 	/**
