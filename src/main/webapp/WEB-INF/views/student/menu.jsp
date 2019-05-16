@@ -156,7 +156,7 @@
                     </div>
                     <div id="cert" class="tab-pane notika-tab-menu-bg animated flipInX">
                         <ul class="notika-main-menu-dropdown">
-                            <li><a href="certificate">증명서발급</a>
+                            <li><a href="${pageContext.request.contextPath }/main/certificate">증명서발급</a>
                             </li>
                         </ul>
                     </div>
