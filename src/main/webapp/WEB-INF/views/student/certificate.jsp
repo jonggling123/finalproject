@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <%--
 * [[개정이력(Modification Information)]]
 * 수정일                 수정자      수정내용
@@ -11,13 +9,6 @@
 *
 * 관리자 증명서관리 화면
  --%>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>증명서관리 화면</title>
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/jonggling123/finalTeamProject.git
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 
@@ -60,8 +51,6 @@
 		
 	});
 </script>
-</head>
-<body>
 	<div class="breadcomb-area">
 		<div class="container">
 			<div class="row">
@@ -123,6 +112,3 @@
 			</div>
 		</div>
 	</div>
-
-</body>
-</html>
