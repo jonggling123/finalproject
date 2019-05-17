@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+
 <div class="footer-copyright-area">
     <div class="container">
         <div class="row">
@@ -77,5 +73,3 @@
 <!-- tawk chat JS
     ============================================ -->
 <script src="${pageContext.request.contextPath}/notika/js/tawk-chat.js"></script>
-</body>
-</html>

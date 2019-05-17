@@ -7,11 +7,6 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html>
-<head>
-    <title>Title</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
         ============================================ -->
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/notika/img/favicon.ico">
@@ -66,9 +61,3 @@
         ============================================ -->   
     <script src="${pageContext.request.contextPath }/notika/js/vendor/modernizr-2.8.3.min.js"></script>
     
-    
-</head>
-<body>
-
-</body>
-</html>

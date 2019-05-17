@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ddit.finalproject.team2.common.service.IUserFindService;
 import ddit.finalproject.team2.common.service.KJE_IFaceIdService;
 import ddit.finalproject.team2.util.AuthorityUtil;
+import ddit.finalproject.team2.util.EncryptUtils;
 import ddit.finalproject.team2.util.constant.AuthConstants;
 import ddit.finalproject.team2.vo.UserVo;
 
