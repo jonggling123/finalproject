@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%--
 * [[개정이력(Modification Information)]]
@@ -10,13 +9,11 @@
 * Copyright (c) 2019 by DDIT All right reserved
 *
  --%>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CreateFaceId</title>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/res/js/webcam.min.js"></script>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
 <script type="text/javascript">
 	var fac1;
 	function take_snapshot() {
@@ -138,16 +135,6 @@
 		#my_camera{
 			float: left;
 			
-				}
-		
-	</script>
-	<style type="text/css">
-		body { font-family: Helvetica, sans-serif; }
-		h2, h3 { margin-top:0; }
-		form { margin-top: 15px; }
-		form > input { margin-right: 15px; }
-		#results { float:right; margin:20px; padding:20px; border:1px solid; background:#ccc; }
-	</style>
 		}
 		#results {
 			float: inherit;
@@ -190,43 +177,8 @@
 				Webcam.attach('#my_camera');
 			</script>
 
-
-<div id="results">Your captured image will appear here...</div>
-	<h1>출석 확인을 위한 FaceId 생성 페이지입니다.</h1>
-	<h3>카메라정면을 바라보고 FaceId생성 버튼을 눌러주세요. </h3>
-	
-	<div id="my_camera"></div>
-	<!-- Configure a few settings and attach camera -->
-	<script language="JavaScript">
-		Webcam.set({
-			// live preview size
-			width: 320,
-			height: 240,
 			<!-- A button for taking snaps -->
 			
-			// device capture size
-			dest_width: 320,
-			dest_height: 240,
-			
-			// final cropped size
-			crop_width: 240,
-			crop_height: 240,
-			
-			// format and quality
-			image_format: 'jpeg',
-			jpeg_quality: 90
-		});
-		
-		Webcam.attach( '#my_camera' );
-	</script>
-	
-	<!-- A button for taking snaps -->
-	<form>
-		<input type=button value="FaceId 생성" onClick="take_snapshot()">
-	</form>
-	
-	<br/>
-	<br/>
 
 			<br /> <br />
 		</div>

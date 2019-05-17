@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath }/res/js/jquery-3.3.1.min.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath }/res/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	function page_link() {
+		window.open("${pageContext.request.contextPath }/subjectPage/eduGoal", "상세강의보기", "width=1000, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes");
+	}
+</script>
 <style>
 .sangyup {
 	display: inline;
@@ -116,8 +119,18 @@
 									</thead>
 									<tbody>
 										<tr role="row" class="odd">
-
-											<td class="sorting_1">초급자바</td>
+											<td class="">
+												<div class="fm-checkbox">
+													<label class=""><div class="icheckbox_square-green"
+															style="position: relative;">
+															<input type="checkbox" class="i-checks"
+																style="position: absolute; opacity: 0;">
+															<ins class="iCheck-helper"
+																style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+														</div></label>
+												</div>
+											</td>
+											<td><a onClick="javascript:page_link();">초급자바</a></td>
 											<td>교양</td>
 											<td>2</td>
 											<td>1학년</td>
@@ -137,7 +150,7 @@
 														</div></label>
 												</div>
 											</td>
-											<td class="sorting_1">초급자바</td>
+											<td><a onClick="javascript:page_link();">초급자바</a></td>
 											<td>교양</td>
 											<td>2</td>
 											<td>1학년</td>
@@ -169,30 +182,6 @@
 										data-dt-idx="7" tabindex="0" id="data-table-basic_next">Next</a>
 								</div>
 							</div>
-
-							<!-- 			                <div class="bsc-tbl"> -->
-							<!-- 			                   <table class="table table-sc-ex"> -->
-							<!-- 			                       <thead> -->
-							<!-- 			                           <tr> -->
-							<!-- 			                               <th>#</th> -->
-							<!-- 			                               <th>First Name</th> -->
-							<!-- 			                               <th>Last Name</th> -->
-							<!-- 			                               <th>Username</th> -->
-							<!-- 			                               <th>Nickname</th> -->
-							<!-- 			                           </tr> -->
-							<!-- 			                       </thead> -->
-							<!-- 			                       <tbody> -->
-							<!-- 			                           <tr> -->
-							<!-- 			                               <td>1</td> -->
-							<!-- 			                               <td>Alexandra</td> -->
-							<!-- 			                               <td>Christopher</td> -->
-							<!-- 			                               <td>@makinton</td> -->
-							<!-- 			                               <td>Ducky</td> -->
-							<!-- 			                           </tr> -->
-							<!-- 			                       </tbody> -->
-							<!-- 			                   </table> -->
-							<!-- 			               </div> -->
-
 						</div>
 					</div>
 				</div>
