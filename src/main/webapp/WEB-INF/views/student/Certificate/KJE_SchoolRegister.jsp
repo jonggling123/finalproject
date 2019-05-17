@@ -14,6 +14,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="pdf2htmlEX"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<script language=javascript> 
+moveTo(0,0)
+resizeTo(1000,700)
+window.print();
+</script>
 <style type="text/css">
 /*! 
  * Base CSS for pdf2htmlEX

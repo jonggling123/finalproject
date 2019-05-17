@@ -7,7 +7,7 @@
 * 2019. 5. 2.      AA      최초작성
 * Copyright (c) 2019 by DDIT All right reserved
 *
-* 관리자 증명서관리 화면
+* 학생 증명서 신청화면
  --%>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
@@ -35,12 +35,37 @@
 		var datatable =  $('#data-table-basic').DataTable();
 		$table.on('click', '.viewbtn', function () {
 			var name = $(this).attr("name");
-			window.open("${pageContext.request.contextPath }/"+name,"증명서 출력",'width=1000,height=700,toolbar=no, menubar=no,location=no,resizable=yes,status=no');
+			window.open("${pageContext.request.contextPath }/"+name,"증명서 미리보기",'width=1000,height=700,toolbar=no, menubar=no,location=no,resizable=yes,status=no');
 	    });
 		
 		$table.on('click', '.applybtn', function () {
-			var name = $(this).attr("name");
-			window.open("${pageContext.request.contextPath }/"+name,"증명서 미리보기",'width=1000,height=700,toolbar=no, menubar=no,location=no,resizable=yes,status=no');
+			var code = $(this).attr("name");
+			var cnt=$(this).parent().parent().find($(".numberinput")).val();
+			var sum = $(this).parent().parent().find($(".suminput")).text();
+			var na = $(this).parent().parent().find($(".sorting_1")).text();
+			if(cnt==0){
+				alert("신청하신 증명서가 없습니다.");
+			}else{
+				var myForm = document.popForm;
+				$('#code').val(code);
+				$('#name').val(na);
+				$('#count').val(cnt);
+				$('#sum').val(sum);
+				
+				$(".numberinput").val("0");
+				var sum = $(this).parent().parent().find($(".suminput")).text("0");
+				
+				var url = '${pageContext.request.contextPath }/kakaoPay';    
+			     	window.open("" ,"popForm",'width=450,height=600,toolbar=no, menubar=no,location=no,resizable=yes,status=no'); 
+				    myForm.action =url;
+				    myForm.method="post";
+				    myForm.target="popForm";
+				    myForm.submit();
+				    
+// 			window.open("${pageContext.request.contextPath }/kakaoPay","결제",'width=1000,height=700,toolbar=no, menubar=no,location=no,resizable=yes,status=no');
+				
+			}
+			
 	    });
 		
 		$table.on('keyup mouseup','.numberinput',function(){
@@ -51,6 +76,13 @@
 		
 	});
 </script>
+
+<form action="Gate" name="popForm" method="post">
+   	<input type="hidden" id="code"  name="code" />  
+    <input type="hidden" id ="name" name="name" />
+    <input type="hidden" id="count" name="count" />
+   	<input type="hidden" id="sum" name="sum" />  
+</form>
 	<div class="breadcomb-area">
 		<div class="container">
 			<div class="row">
