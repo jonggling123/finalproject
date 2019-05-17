@@ -14,4 +14,8 @@ public interface IUserDao {
 	List<UserVo> selectUserList();
 
 	public String findId(UserVo user);
+
+	int confirmHp(UserVo userVo);
+
+	int confirmPassHp(UserVo userVo);
 }

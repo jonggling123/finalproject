@@ -2,14 +2,18 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/res/js/jquery-3.3.1.min.js"></script> --%>
+<script type="text/javascript" src="${pageContext.request.contextPath }/res/js/jquery-3.3.1.min.js"></script>
 <!-- Data Table JS
 		============================================ -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/notika/css/jquery.dataTables.min.css">
 <!-- normalize CSS
 		============================================ -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/notika/css/normalize.css">
-
+<script type="text/javascript">
+	function page_link() {
+		window.open("${pageContext.request.contextPath }/subjectPage/eduGoal", "상세강의보기", "width=1000, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes");
+	}
+</script>
 <style>
 .sangyup {
 	display: inline;
@@ -101,7 +105,7 @@
 							</thead>
 							<tbody>
 								<tr role="row" class="odd">
-									<td class="sorting_1">초급자바</td>
+									<td><a onClick="javascript:page_link();">초급자바</a></td>
 									<td>교양</td>
 									<td>2</td>
 									<td>1학년</td>
@@ -110,7 +114,7 @@
 									<td><button class="btn btn-default notika-btn-default">보기1</button></td>
 								</tr>
 								<tr role="row" class="odd">
-									<td class="sorting_1">초급자바</td>
+									<td><a onClick="javascript:page_link();">중급자바</a></td>
 									<td>교양</td>
 									<td>2</td>
 									<td>1학년</td>

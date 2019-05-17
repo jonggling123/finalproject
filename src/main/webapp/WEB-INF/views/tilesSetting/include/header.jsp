@@ -1,9 +1,4 @@
 <%@ page language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
 <div class="header-top-area">
     <div class="container">
         <div class="row">
@@ -284,5 +279,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

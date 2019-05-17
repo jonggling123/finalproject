@@ -13,7 +13,7 @@
         </div>
     </div>
 </div>
-<%-- <script src="${pageContext.request.contextPath}/notika/js/vendor/jquery-1.12.4.min.js"></script> --%>
+<script src="${pageContext.request.contextPath}/notika/js/vendor/jquery-1.12.4.min.js"></script>
 <!-- bootstrap JS
     ============================================ -->
 <script src="${pageContext.request.contextPath}/notika/js/bootstrap.min.js"></script>

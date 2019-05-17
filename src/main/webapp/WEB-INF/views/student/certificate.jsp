@@ -14,7 +14,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>증명서관리 화면</title>
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/jonggling123/finalTeamProject.git
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 

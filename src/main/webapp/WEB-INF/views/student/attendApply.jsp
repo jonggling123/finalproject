@@ -6,7 +6,7 @@
 	src="${pageContext.request.contextPath }/res/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	function page_link() {
-		window.open("${pageContext.request.contextPath }/eduGoal", "상세강의보기", "width=1000, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes");
+		window.open("${pageContext.request.contextPath }/subjectPage/eduGoal", "상세강의보기", "width=1000, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes");
 	}
 </script>
 <!-- Data Table JS
@@ -104,7 +104,7 @@
 							</thead>
 							<tbody>
 								<tr role="row" class="odd">
-									<td class="sorting_1" onClick="javascript:page_link();">초급자바</td>
+									<td class="sorting_1"><a onClick="javascript:page_link();">초급자바</a></td>
 									<td>교양</td>
 									<td>2</td>
 									<td>1학년</td>
@@ -114,7 +114,7 @@
 									<td><button class="btn btn-default notika-btn-default" id="asd">신청</button></td>
 								</tr>
 								<tr role="row" class="odd">
-									<td class="sorting_1" onClick="javascript:page_link();">중급자바</td>
+									<td class="sorting_1"><a onClick="javascript:page_link();">중급자바</a></td>
 									<td>전공</td>
 									<td>3</td>
 									<td>2학년</td>
@@ -150,7 +150,7 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td onClick="javascript:page_link();">초급자바</td>
+									<td><a onClick="javascript:page_link();">초급자바</a></td>
 									<td>교양</td>
 									<td>2</td>
 									<td>1학년</td>
@@ -162,7 +162,7 @@
 											id="asd">신청</button></td>
 								</tr>
 								<tr>
-									<td onClick="javascript:page_link();">중급자바</td>
+									<td><a onClick="javascript:page_link();">중급자바</a></td>
 									<td>전공</td>
 									<td>3</td>
 									<td>2학년</td>
