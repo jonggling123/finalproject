@@ -102,7 +102,7 @@
 				success : function(resp) {
 					var userId = resp.user_id;
 					$("#userIdResult").empty();
-					$("#userIdResult").append("<input type='checkbox' name='checkId' /><h2 class='checkUserId'>" +userId+ "</h2>");
+					$("#userIdResult").append("<input type='checkbox' name='checkId' checked/><h2 class='checkUserId'>" +userId+ "</h2>");
 					$("input[name=user_mail]").attr('disabled',true);
 					$(".changeFindIdResult").show();
 				},
@@ -422,26 +422,32 @@ body .changePassForm {
 				$('.input100').removeClass('has-val');
 			}
 			if ($(this).hasClass('findPass')) {
-				$('.text-center .txt1').removeClass('active');
-				$(this).addClass('active');
-				$('.loginForm').hide();
-				$('.findIdForm').hide();
-				$('.changePassForm').hide();
-				$('.findPassForm').show();
-				$('.changeFindIdResult').hide();
-				$('.input100').val('');
-				$('.input100').removeClass('has-val');
-// 				if($("input[name=checkId]").attr('checked',false)) {
-// 					$("input[name=checkId]").attr('checked',true);
-// 					$('.text-center .txt1').removeClass('active');
-// 					$(this).addClass('active');
-// 					$('.loginForm').hide();
-// 					$('.findIdForm').hide();
-// 					$('.findPassForm').hide();
-// 					$('.changePassForm').show();
-// 					$('.input100').val('');
-// 					$('.input100').removeClass('has-val');
-// 				}
+				if(($("#findIdForm").find("input[name=user_mail]").val()) !='') {
+				if(($("#findIdForm").find("input[name=user_mail]").val()) !='') {
+					var dd = $("#userIdResult").text();
+					var rets = dd.substring(9);
+					console.log(rets);
+					$("#changePassForm").find("input[name=user_id]").val(rets);
+					$("input[name=checkId]").attr('checked',false);
+					$('.text-center .txt1').removeClass('active');
+					$(this).addClass('active');
+					$('.loginForm').hide();
+					$('.findIdForm').hide();
+					$('.findPassForm').hide();
+					$('.changePassForm').show();
+					$('.input100').val('');
+					$('.input100').removeClass('has-val');
+				} else {
+					$('.text-center .txt1').removeClass('active');
+					$(this).addClass('active');
+					$('.loginForm').hide();
+					$('.findIdForm').hide();
+					$('.changePassForm').hide();
+					$('.findPassForm').show();
+					$('.changeFindIdResult').hide();
+					$('.input100').val('');
+					$('.input100').removeClass('has-val');
+				}
 			}
 			if ($(this).hasClass('login')) {
 				$('.text-center .txt1').removeClass('active');
