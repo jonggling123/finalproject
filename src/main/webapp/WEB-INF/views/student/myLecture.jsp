@@ -5,7 +5,7 @@
 <script type="text/javascript">
 	function openMine(a){
 		var name = $(a).attr("name");
-		window.open("${pageContext.request.contextPath }/eduGoal", "상세강의보기", "width=1000, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes");
+		window.open("${pageContext.request.contextPath }/subjectPage/eduGoal", "상세강의보기", "width=1000, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes");
 	}
 </script>
 
@@ -34,8 +34,8 @@
                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="breadcomb-wp">
                            <div class="breadcomb-ctn">
-                              <h2>나의강의</h2>
-                              <p>나의강의 조회 페이지 <span class="bread-ntd"></span></p>
+                              <h2>나의강의dd</h2>
+                              <p>나의강의 조회 페이지dd <span class="bread-ntd"></span></p>
                            </div>
                         </div>
                      </div>
@@ -78,7 +78,7 @@
                                 </thead>
                                 <tbody>
 	                                <tr role="row" class="odd">
-	                                    <td class="sorting_1"><a href="${pageContext.request.contextPath }/subjectPage" onClick="javascript:openMine(this);">초급자바</a></td>
+	                                    <td class="sorting_1"><a href="#" onClick="javascript:openMine(this);">초급자바</a></td>
 	                                    <td>교양</td>
 	                                    <td>2</td>
 	                                    <td>65/70</td>

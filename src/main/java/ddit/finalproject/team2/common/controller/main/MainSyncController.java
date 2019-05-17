@@ -135,9 +135,9 @@ public class MainSyncController {
 	 * @param au
 	 * @return
 	 */
-	@GetMapping("attend")
+	@GetMapping("attendApply")
 	public ModelAndView goAttendance(ModelAndView mv, Authentication au){
-		mv.setViewName("student/attend");
+		mv.setViewName("student/attendApply");
 		mv.getModel().put("id", au.getName());
 		return mv;
 	}

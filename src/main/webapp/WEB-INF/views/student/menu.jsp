@@ -112,29 +112,27 @@
                 <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
                     <li><a data-toggle="tab" href="#myPage"><i class="notika-icon notika-house"></i>마이페이지</a></li>
                     <li><a data-toggle="tab" href="#lecture"><i class="notika-icon notika-mail"></i>강의</a></li>
-                    <li><a href="attendApply"><i class="notika-icon notika-edit"></i>수강신청</a></li>
-                    <li><a data-toggle="tab" href="#cert"><i class="notika-icon notika-bar-chart"></i>증명서</a></li>
-                </ul>
+                    <li><a href="${pageContext.request.contextPath }/main/attendApply"><i class="notika-icon notika-edit"></i>수강신청</a></li>
+                    <li><a href="${pageContext.request.contextPath }/main/certificate"><i class="notika-icon notika-bar-chart"></i>증명서</a></li>
+                </ul>	
                 <div class="tab-content custom-menu-content">
                     <div id="myPage" class="tab-pane in notika-tab-menu-bg animated flipInX">
                         <ul class="notika-main-menu-dropdown">
-                            <li><a href="myInfo">나의정보</a>
+                            <li><a href="${pageContext.request.contextPath }/main/myInfo">나의정보</a>
                             </li>
-                            <li><a href="gradeCheck">성적조회</a>
+                            <li><a href="${pageContext.request.contextPath }/main/searchGrade">성적조회</a>
                             </li>
-                            <li><a href="index-3.html">일정</a>
+                            <li><a href="${pageContext.request.contextPath }/main/schedule">일정</a>
                             </li>
-                            <li><a href="ringList">알림</a>
-                            </li>
-                            <li><a href="attendList">수강과목</a>
+                            <li><a href="${pageContext.request.contextPath }/main/attendList">수강과목</a>
                             </li>
                         </ul>
                     </div>
                     <div id="lecture" class="tab-pane notika-tab-menu-bg animated flipInX">
                         <ul class="notika-main-menu-dropdown">
-                            <li><a href="allLectureList">모든강의</a>
+                            <li><a href="${pageContext.request.contextPath }/main/allLecture">모든강의</a>
                             </li>
-                            <li><a href="myLectureList">나의강의</a>
+                            <li><a href="${pageContext.request.contextPath }/main/myLecture">나의강의</a>
                             </li>
                         </ul>
                     </div>

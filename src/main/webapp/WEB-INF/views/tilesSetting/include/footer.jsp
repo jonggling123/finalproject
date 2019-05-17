@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+
 <div class="footer-copyright-area">
     <div class="container">
         <div class="row">
@@ -17,7 +13,7 @@
         </div>
     </div>
 </div>
-<%-- <script src="${pageContext.request.contextPath}/notika/js/vendor/jquery-1.12.4.min.js"></script> --%>
+<script src="${pageContext.request.contextPath}/notika/js/vendor/jquery-1.12.4.min.js"></script>
 <!-- bootstrap JS
     ============================================ -->
 <script src="${pageContext.request.contextPath}/notika/js/bootstrap.min.js"></script>
@@ -77,5 +73,3 @@
 <!-- tawk chat JS
     ============================================ -->
 <script src="${pageContext.request.contextPath}/notika/js/tawk-chat.js"></script>
-</body>
-</html>
