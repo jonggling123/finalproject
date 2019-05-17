@@ -23,14 +23,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/operation")
 public class LectureOperationSyncController {
-	
 	/**
-	 * 평가정책관리 화면으로 이동하기 위한 command handler
+	 * 평가정책관리
+	 * @param mv
 	 * @return
 	 */
 	@GetMapping("policy")
 	public ModelAndView goPolicy(ModelAndView mv){
-		mv.setViewName("admin/policy");
+		mv.setViewName("admin/lectureOperation");
 		return mv;
 	}
 	
@@ -40,7 +40,7 @@ public class LectureOperationSyncController {
 	 */
 	@GetMapping("attend")
 	public ModelAndView goAttend(ModelAndView mv){
-		mv.setViewName("admin/attend");
+		mv.setViewName("lectureOperation-attendance");
 		return mv;
 	}
 	
@@ -50,7 +50,7 @@ public class LectureOperationSyncController {
 	 */
 	@GetMapping("attendList")
 	public ModelAndView goLectureList(ModelAndView mv){
-		mv.setViewName("admin/attendList");
+		mv.setViewName("lectureOperation-attend");
 		return mv;
 	}
 	
@@ -60,7 +60,7 @@ public class LectureOperationSyncController {
 	 */
 	@GetMapping("assignment")
 	public ModelAndView goAssignment(ModelAndView mv){
-		mv.setViewName("admin/assignment");
+		mv.setViewName("admin/managehomework");
 		return mv;
 	}
 	
@@ -70,7 +70,7 @@ public class LectureOperationSyncController {
 	 */
 	@GetMapping("exam")
 	public ModelAndView goExam(ModelAndView mv){
-		mv.setViewName("admin/exam");
+		mv.setViewName("admin/manageExam");
 		return mv;
 	}
 	
@@ -80,7 +80,7 @@ public class LectureOperationSyncController {
 	 */
 	@GetMapping("evaluation")
 	public ModelAndView goEvaluation(ModelAndView mv){
-		mv.setViewName("admin/lectureEvaluation");
+		mv.setViewName("admin/managePolicy");
 		return mv;
 	}
 }

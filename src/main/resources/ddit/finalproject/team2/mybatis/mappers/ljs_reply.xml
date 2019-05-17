@@ -11,4 +11,22 @@
 		SELECT * FROM REPLY
 		WHERE BOARD_NO = #{board_no}
 	</select>
+	
+	<insert id="insertReply" parameterType="ddit.finalproject.team2.vo.ReplyVo">
+		<selectKey resultType="string" keyProperty="reply_no" order="BEFORE">
+			SELECT REPLY_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO REPLY(
+			BOARD_NO, LECTURE_CODE, REPLY_NO, ATTEND_NO
+			, REPLY_CONTENT, REPLY_REG
+		) VALUES (
+			#{board_no}, #{lecture_code}, #{reply_no}, #{attend_no}
+			, #{reply_content}, SYSDATE
+		)
+	</insert>
+	
+	<delete id="deleteReply" parameterType="string">
+		DELETE FROM REPLY
+		WHERE REPLY_NO = #{reply_no}
+	</delete>
 </mapper>

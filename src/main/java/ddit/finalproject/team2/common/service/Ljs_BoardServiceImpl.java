@@ -33,6 +33,7 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 		
 		for(int i=0; i<boardList.size(); i++){
 			Ljs_BoardSubjectVo vo = boardList.get(i);
+			vo.setBoard_title(vo.getBoard_title(), vo.getBoard_no());
 			vo.setReplycount(replyDao.selectReplyCount(vo.getBoard_no()));
 		}
 		

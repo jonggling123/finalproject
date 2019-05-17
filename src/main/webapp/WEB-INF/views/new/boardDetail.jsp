@@ -48,32 +48,18 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="view-mail-list sm-res-mg-t-30">
-					<div class="view-mail-hd">
-						<!--                             <div class="view-mail-hrd"> -->
-						<!--                             </div> -->
-						<div class="view-ml-rl">
-							<select name="data-table-basic_length"
-								aria-controls="data-table-basic" class="">
-								<option value="">일반</option>
-								<option value="">공지</option>
-								<option value="">과목</option>
-							</select>
-							<button class="btn btn-default notika-btn-default" id="asd">등록</button>
-							<button class="btn btn-default notika-btn-default" id="asd">수정</button>
-						</div>
-					</div>
 					<div class="mail-ads mail-vw-ph">
 						<p class="first-ph">
-							<b>분류 : </b>공지게시판
+							<b>분류 : </b>${board.board_type }
 						</p>
 						<p>
-							<b>작성자:</b> <a href="#">누구야</a>
+							<b>작성자:</b>${user.user_name }
 						</p>
 						<p>
-							<b>제목:</b> <a href="#">부스트스랩개어렵다람쥐</a>
+							<b>제목:</b>${board.board_title }
 						</p>
 						<p class="last-ph">
-							<b>Date:</b> 2019.05.11
+							<b>Date:</b>${board.board_date }
 						</p>
 					</div>
 					<div class="file-download-system">

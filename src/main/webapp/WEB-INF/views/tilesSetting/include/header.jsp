@@ -1,9 +1,6 @@
-<%@ page language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
 <div class="header-top-area">
     <div class="container">
         <div class="row">
@@ -278,11 +275,12 @@
                                 </div>
                             </div>
                         </li>
+                        <li class="nav-item">
+                        	<a href="${pageContext.request.contextPath }/logout" aria-expanded="false" class="nav-link">로그아웃</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</body>
-</html>

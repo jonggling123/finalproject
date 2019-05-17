@@ -7,7 +7,7 @@
 * 2019. 5. 2.      AA      최초작성
 * Copyright (c) 2019 by DDIT All right reserved
 *
-* 관리자 교육과정관리 (강좌관리)화면
+* 관리자 교육과정관리 (과목관리)화면
  --%>
 
 <script type="text/javascript">
@@ -24,7 +24,7 @@
                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="breadcomb-wp">
                            <div class="breadcomb-ctn">
-                              <h2>교육과정관리</h2>
+                              <h2>교육과정관리(과목관리)</h2>
                               <p>교육과정을 조회하고 관리하는 게시판입니다. <span class="bread-ntd"></span></p>
                            </div>
                         </div>
@@ -58,7 +58,7 @@
                             <button class="btn btn-default notika-btn-default">검색</button>
                             
                             <div>     
-                               		  <button class="btn btn-default notika-btn-default" style="float:right;"  id="btn1" >차시정보 엑셀 일괄등록</button>
+                               		  <button class="btn btn-default notika-btn-default" style="float:right;"  id="btn1" >강좌개설</button>
                                		  <select style="float:right;"><OPTION>10건씩 정렬</OPTION>20건씩 정렬<OPTION></OPTION><OPTION></OPTION></select>
                             </div>
                             

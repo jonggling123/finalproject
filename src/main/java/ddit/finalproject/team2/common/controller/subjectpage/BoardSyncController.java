@@ -15,12 +15,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.ModelAndView;
 
 import ddit.finalproject.team2.common.service.Ljs_BoardServiceImpl;
 import ddit.finalproject.team2.util.enumpack.BrowserType;
 import ddit.finalproject.team2.vo.AttachmentVo;
+import ddit.finalproject.team2.vo.UserVo;
 
 /**
  * @author 이종선
@@ -42,14 +44,7 @@ public class BoardSyncController {
 	@Inject
 	Ljs_BoardServiceImpl boardService;
 	
-	@GetMapping("/board/{board_no}")
-	public ModelAndView goBoardView(@PathVariable String board_no, ModelAndView mv, Authentication au){
-		mv.setViewName("common/boardView");
-		mv.getModel().put("id", au.getName());
-		mv.getModel().put("board", boardService.retrieveBoard(board_no));
-		
-		return mv;
-	}
+	@PostMapping("")
 	
 	@GetMapping("/board/download/{attachment_no}")
 	public String download(@PathVariable String attachment_no
@@ -82,5 +77,21 @@ public class BoardSyncController {
 			IOUtils.copy(is, os);
 		}
 		return null;
+	}
+	
+	@GetMapping("/board/create")
+	public ModelAndView goCreate(ModelAndView mv, Authentication au){
+		mv.setViewName("new/boardAdd");
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
+		return mv;
+	}
+	
+	@GetMapping("subjectPage/board/{board_no}")
+	public ModelAndView goBoardView(@PathVariable String board_no, ModelAndView mv, Authentication au){
+		mv.setViewName("new/boardDetail");
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
+		mv.getModel().put("board", boardService.retrieveBoard(board_no));
+		
+		return mv;
 	}
 }

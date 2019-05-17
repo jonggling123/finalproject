@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<script type="text/javascript"
-	src="${pageContext.request.contextPath }/res/js/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 	function page_link() {
 		window
@@ -12,6 +12,31 @@
 						"상세강의보기",
 						"width=1000, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes");
 	}
+	
+	$(function() {
+// 		데이터 테이블
+		$('#data-table-basic').DataTable({
+	        ajax: {
+	            "type" : "get",
+	               "url" : "${pageContext.request.contextPath}/board",
+	                  "dataType": "JSON"
+	               },
+	              columns: [
+	                         { data: "board_type" },
+	                         { data: "board_no" },
+	                         { data: "board_title" },
+	                         { data: "replycount" },
+	                         { data: "user_id" },
+	                         { data: "board_date" },
+	                         { data: "board_hit" }
+	                     ]
+	          });
+		
+		//등록 버튼
+		$('#createBoard').on('click', function() {
+			location.href = "${pageContext.request.contextPath}/board/create";
+		})
+	});
 </script>
 <!-- Data Table JS
 		============================================ -->
@@ -51,8 +76,8 @@
 				<div class="data-table-list">
 					<div class="table-responsive">
 						<h2>강의게시판</h2>
-						<div id="data-table-basic_wrapper" class="dataTables_wrapper">
-							<div class="dataTables_length" id="data-table-basic_length">
+<!-- 						<div id="data-table-basic_wrapper" class="dataTables_wrapper"> -->
+<!-- 							<div class="dataTables_length" id="data-table-basic_length"> -->
 								<div id="data-table-basic_filter"
 									class="dataTables_filter sangyup">
 									<span>분류
@@ -62,78 +87,24 @@
 										<OPTION>일반</OPTION>
 									</select>
 									</span>
-									<button class="btn btn-default notika-btn-default" id="asd">등록</button>
+									<button class="btn btn-default notika-btn-default" id="createBoard">등록</button>
 								</div>
 								<table id="data-table-basic"
 									class="table table-striped dataTable" role="grid"
 									aria-describedby="data-table-basic_info">
 									<thead>
-										<tr role="row">
-											<th class="sorting_asc" tabindex="0"
-												aria-controls="data-table-basic" rowspan="1" colspan="1"
-												aria-sort="ascending"
-												aria-label="Name: activate to sort column descending"
-												style="width: 80px;">선택</th>
-											<th class="sorting_asc" tabindex="0"
-												aria-controls="data-table-basic" rowspan="1" colspan="1"
-												aria-sort="ascending"
-												aria-label="Name: activate to sort column descending"
-												style="width: 80px;">글번호</th>
-											<th class="sorting" tabindex="0"
-												aria-controls="data-table-basic" rowspan="1" colspan="1"
-												aria-label="Position: activate to sort column ascending"
-												style="width: 100px;">제목</th>
-											<th class="sorting" tabindex="0"
-												aria-controls="data-table-basic" rowspan="1" colspan="1"
-												aria-label="Office: activate to sort column ascending"
-												style="width: 80px;">댓글수</th>
-											<th class="sorting" tabindex="0"
-												aria-controls="data-table-basic" rowspan="1" colspan="1"
-												aria-label="Age: activate to sort column ascending"
-												style="width: 80px;">작성자</th>
-											<th class="sorting" tabindex="0"
-												aria-controls="data-table-basic" rowspan="1" colspan="1"
-												aria-label="Start date: activate to sort column ascending"
-												style="width: 125px;">작성일</th>
-											<th class="sorting" tabindex="0"
-												aria-controls="data-table-basic" rowspan="1" colspan="1"
-												aria-label="Salary: activate to sort column ascending"
-												style="width: 117px;">조회수</th>
-										</tr>
+										<tr>
+	                                    <th>분류</th>
+	                                    <th>글번호</th>
+	                                    <th>제목</th>
+	                                    <th>댓글수</th>
+	                                    <th>작성자</th>
+	                                    <th>작성일</th>
+	                                    <th>조회수</th>
+                                    </tr>
 									</thead>
 									<tbody>
-										<tr role="row" class="odd" onClick="javascript:page_link();">
-											<td class="">
-												<div class="fm-checkbox">
-													<div class="icheckbox_square-green" style="position: relative;">
-														<input type="checkbox" class="i-checks" style="position: absolute; opacity: 0;" />
-														<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-													</div>
-												</div>
-											</td>
-											<td class="sorting_1">1번글</td>
-											<td>1번글제목</td>
-											<td>5</td>
-											<td>최희연</td>
-											<td>2019-05-11</td>
-											<td>70</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="">
-												<div class="fm-checkbox">
-													<div class="icheckbox_square-green" style="position: relative;">
-														<input type="checkbox" class="i-checks" style="position: absolute; opacity: 0;" />
-														<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-													</div>
-												</div>
-											</td>
-											<td class="sorting_1">2번글</td>
-											<td>2번글제목</td>
-											<td>10</td>
-											<td>이진우</td>
-											<td>2019-05-09</td>
-											<td>65</td>
-										</tr>
+										
 									</tbody>
 								</table>
 							</div>

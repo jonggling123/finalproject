@@ -49,14 +49,15 @@ public class PortalSyncController {
 		return mv;
 	}
 	
-	/**
-	 * 리소스관리 화면으로 이동하기 위한 command handler
-	 * @param mv
-	 * @return
-	 */
-	@GetMapping("resource")
-	public ModelAndView goResource(ModelAndView mv){
-		mv.setViewName("admin/resource");
+	@GetMapping("popup")
+	public ModelAndView goPopup(ModelAndView mv){
+		mv.setViewName("admin/portal");
+		return mv;
+	}
+	
+	@GetMapping("system")
+	public ModelAndView goSystem(ModelAndView mv){
+		mv.setViewName("admin/system");
 		return mv;
 	}
 }

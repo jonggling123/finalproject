@@ -21,4 +21,7 @@ public interface Ljs_IReplyDao {
 	 * @return not exist : list.size()==0
 	 */
 	List<ReplyVo> selectReplyList(String board_no);
+	
+	int insertReply(ReplyVo vo);
+	int deleteReply(String reply_no);
 }

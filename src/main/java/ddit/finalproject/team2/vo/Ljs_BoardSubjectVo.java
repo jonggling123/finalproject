@@ -30,8 +30,6 @@ public class Ljs_BoardSubjectVo implements Serializable{
 	private String attend_no;
 	private String lecture_code;
 	
-	private String user_id;
-	
 	private List<ReplyVo> replyList;
 	private int replycount;
 	
@@ -45,7 +43,7 @@ public class Ljs_BoardSubjectVo implements Serializable{
 	};
 	
 	public void setBoard_title(String board_title, String board_no){
-		this.board_title = "<a href='${pageContext.request.contextPath}/board/"+board_no+"'>"+board_title+"</a>";
+		this.board_title = "<a href='/board/"+board_no+"'>"+board_title+"</a>";
 	}
 	
 	public void setBoard_files(MultipartFile[] board_files){

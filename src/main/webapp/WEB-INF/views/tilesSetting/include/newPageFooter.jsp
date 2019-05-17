@@ -1,18 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<div class="footer-copyright-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="footer-copy-right">
-                    <p>Copyright Â© 2018
-                        . All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <%-- <script src="${pageContext.request.contextPath}/notika/js/vendor/jquery-1.12.4.min.js"></script> --%>
 <!-- bootstrap JS
     ============================================ -->

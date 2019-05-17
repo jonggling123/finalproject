@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ddit.finalproject.team2.util.AuthConstants;
 import ddit.finalproject.team2.util.AuthorityUtil;
+import ddit.finalproject.team2.util.constant.AuthConstants;
 
 /**
  * @author 이종선
@@ -75,8 +75,6 @@ public class SubjectPageSyncController {
 	 * @return
 	 */
 	@GetMapping("lectureBoard")
-	public String goBoard(){
-		return "common/board";
 	public ModelAndView goBoard(ModelAndView mv, Authentication au){
 		List<String> authorities = AuthorityUtil.getAuthorityList(au);
 		if(authorities.contains(AuthConstants.ROLE_STUDENT)){

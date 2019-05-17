@@ -30,7 +30,7 @@ public class AdminMainSyncController {
 	 */
 	@GetMapping("basic")
 	public ModelAndView goBasic(ModelAndView mv){
-		mv.setViewName("admin/basicInfo");
+		mv.setViewName("admin/information");
 		return mv;
 	}
 	
@@ -41,26 +41,6 @@ public class AdminMainSyncController {
 	@GetMapping("user")
 	public ModelAndView goUser(ModelAndView mv){
 		mv.setViewName("admin/user");
-		return mv;
-	}
-	
-	/**
-	 * 교육과정관리 화면으로 이동하는 command handler
-	 * @return
-	 */
-	@GetMapping("curriculum")
-	public ModelAndView goCurriculum(ModelAndView mv){
-		mv.setViewName("admin/curriculum");
-		return mv;
-	}
-	
-	/**
-	 * 강의운영관리 화면으로 이동하는 command handler
-	 * @return
-	 */
-	@GetMapping("lecture")
-	public ModelAndView goLecture(ModelAndView mv){
-		mv.setViewName("admin/lectureOperation");
 		return mv;
 	}
 	
