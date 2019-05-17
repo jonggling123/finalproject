@@ -40,7 +40,7 @@ public class LectureOperationSyncController {
 	 */
 	@GetMapping("attend")
 	public ModelAndView goAttend(ModelAndView mv){
-		mv.setViewName("lectureOperation-attendance");
+		mv.setViewName("admin/lectureOperation-attendance");
 		return mv;
 	}
 	
@@ -50,7 +50,7 @@ public class LectureOperationSyncController {
 	 */
 	@GetMapping("attendList")
 	public ModelAndView goLectureList(ModelAndView mv){
-		mv.setViewName("lectureOperation-attend");
+		mv.setViewName("admin/lectureOperation-attend");
 		return mv;
 	}
 	

@@ -38,7 +38,7 @@
                         <div class="breadcomb-wp">
                            <div class="breadcomb-ctn">
                               <h2>포털관리</h2>
-                              <p>게시판 관리페이지 <span class="bread-ntd"></span></p>
+                              <p>팝업공지 관리 페이지 <span class="bread-ntd"></span></p>
                            </div>
                         </div>
                      </div>

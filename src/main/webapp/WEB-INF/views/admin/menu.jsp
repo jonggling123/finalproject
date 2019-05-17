@@ -112,13 +112,14 @@
                 <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
                     <li><a href="${pageContext.request.contextPath }/adminMain/basic"><i class="notika-icon notika-house"></i>기초정보관리</a></li>
                     <li><a href="${pageContext.request.contextPath }/adminMain/user"><i class="notika-icon notika-mail"></i>사용자관리</a></li>
-                    <li><a data-toggle="tab" href="#lecture"><i class="notika-icon notika-edit"></i>교육과정관리</a></li>
-                    <li><a data-toggle="tab" href="#operation"><i class="notika-icon notika-bar-chart"></i>강의운영관리</a></li>
+                    <li><a data-toggle="tab" href="#lecture" ><i class="notika-icon notika-edit"></i>교육과정관리</a></li>
+                    <li><a data-toggle="tab" href="#operation" ><i class="notika-icon notika-bar-chart"></i>강의운영관리</a></li>
                     <li><a href="${pageContext.request.contextPath }/adminMain/certificate"><i class="notika-icon notika-bar-chart"></i>증명서관리</a></li>
                     <li><a href="${pageContext.request.contextPath }/adminMain/board"><i class="notika-icon notika-bar-chart"></i>게시판관리</a></li>
-                    <li><a data-toggle="tab" href="#stats"><i class="notika-icon notika-bar-chart"></i>통계관리(미구현)</a></li>
-                    <li><a data-toggle="tab" href="#portal"><i class="notika-icon notika-bar-chart"></i>포털관리(sms, 일정 미구현)</a></li>
+                    <li><a data-toggle="tab" href="#stats" ><i class="notika-icon notika-bar-chart"></i>통계관리(미구현)</a></li>
+                    <li><a data-toggle="tab" href="#portal" ><i class="notika-icon notika-bar-chart"></i>포털관리(sms, 일정 미구현)</a></li>
                 </ul>
+                <div class="tab-content custom-menu-content">
                     <div id="lecture" class="tab-pane notika-tab-menu-bg animated flipInX">
                         <ul class="notika-main-menu-dropdown">
                             <li><a href="${pageContext.request.contextPath }/curriculum/subject">과목관리</a>
@@ -127,15 +128,31 @@
                             </li>
                         </ul>
                     </div>
-                    <div id="stats" class="tab-pane notika-tab-menu-bg animated flipInX">
+                    <div id="operation" class="tab-pane notika-tab-menu-bg animated flipInX">
                         <ul class="notika-main-menu-dropdown">
-                            <li><a href="">과목통계</a>
+                            <li><a href="${pageContext.request.contextPath }/operation/policy">평가정책관리</a>
                             </li>
-                            <li><a href="">사용자통계</a>
+                            <li><a href="${pageContext.request.contextPath }/operation/attend">수강신청관리</a>
                             </li>
-                            <li><a href="">시스템접속통계</a>
+                            <li><a href="${pageContext.request.contextPath }/operation/attendList">수강관리</a>
                             </li>
-                            <li><a href="">교수활동통계</a>
+                            <li><a href="${pageContext.request.contextPath }/operation/assignment">과제물관리</a>
+                            </li>
+                            <li><a href="${pageContext.request.contextPath }/operation/exam">시험관리</a>
+                            </li>
+                            <li><a href="${pageContext.request.contextPath }/operation/evaluation">강의평가관리</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div  id="stats" class="tab-pane notika-tab-menu-bg animated flipInX">
+                        <ul  class="notika-main-menu-dropdown">
+                            <li><a href="#">과목통계</a>
+                            </li>
+                            <li><a href="#">사용자통계</a>
+                            </li>
+                            <li><a href="#">시스템접속통계</a>
+                            </li>
+                            <li><a href="#">교수활동통계</a>
                             </li>
                         </ul>
                     </div>
@@ -143,13 +160,14 @@
                         <ul class="notika-main-menu-dropdown">
                             <li><a href="${pageContext.request.contextPath }/portal/popup">팝업공지</a>
                             </li>
-                            <li><a href="">일정</a>
+                            <li><a href="#">일정</a>
                             </li>
-                            <li><a href="">sms</a>
+                            <li><a href="#">sms</a>
                             </li>
                             <li><a href="${pageContext.request.contextPath }/portal/system">시스템관리</a>
                             </li>
                         </ul>
+                    </div>
                     </div>
                 </div>
             </div>
