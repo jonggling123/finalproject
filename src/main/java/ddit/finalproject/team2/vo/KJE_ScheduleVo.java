@@ -16,7 +16,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(of="schedule_no")
 @ToString(exclude="schedule_content")
-public class ScheduleVo implements Serializable{
+public class KJE_ScheduleVo implements Serializable{
 	@NotNull private String schedule_no;
 	@NotNull private String schedule_type;
 	@NotNull private String schedule_title;
@@ -24,5 +24,7 @@ public class ScheduleVo implements Serializable{
 	@NotNull private String schedule_start;
 	@NotNull private String schedule_end;
 	@NotNull private String schedule_add;
+	@NotNull private String lecture_name;
+	
 	private String lecture_code;
 }

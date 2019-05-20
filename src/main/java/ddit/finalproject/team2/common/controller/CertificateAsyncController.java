@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ddit.finalproject.team2.common.service.KJE_CertificateServiceImpl;
 import ddit.finalproject.team2.vo.KJE_CertificateVo;
+import ddit.finalproject.team2.vo.KJE_CertificatieAdminVo;
 import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;
 import ddit.finalproject.team2.vo.UserVo;
 
 @RestController
-@RequestMapping("/certificateList")
 public class CertificateAsyncController {
 	@Inject
 	KJE_CertificateServiceImpl certificateService;
 	
-	@GetMapping(produces="application/json;charset=UTF-8")
+	@GetMapping(value="/certificateList", produces="application/json;charset=UTF-8")
 	public Map<String, Object> getList(Authentication authentication){
 		Map<String, Object> map = new HashMap<>();
 		String user_authority = ((UserVo)authentication.getPrincipal()).getUser_authority();
@@ -31,4 +31,12 @@ public class CertificateAsyncController {
 		return map;
 	}
 	
+	
+	@GetMapping(value="/certificateAdminList", produces="application/json;charset=UTF-8")
+	public Map<String, Object> getAdminList(Authentication authentication){
+		Map<String, Object> map = new HashMap<>();
+		List<KJE_CertificatieAdminVo> list = certificateService.retriveCertificateAdminList();
+		map.put("data", list);
+		return map;
+	}
 }

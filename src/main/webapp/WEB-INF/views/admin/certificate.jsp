@@ -9,9 +9,27 @@
 *
 * 관리자 증명서관리 화면
  --%>
-
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <script type="text/javascript">
 	$(function() {
+		$('#data-table-basic').DataTable({
+	        ajax: {
+	            "type" : "get",
+	               "url" : "${pageContext.request.contextPath}/certificateAdminList",
+	                  "dataType": "JSON"
+	               },
+	              columns: [
+	                         { data: "user_authority" },
+	                         { data: "user_id" },
+	                         { data: "user_name"},
+	                         { data: "certificate_name"},
+	                         { data: "issue_count" },
+	                         { data: "issue_totalprice" },
+	                         { data: "issue_date" }
+	                        
+	                     ]
+	          });
 		
 	});
 </script>
@@ -25,7 +43,7 @@
                         <div class="breadcomb-wp">
                            <div class="breadcomb-ctn">
                               <h2>증명서관리</h2>
-                              <p>증명서를 조회하고 관리하는 게시판입니다. <span class="bread-ntd"></span></p>
+                              <p>발급된 증명서내역을 조회합니다. <span class="bread-ntd"></span></p>
                            </div>
                         </div>
                      </div>
@@ -44,38 +62,19 @@
                         
                        <table id="data-table-basic" class="table table-striped dataTable" role="grid" aria-describedby="data-table-basic_info">
                                 <thead>
-                                    
+                                    <tr>
+									<th>구분</th>
+									<th>아이디</th>
+									<th>성명</th>
+									<th>증명서</th>
+									<th>발급통수</th>
+									<th>총결제금액</th>
+									<th>발급날짜</th>
+								</tr>
                                 </thead>
                                 <tbody>
-                                <tr role="row" class="odd">
-                                        <td colspan="3">증명서선택</td>
-                                    </tr><tr role="row" class="even">
-                                        <td colspan="3">여러가지 증명서를 한번에 신청할 수 없습니다. 한개씩 신청해 주세요.</td>
-                                    </tr>
-                                    <tr role="row" class="even">
-                                    <th>증명서</th>
-                                    <th>통수</th>
-                                    <th>신청</th>
-                                    </tr>
-                                    <tr role="row" class="odd">
-                           			<td>성적증명서</td>
-                                    <td><input type="number"></td>
-                                    <td><button class="btn btn-default notika-btn-default" style="float:left;"  id="btn1" >신청</button>
-                                    <button class="btn btn-default notika-btn-default" style="float:left;"  id="btn2" >미리보기</button></td>
-                                    </tr>
-                                    <tr role="row" class="even">
-                           			<td>졸업예정증명서</td>
-                                    <td><input type="number"></td>
-                                    <td><button class="btn btn-default notika-btn-default" style="float:left;"  id="btn3" >신청</button>
-                                    <button class="btn btn-default notika-btn-default" style="float:left;"  id="btn4" >미리보기</button></td>
-                                    </tr>
-                                    <tr role="row" class="odd">
-                           			<td>학년수료 증명서</td>
-                                    <td><input type="number"></td>
-                                    <td><button class="btn btn-default notika-btn-default" style="float:left;"  id="btn5" >신청</button>
-                                    <button class="btn btn-default notika-btn-default" style="float:left;"  id="btn6" >미리보기</button></td>
-                                    </tr>
-                                   </tbody>
+                               
+                                </tbody>
                                 <tfoot>
                            			
                                 </tfoot>
@@ -84,14 +83,5 @@
                             </div>
                             </div>
                             </div>
-                            </div>
-        <div class="container">
-            <div class="row">
-			<textarea rows="5" cols="100">
-			신청(결제)한 매수만큼만 출력 가능합니다.
- 			신청(결제)일 기준, 30일 내에만 취소/환불 가능합니다.
- 			본 서비스를 통해 출력한 증명서는 원본증명서 입니다.
-			</textarea>            
-            </div>
-            </div>
+     
 

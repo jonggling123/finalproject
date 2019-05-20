@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import ddit.finalproject.team2.common.dao.KJE_ICertificateDao;
 import ddit.finalproject.team2.util.exception.CommonException;
+import ddit.finalproject.team2.vo.IssueVo;
 import ddit.finalproject.team2.vo.KJE_CertificateVo;
+import ddit.finalproject.team2.vo.KJE_CertificatieAdminVo;
 import ddit.finalproject.team2.vo.KJE_SRVo;
 
 @Service
@@ -46,6 +48,18 @@ public class KJE_CertificateServiceImpl implements KJE_ICertificateService {
 			
 		}
 		return srvo;
+	}
+
+	@Override
+	public int recordIssu(IssueVo issue) {
+		int rowCnt = certificateDao.insertIssu(issue);
+		return rowCnt;
+	}
+
+	@Override
+	public List<KJE_CertificatieAdminVo> retriveCertificateAdminList() {
+		List<KJE_CertificatieAdminVo> certificatieAdmin = certificateDao.selectCertificateAdminList();
+		return certificatieAdmin;
 	}
 
 }

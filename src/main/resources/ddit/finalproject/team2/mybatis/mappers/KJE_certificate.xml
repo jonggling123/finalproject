@@ -22,13 +22,50 @@
 		USER_ADD1,
 		USER_ADD2,
 		LOWER_ORGANIZATION,
-		(SELECT TO_CHAR(ADMISSION, 'YYYY"년"MM"월"DD"일"') FROM STUDENT where
+		(SELECT TO_CHAR(ADMISSION, 'YYYY"년"MM"월"DD"일"')
+		FROM STUDENT where
 		USER_ID=#{user_id})ADMISSION,
-		(SELECT TO_CHAR(SYSDATE, 'YYYY"년"MM"월"DD"일"' ) AS TODAY FROM DUAL) TODAY
-		FROM USERS A INNER JOIN STUDENT B
+		(SELECT
+		TO_CHAR(SYSDATE, 'YYYY"년"MM"월"DD"일"' ) AS TODAY FROM DUAL) TODAY
+		FROM
+		USERS A INNER JOIN STUDENT B
 		ON(A.USER_ID =B.USER_ID)
-		where A.USER_ID=#{user_id}
+		where
+		A.USER_ID=#{user_id}
 
 	</select>
+
+	<select id="selectCertificateAdminList" resultType="ddit.finalproject.team2.vo.KJE_CertificatieAdminVo">
+		SELECT
+		ISSUE_CODE,
+		ISSUE_COUNT,
+		ISSUE_TOTALPRICE,
+		ISSUE_DATE,
+		I.CERTIFICATE_CODE,
+		CERTIFICATE_NAME,
+		USER_AUTHORITY,
+		I.USER_ID,
+		USER_NAME
+		FROM ISSUE I INNER JOIN CERTIFICATE C
+		ON(I.CERTIFICATE_CODE= C.CERTIFICATE_CODE)
+		INNER JOIN USERS U ON(I.USER_ID=U.USER_ID)
+	</select>
+
+
+	<insert id="insertIssu" parameterType="ddit.finalproject.team2.vo.IssueVo">
+		<selectKey resultType="int" keyProperty="issue_code" order="BEFORE">
+			SELECT ISSUE_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO ISSUE(
+		ISSUE_CODE, USER_ID, ISSUE_COUNT,
+		CERTIFICATE_CODE, ISSUE_DATE , ISSUE_TOTALPRICE
+		)VALUES(
+		#{issue_code},#{user_id, jdbcType=VARCHAR},#{issue_count},
+		#{certificate_code, jdbcType=VARCHAR}, SYSDATE ,#{issue_totalprice}
+		)
+
+	</insert>
+
+
 
 </mapper>

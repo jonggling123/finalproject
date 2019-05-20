@@ -55,6 +55,7 @@
 <script src="${pageContext.request.contextPath}/notika/js/knob/knob-active.js"></script>
 <!--  Chat JS
     ============================================ -->
+<script src="${pageContext.request.contextPath}/notika/js/chat/moment.min.js"></script>
 <script src="${pageContext.request.contextPath}/notika/js/chat/jquery.chat.js"></script>
 <!--  todo JS
     ============================================ -->
