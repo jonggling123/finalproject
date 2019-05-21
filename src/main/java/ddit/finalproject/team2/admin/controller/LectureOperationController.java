@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.admin.controller.sync;
+package ddit.finalproject.team2.admin.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/operation")
-public class LectureOperationSyncController {
+public class LectureOperationController {
 	/**
 	 * 평가정책관리
 	 * @param mv

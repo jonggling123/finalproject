@@ -13,14 +13,14 @@ public interface Ljs_IBoardDao {
 	 * 게시글 전체 목록을 가져오는 메서드
 	 * @return not exist : list.size()==0;
 	 */
-	List<Ljs_BoardSubjectVo> selectBoardList();
+	List<Ljs_BoardSubjectVo> selectBoardList(String lecture_code);
 	
 	/**
-	 * 게시글 1개를 가져오는 메서드
+	 * 해당 게시글과 앞, 뒤 2개의 게시글을 같이 가져오는 메서드
 	 * @param board_no
 	 * @return not exist : null
 	 */
-	Ljs_BoardSubjectVo selectboard(String board_no);
+	List<Ljs_BoardSubjectVo> selectboard(String board_no);
 	
 	/**
 	 * 게시글 조회수 증가 메서드
@@ -28,4 +28,15 @@ public interface Ljs_IBoardDao {
 	 * @return
 	 */
 	int incrementHit(String board_no);
+	
+	/**
+	 * 게시글 삽입 메서드
+	 * @param board
+	 * @return 
+	 */
+	int insertBoard(Ljs_BoardSubjectVo board);
+	
+	int deleteBoard(String board_no);
+	
+	int updateBoard(Ljs_BoardSubjectVo board);
 }

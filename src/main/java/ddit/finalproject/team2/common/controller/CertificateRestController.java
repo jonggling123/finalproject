@@ -18,7 +18,7 @@ import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;
 import ddit.finalproject.team2.vo.UserVo;
 
 @RestController
-public class CertificateAsyncController {
+public class CertificateRestController {
 	@Inject
 	KJE_CertificateServiceImpl certificateService;
 	

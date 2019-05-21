@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ddit.finalproject.team2.vo.UserVo;
 
 @Controller
-public class ChatBotSyncController {
+public class ChatBotController {
 	@RequestMapping("/chatbot")
 	public String chatbotController(Model model,Authentication authentication){
 		UserVo user = (UserVo) authentication.getPrincipal();

@@ -2,6 +2,9 @@ package ddit.finalproject.team2.common.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.vo.AttachmentVo;
 import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;
 
@@ -25,14 +28,14 @@ public interface Ljs_IBoardService {
 	 * 과목게시판 게시글 목록을 가져오는 메서드
 	 * @return not exist : common exception
 	 */
-	List<Ljs_BoardSubjectVo> retrieveBoardList();
+	List<Ljs_BoardSubjectVo> retrieveBoardList(String lecture_code);
 	
 	/**
 	 * 게시글을 가져오는 메서드
 	 * @param board_no
 	 * @return not exist : common exception
 	 */
-	Ljs_BoardSubjectVo retrieveBoard(String board_no);
+	List<Ljs_BoardSubjectVo> retrieveBoard(String board_no);
 	
 	/**
 	 * 첨부파일 다운로드 처리를 위한 메서드
@@ -40,4 +43,15 @@ public interface Ljs_IBoardService {
 	 * @return not exist : common exception
 	 */
 	AttachmentVo downloadAttachment(String attachment_no);
+	
+	/**
+	 * 게시글 추가 메서드
+	 * @param board
+	 * @return OK, FAILED
+	 */
+	ServiceResult createBoard(Ljs_BoardSubjectVo board);
+	
+	ServiceResult removeBoard(Ljs_BoardSubjectVo board);
+	
+	Ljs_BoardSubjectVo modifyBoard(Ljs_BoardSubjectVo board);
 }
