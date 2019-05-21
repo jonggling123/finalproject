@@ -31,9 +31,9 @@
 			INTO ATTACHMENT(
 				<include refid="attachmentCols" />
 			) VALUES (
-				#{board_no}, #{file_name}, #{file_type}
-				, #{file_size}, #{file_path}, #{file_order}
-				, #{startAttachmentNo} + #{idx}, #{lecture_code}
+				#{board_no}, #{attachment.file_name}, #{attachment.file_type}
+				, #{attachment.file_size}, #{attachment.file_path}, #{attachment.file_order}
+				, TO_CHAR(#{startAttachmentNo} + #{idx}), #{lecture_code}
 			)
 		</foreach>
 		SELECT * FROM DUAL

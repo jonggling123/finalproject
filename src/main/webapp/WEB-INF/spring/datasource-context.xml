@@ -5,12 +5,16 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<context:property-placeholder location="classpath:ddit/finalproject/team2/db/dbInfo.properties"/>
 
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" 
 		p:driverClassName="${main.driverClassName}"
 		p:url="${main.url}"
@@ -19,6 +23,7 @@
 		p:initialSize="${main.initialSize}"
 		p:maxWaitMillis="${main.maxWaitMillis}"
 		p:maxTotal="${main.maxTotal}"
+		p:defaultAutoCommit="true"
 	/>
 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 

@@ -15,7 +15,7 @@ import ddit.finalproject.team2.vo.KJE_SRVo;
 import ddit.finalproject.team2.vo.UserVo;
 
 @Controller
-public class CertificateSyncController {
+public class CertificateController {
 	
 	@Inject
 	KJE_ICertificateService CertificateService;
