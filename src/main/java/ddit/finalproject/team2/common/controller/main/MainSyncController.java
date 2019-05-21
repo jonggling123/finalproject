@@ -180,10 +180,6 @@ public class MainSyncController {
 		return mv;
 	}
 	
-	
-	
-	
-	
 	/**
 	 * 교수용 과목관리 페이지로 이동하는 command handler
 	 * 이상엽 만든거 보고 수정해야함(0515)

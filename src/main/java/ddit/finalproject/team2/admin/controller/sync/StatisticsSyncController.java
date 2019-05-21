@@ -30,7 +30,7 @@ public class StatisticsSyncController {
 	 */
 	@GetMapping("subject")
 	public ModelAndView goSubject(ModelAndView mv){
-		mv.setViewName("admin/subjectStats");
+		mv.setViewName("admin/statistics");
 		return mv;
 	}
 	

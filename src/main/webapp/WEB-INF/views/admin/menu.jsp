@@ -146,7 +146,7 @@
                     </div>
                     <div  id="stats" class="tab-pane notika-tab-menu-bg animated flipInX">
                         <ul  class="notika-main-menu-dropdown">
-                            <li><a href="#">과목통계</a>
+                            <li><a href="${pageContext.request.contextPath }/statistics/subject">과목통계</a>
                             </li>
                             <li><a href="#">사용자통계</a>
                             </li>
