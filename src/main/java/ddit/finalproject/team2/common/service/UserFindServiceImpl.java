@@ -53,4 +53,15 @@ public class UserFindServiceImpl implements IUserFindService {
 		return result;
 	}
 
+	@Override
+	public ServiceResult changePass(UserVo userVo) {
+		int rowCnt = userDao.changePass(userVo);
+		
+		ServiceResult result = ServiceResult.FAILED;
+		if(rowCnt > 0) {
+			result = ServiceResult.OK;
+		} // if(rowCnt > 0) end
+		return result;
+	}
+
 }

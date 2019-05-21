@@ -175,10 +175,9 @@
 		});
 		
 		$("#changePassBtn").on("click", function() {
-		
 			$("#userIdResult").empty();
 			$(".changeFindIdResult").hide();
-			var inputs = $("#findIdForm").find(":input");
+			var inputs = $("#changePassForm").find(":input");
 			var sendData = {};
 			$(inputs).each(function(index, input) {
 				var prop = $(input).attr("name");
@@ -194,10 +193,16 @@
 				contentType : "application/json; charset=UTF-8",
 				dataType : "text", // request header(Accept), response header(Content-Type),
 				success : function(resp) {
-					console.log(useid+"000");
-					$("#changePassForm").find("input[name=user_id]").val(useid);
+					console.log(resp);
+					$('.text-center .txt1').removeClass('active');
+					$(this).addClass('active');
+					$('.findIdForm').hide();
 					$('.findPassForm').hide();
-					$('.changePassForm').show();
+					$('.changePassForm').hide();
+					$('.loginForm').show();
+					$('.changeFindIdResult').hide();
+					$('.input100').val('');
+					$('.input100').removeClass('has-val');
 				},
 				error : function(errorResp) {
 					console.log(errorResp.status);
@@ -214,15 +219,85 @@
                 if(pwd1 == pwd2){
                     $("#alert-success").show();
                     $("#alert-danger").hide();
+                    $("#changePassBtn").removeAttr("disabled", "disabled");
                     $("#submit").removeAttr("disabled");
                 }else{
                     $("#alert-success").hide();
                     $("#alert-danger").show();
+                    $("#changePassBtn").attr("disabled", "disabled");
                     $("#submit").attr("disabled", "disabled");
                 }    
             }
         });
 
+        $("#loginBtn").on("click", function() {
+			var form = $(this).closest("form");
+			$(form).submit();
+		});
+
+		$('.text-center .txt1').click(function() {
+			if ($(this).hasClass('findId')) {
+				$('.text-center .txt1').removeClass('active');
+				$(this).addClass('active');
+				$('.loginForm').hide();
+				$('.findPassForm').hide();
+				$('.findIdForm').show();
+				$('.changePassForm').hide();
+				$('.changeFindIdResult').hide();
+				$('.input100').val('');
+				$('.input100').removeClass('has-val');
+			}
+			if ($(this).hasClass('findPass')) {
+					$("#alert-success").hide();
+                    $("#alert-danger").hide();
+				if(($("#findIdForm").find("input[name=user_mail]").val()) !='') {
+// 				if($("#findIdForm").find("input[name=checkId]").prop('checked', true)) {
+					$('.text-center .txt1').removeClass('active');
+					$(this).addClass('active');
+					$('.loginForm').hide();
+					$('.findIdForm').hide();
+					$('.findPassForm').hide();
+					$('.changePassForm').show();
+					$('.input100').val('');
+					$('.input100').removeClass('has-val');
+					var dd = $("#userIdResult").text();
+					var rets = dd.substring(8);
+					console.log(rets);
+					$("#changePassForm").find("input[name=user_id]").val(rets);
+					$("input[name=checkId]").removeAttr('checked');
+				} else {
+					$('.text-center .txt1').removeClass('active');
+					$(this).addClass('active');
+					$('.loginForm').hide();
+					$('.findIdForm').hide();
+					$('.changePassForm').hide();
+					$('.findPassForm').show();
+					$('.changeFindIdResult').hide();
+					$('.input100').val('');
+					$('.input100').removeClass('has-val');
+				}
+			}
+			if ($(this).hasClass('login')) {
+				$('.text-center .txt1').removeClass('active');
+				$(this).addClass('active');
+				$('.findIdForm').hide();
+				$('.findPassForm').hide();
+				$('.changePassForm').hide();
+				$('.loginForm').show();
+				$('.changeFindIdResult').hide();
+				$('.input100').val('');
+				$('.input100').removeClass('has-val');
+			}
+		});
+		
+		$('.container .bg').mousemove(
+		function(e) {
+			var amountMovedX = (e.pageX * -1 / 30);
+			var amountMovedY = (e.pageY * -1 / 9);
+			$(this).css('background-position',
+					amountMovedX + 'px ' + amountMovedY + 'px');
+		});
+		
 	});
 </script>
 <style>
@@ -251,15 +326,15 @@ body .changePassForm {
 					action="${pageContext.request.contextPath }/loginCheck">
 					<span class="login100-form-logo"> <i
 						class="zmdi zmdi-landscape"></i>
-					</span> <span class="login100-form-title p-b-34 p-t-27"> 로그인 test</span>
-
+					</span> <span class="login100-form-title p-b-34 p-t-27"> 로그인</span>
+				
 					<div class="wrap-input100 validate-input" data-validate="Enter username">
-						<input class="input100" type="text" name="user_id" placeholder="Username"> 
+						<input class="input100" type="text" name="user_id" placeholder="아이디"> 
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="user_pass" placeholder="Password"> 
+						<input class="input100" type="password" name="user_pass" placeholder="비밀번호"> 
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 
@@ -403,72 +478,6 @@ body .changePassForm {
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		$("#loginBtn").on("click", function() {
-			var form = $(this).closest("form");
-			$(form).submit();
-		});
-
-		$('.text-center .txt1').click(function() {
-			if ($(this).hasClass('findId')) {
-				$('.text-center .txt1').removeClass('active');
-				$(this).addClass('active');
-				$('.loginForm').hide();
-				$('.findPassForm').hide();
-				$('.findIdForm').show();
-				$('.changePassForm').hide();
-				$('.changeFindIdResult').hide();
-				$('.input100').val('');
-				$('.input100').removeClass('has-val');
-			}
-			if ($(this).hasClass('findPass')) {
-				if(($("#findIdForm").find("input[name=user_mail]").val()) !='') {
-				if(($("#findIdForm").find("input[name=user_mail]").val()) !='') {
-					var dd = $("#userIdResult").text();
-					var rets = dd.substring(9);
-					console.log(rets);
-					$("#changePassForm").find("input[name=user_id]").val(rets);
-					$("input[name=checkId]").attr('checked',false);
-					$('.text-center .txt1').removeClass('active');
-					$(this).addClass('active');
-					$('.loginForm').hide();
-					$('.findIdForm').hide();
-					$('.findPassForm').hide();
-					$('.changePassForm').show();
-					$('.input100').val('');
-					$('.input100').removeClass('has-val');
-				} else {
-					$('.text-center .txt1').removeClass('active');
-					$(this).addClass('active');
-					$('.loginForm').hide();
-					$('.findIdForm').hide();
-					$('.changePassForm').hide();
-					$('.findPassForm').show();
-					$('.changeFindIdResult').hide();
-					$('.input100').val('');
-					$('.input100').removeClass('has-val');
-				}
-			}
-			if ($(this).hasClass('login')) {
-				$('.text-center .txt1').removeClass('active');
-				$(this).addClass('active');
-				$('.findIdForm').hide();
-				$('.findPassForm').hide();
-				$('.changePassForm').hide();
-				$('.loginForm').show();
-				$('.changeFindIdResult').hide();
-				$('.input100').val('');
-				$('.input100').removeClass('has-val');
-			}
-		});
-		$('.container .bg').mousemove(
-				function(e) {
-					var amountMovedX = (e.pageX * -1 / 30);
-					var amountMovedY = (e.pageY * -1 / 9);
-					$(this).css('background-position',
-							amountMovedX + 'px ' + amountMovedY + 'px');
-				});
-	</script>
 
 	<!--===============================================================================================-->
 	<script

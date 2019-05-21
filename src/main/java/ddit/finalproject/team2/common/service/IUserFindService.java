@@ -9,4 +9,5 @@ public interface IUserFindService {
 	public String findPass(UserVo user);
 	public ServiceResult confirmHp(UserVo userVo);
 	public ServiceResult confirmPassHp(UserVo userVo);
+	public ServiceResult changePass(UserVo userVo);
 }

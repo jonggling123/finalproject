@@ -24,4 +24,8 @@
 	<select id="confirmPassHp" resultType="int" parameterType="ddit.finalproject.team2.vo.UserVo">
 		SELECT COUNT(*) FROM USERS WHERE USER_ID=#{user_id} AND USER_HP=#{user_hp}
 	</select>
+	
+	<update id="changePass" parameterType="ddit.finalproject.team2.vo.UserVo">
+		UPDATE USERS SET USER_PASS=#{user_pass} WHERE USER_ID =#{user_id}
+	</update>
 </mapper>

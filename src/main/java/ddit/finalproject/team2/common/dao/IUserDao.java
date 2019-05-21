@@ -18,4 +18,6 @@ public interface IUserDao {
 	int confirmHp(UserVo userVo);
 
 	int confirmPassHp(UserVo userVo);
+
+	int changePass(UserVo userVo);
 }
