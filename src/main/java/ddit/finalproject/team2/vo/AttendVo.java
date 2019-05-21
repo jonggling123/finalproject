@@ -20,4 +20,9 @@ public class AttendVo implements Serializable{
 	private String attend_no;
 	@NotNull
 	private String lecture_code;
+	
+	public AttendVo(String user_id, String lecture_code){
+		this.user_id = user_id;
+		this.lecture_code = lecture_code;
+	}
 }

@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import ddit.finalproject.team2.vo.IssueVo;
 import ddit.finalproject.team2.vo.KJE_CertificateVo;
+import ddit.finalproject.team2.vo.KJE_CertificatieAdminVo;
 import ddit.finalproject.team2.vo.KJE_SRVo;
 
 /**
@@ -36,4 +38,17 @@ public interface KJE_ICertificateDao {
 	 * @return
 	 */
 	KJE_SRVo selectSRinfo(String userId);
+	
+	/**
+	 * 증명서 발급 내역을 저장하는 메서드
+	 * @param issu 증명서 정보
+	 * @return 저장 성공 여부
+	 */
+	int insertIssu(IssueVo issu);
+	
+	/**
+	 * 증명서 발급 리스트를 조회하는 메서드
+	 * @return 증명서 발급 리스트
+	 */
+	List<KJE_CertificatieAdminVo>selectCertificateAdminList();
 }

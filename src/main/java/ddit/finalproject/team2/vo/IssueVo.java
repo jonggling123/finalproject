@@ -15,10 +15,11 @@ import lombok.ToString;
 @EqualsAndHashCode(of="issue_code")
 @ToString
 public class IssueVo implements Serializable{
-	@NotNull private String issue_code;
+	@NotNull private int issue_code;
 	private String user_id;
 	@NotNull private String issue_count;
 	private String certificate_code;
 	@NotNull private String issue_url;
 	@NotNull private Date issue_date;
+	@NotNull private String issue_totalprice;
 }

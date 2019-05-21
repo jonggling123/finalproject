@@ -21,8 +21,8 @@ public class ScheduleVo implements Serializable{
 	@NotNull private String schedule_type;
 	@NotNull private String schedule_title;
 	@NotNull private String schedule_content;
-	@NotNull private Date schedule_start;
-	@NotNull private Date schedule_end;
-	@NotNull private Date schedule_add;
+	@NotNull private String schedule_start;
+	@NotNull private String schedule_end;
+	@NotNull private String schedule_add;
 	private String lecture_code;
 }

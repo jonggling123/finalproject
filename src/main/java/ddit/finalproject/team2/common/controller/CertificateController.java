@@ -12,9 +12,10 @@ import ddit.finalproject.team2.common.service.KJE_ICertificateService;
 import ddit.finalproject.team2.common.service.KJE_IFaceIdService;
 import ddit.finalproject.team2.util.EncryptUtils;
 import ddit.finalproject.team2.vo.KJE_SRVo;
+import ddit.finalproject.team2.vo.UserVo;
 
 @Controller
-public class CertificateSyncController {
+public class CertificateController {
 	
 	@Inject
 	KJE_ICertificateService CertificateService;
@@ -54,5 +55,7 @@ public class CertificateSyncController {
 		model.addAttribute("srInfo", srInfo);
 		return "student/Certificate/KJE_SchoolRegister";
 	}
+	
+	
 	
 }

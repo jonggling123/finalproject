@@ -7,20 +7,20 @@
 		WHERE BOARD_NO = #{board_no}
 	</select>
 	
-	<select id="selectReplyList" parameterType="string" resultType="ddit.finalproject.team2.vo.ReplyVo">
-		SELECT * FROM REPLY
+	<select id="selectReplyList" parameterType="string" resultType="ddit.finalproject.team2.vo.Ljs_ReplyVo">
+		SELECT REPLY_NO, A.USER_ID
+			, REPLY_CONTENT, REPLY_REG
+		FROM REPLY R INNER JOIN ATTEND A
+		ON(R.ATTEND_NO = A.ATTEND_NO)
 		WHERE BOARD_NO = #{board_no}
 	</select>
 	
-	<insert id="insertReply" parameterType="ddit.finalproject.team2.vo.ReplyVo">
-		<selectKey resultType="string" keyProperty="reply_no" order="BEFORE">
-			SELECT REPLY_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
+	<insert id="insertReply" parameterType="ddit.finalproject.team2.vo.Ljs_ReplyVo">
 		INSERT INTO REPLY(
 			BOARD_NO, LECTURE_CODE, REPLY_NO, ATTEND_NO
 			, REPLY_CONTENT, REPLY_REG
 		) VALUES (
-			#{board_no}, #{lecture_code}, #{reply_no}, #{attend_no}
+			#{board_no}, #{lecture_code}, REPLY_SEQ.NEXTVAL, #{attend_no}
 			, #{reply_content}, SYSDATE
 		)
 	</insert>
@@ -29,4 +29,13 @@
 		DELETE FROM REPLY
 		WHERE REPLY_NO = #{reply_no}
 	</delete>
+	
+	<delete id="deleteAllReply" parameterType="string">
+		DELETE FROM REPLY
+		WHERE BOARD_NO = #{board_no}
+	</delete>
+	
+	<update id="updateReply" parameterType="string">
+		UPDATE REPLY SET REPLY_CONTENT = 
+	</update>
 </mapper>

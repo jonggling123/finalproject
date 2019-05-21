@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.admin.controller.sync;
+package ddit.finalproject.team2.admin.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/curriculum")
-public class CurriculumSyncController {
+public class CurriculumController {
 	
 	@GetMapping("lecture")
 	public ModelAndView goLecture(ModelAndView mv){

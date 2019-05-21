@@ -1,6 +1,5 @@
 package ddit.finalproject.team2.vo;
 
-import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
@@ -17,16 +16,20 @@ public class OpenSemesterVo {
 	@NotNull private String openseme_year;
 	@NotNull private String openseme_semester;
 	@NotNull private String openseme_no;
-	@NotNull private Date openseme_attend1;
-	@NotNull private Date openseme_adjust1;
-	@NotNull private Date openseme_attend2;
-	@NotNull private Date openseme_adjust2;
-	@NotNull private Date openseme_registgrade1;
-	@NotNull private Date openseme_registgrade2;
-	@NotNull private Date openseme_evaluate1;
-	@NotNull private Date openseme_evaluate2;
-	@NotNull private Date openseme_checkgrade1;
-	@NotNull private Date openseme_checkgrade2;
-	@NotNull private Date openseme_period1;
-	@NotNull private Date openseme_period2;
+	@NotNull private String openseme_attend1;
+	@NotNull private String openseme_adjust1;
+	@NotNull private String openseme_attend2;
+	@NotNull private String openseme_adjust2;
+	@NotNull private String openseme_registgrade1;
+	@NotNull private String openseme_registgrade2;
+	@NotNull private String openseme_registgrade3;
+	@NotNull private String openseme_registgrade4;
+	@NotNull private String openseme_evaluate1;
+	@NotNull private String openseme_evaluate2;
+	@NotNull private String openseme_checkgrade1;
+	@NotNull private String openseme_checkgrade2;
+	@NotNull private String openseme_checkgrade3;
+	@NotNull private String openseme_checkgrade4;
+	@NotNull private String openseme_period1;
+	@NotNull private String openseme_period2;
 }

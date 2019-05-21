@@ -18,7 +18,7 @@
 		$('#data-table-basic').DataTable({
 	        ajax: {
 	            "type" : "get",
-	               "url" : "${pageContext.request.contextPath}/board",
+	               "url" : "${pageContext.request.contextPath}/${lecture_code}/board",
 	                  "dataType": "JSON"
 	               },
 	              columns: [
@@ -29,13 +29,20 @@
 	                         { data: "user_id" },
 	                         { data: "board_date" },
 	                         { data: "board_hit" }
-	                     ]
+	                     ],
+	                     "order": []		
 	          });
 		
 		//등록 버튼
 		$('#createBoard').on('click', function() {
-			location.href = "${pageContext.request.contextPath}/board/create";
-		})
+			location.href = "${pageContext.request.contextPath}/${lecture_code}/board/create";
+		});
+		
+		$('#data-table-basic').on('click', 'a', function(e){
+			e.preventDefault();
+			var no = $(this).attr("href");
+			location.href = "${pageContext.request.contextPath}/${lecture_code}/board/"+no;
+		});
 	});
 </script>
 <!-- Data Table JS

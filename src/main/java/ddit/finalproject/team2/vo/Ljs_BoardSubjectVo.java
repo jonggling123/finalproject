@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
@@ -16,8 +17,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of="board_no")
 @ToString(exclude={
 	"board_content", "replyList", "deleteAttachmentNos"
-	, "attachmentList", "savedAttachmentList", "board_files"
-	, "updatableList"
+	, "attachmentList", "savedAttachmentList", "file"
 })
 public class Ljs_BoardSubjectVo implements Serializable{
 	private String board_no;
@@ -30,47 +30,28 @@ public class Ljs_BoardSubjectVo implements Serializable{
 	private String attend_no;
 	private String lecture_code;
 	
-	private List<ReplyVo> replyList;
+	private String user_id;
+	
+	private List<Ljs_ReplyVo> replyList;
 	private int replycount;
 	
+	private Integer startAttachmentNo;
 	private int[] deleteAttachmentNos;
 	private List<AttachmentVo> attachmentList;
 	private List<AttachmentVo> savedAttachmentList;
-	private MultipartFile[] board_files;
-	
-	private String[] updatableList = new String[]{
-		".doc", ".hwp", ".pdf", ".xls", ".xlsx", ".jpg", ".jpeg", ".png", ".gif", ".zip"
-	};
+	private MultipartFile[] bo_files;
 	
 	public void setBoard_title(String board_title, String board_no){
-		this.board_title = "<a href='/board/"+board_no+"'>"+board_title+"</a>";
+		this.board_title = "<a href='"+board_no+"'>"+board_title+"</a>";
 	}
 	
-	public void setBoard_files(MultipartFile[] board_files){
-		if(board_files==null) return;
-		this.board_files = board_files;
-		
+	public void setBo_files(MultipartFile[] bo_files) {
+		if(bo_files==null) return;
+		this.bo_files = bo_files;
+		this.board_attachmentcount = bo_files.length+"";
 		this.attachmentList = new ArrayList<>();
-		for(MultipartFile file : board_files){
-			String fileName = file.getOriginalFilename();
-			if(fileName==null){
-				continue;
-			}
-			
-			boolean flag = false;
-			for(int i=0; i<updatableList.length; i++){
-				if(!fileName.contains(updatableList[i])){
-					continue;
-				}else{
-					flag = true;
-					break;
-				}
-			}
-			
-			if(!flag){
-				throw new RuntimeException(fileName.split(".")[1]+"은(는) 지원하지 않는 확장자 입니다.");
-			}
-			
+		for(MultipartFile file : bo_files){
+			if(StringUtils.isBlank(file.getOriginalFilename())) continue;
 			attachmentList.add(new AttachmentVo(file));
 		}
 	}

@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.admin.controller.sync;
+package ddit.finalproject.team2.admin.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
  * 관리자 메인화면의 하위 항목들로 이동하기 위한 controller
  * </pre>
  */
-@Controller
+@Controller("adminController")
 @RequestMapping("/adminMain")
-public class AdminMainSyncController {
+public class MainController {
 
 	/**
 	 * 기초정보관리 화면으로 이동하는 command handler
