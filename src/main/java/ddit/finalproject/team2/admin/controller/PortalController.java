@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.admin.controller.sync;
+package ddit.finalproject.team2.admin.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/portal")
-public class PortalSyncController {
+public class PortalController {
 
 	/**
 	 * 일정 화면으로 이동하기 위한 command handler

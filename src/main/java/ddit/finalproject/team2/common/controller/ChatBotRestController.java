@@ -19,7 +19,7 @@ import ddit.finalproject.team2.vo.KJE_ChatBotScheduleResponseVo;
 import ddit.finalproject.team2.vo.OpenSemesterVo;
 
 @Controller
-public class ChatBotAsyncController {
+public class ChatBotRestController {
 	
 	@Inject
 	KJE_IChatBotService chatBotService;

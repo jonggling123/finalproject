@@ -1,15 +1,17 @@
-package ddit.finalproject.team2.common.controller.subjectpage;
+package ddit.finalproject.team2.student.controller.subjectpage;
 
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ddit.finalproject.team2.util.AuthorityUtil;
 import ddit.finalproject.team2.util.constant.AuthConstants;
+import ddit.finalproject.team2.vo.UserVo;
 
 /**
  * @author 이종선
@@ -27,8 +29,8 @@ import ddit.finalproject.team2.util.constant.AuthConstants;
  * </pre>
  */
 @Controller
-@RequestMapping("/subjectPage")
-public class SubjectPageSyncController {
+@RequestMapping("/subjectPage/{lecture_code}")
+public class SubjectPageController {
 
 	/**
 	 * 교육목표 화면으로 이동하기 위한 command handler
@@ -36,7 +38,7 @@ public class SubjectPageSyncController {
 	 */
 	@GetMapping("eduGoal")
 	public ModelAndView goGoal(ModelAndView mv){
-		mv.setViewName("new/eduGoal");
+		mv.setViewName("student/eduGoal");
 		return mv;
 	}
 	
@@ -46,7 +48,7 @@ public class SubjectPageSyncController {
 	 */
 	@GetMapping("professorIntro")
 	public ModelAndView goIntroduction(ModelAndView mv){
-		mv.setViewName("new/professorIntro");
+		mv.setViewName("student/professorIntro");
 		return mv;
 	}
 	
@@ -58,12 +60,7 @@ public class SubjectPageSyncController {
 	 */
 	@GetMapping("lecturePage")
 	public ModelAndView goWeekList(ModelAndView mv, Authentication au){
-		List<String> authorities = AuthorityUtil.getAuthorityList(au);
-		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
-			mv.setViewName("new/lecturePage");
-		}else{
-			mv.setViewName("professor/lecturePage");
-		}
+		mv.setViewName("student/lecturePage");
 		mv.getModel().put("id", au.getName());
 		return mv;
 	}
@@ -75,14 +72,10 @@ public class SubjectPageSyncController {
 	 * @return
 	 */
 	@GetMapping("lectureBoard")
-	public ModelAndView goBoard(ModelAndView mv, Authentication au){
-		List<String> authorities = AuthorityUtil.getAuthorityList(au);
-		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
-			mv.setViewName("new/lectureBoard");
-		}else{
-			mv.setViewName("professor/board");
-		}
-		mv.getModel().put("id", au.getName());
+	public ModelAndView goBoard(@PathVariable String lecture_code, ModelAndView mv, Authentication au){
+		mv.setViewName("student/lectureBoard");
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
+		mv.getModel().put("lectureCode", lecture_code);
 		return mv;
 	}
 	
@@ -94,12 +87,7 @@ public class SubjectPageSyncController {
 	 */
 	@GetMapping("mantoman")
 	public ModelAndView goFaceChat(ModelAndView mv, Authentication au){
-		List<String> authorities = AuthorityUtil.getAuthorityList(au);
-		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
-			mv.setViewName("new/mantoman");
-		}else{
-			mv.setViewName("professor/faceChat");
-		}
+		mv.setViewName("student/mantoman");
 		mv.getModel().put("id", au.getName());
 		return mv;
 	}
@@ -112,12 +100,7 @@ public class SubjectPageSyncController {
 	 */
 	@GetMapping("lectureAssignment")
 	public ModelAndView goAssignment(ModelAndView mv, Authentication au){
-		List<String> authorities = AuthorityUtil.getAuthorityList(au);
-		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
-			mv.setViewName("new/lectureAssignment");
-		}else{
-			mv.setViewName("professor/assignment");
-		}
+		mv.setViewName("student/lectureAssignment");
 		mv.getModel().put("id", au.getName());
 		return mv;
 	}
@@ -130,7 +113,7 @@ public class SubjectPageSyncController {
 	 */
 	@GetMapping("studyState")
 	public ModelAndView goStudy(ModelAndView mv, Authentication au){
-		mv.setViewName("new/studyState");
+		mv.setViewName("student/studyState");
 		mv.getModel().put("id", au.getName());
 		return mv;
 	}
@@ -143,12 +126,7 @@ public class SubjectPageSyncController {
 	 */
 	@GetMapping("survey")
 	public ModelAndView goSurvey(ModelAndView mv, Authentication au){
-		List<String> authorities = AuthorityUtil.getAuthorityList(au);
-		if(authorities.contains(AuthConstants.ROLE_STUDENT)){
-			mv.setViewName("new/survey");
-		}else{
-			mv.setViewName("professor/survey");
-		}
+		mv.setViewName("student/survey");
 		mv.getModel().put("id", au.getName());
 		return mv;
 	}
