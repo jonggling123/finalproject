@@ -58,7 +58,6 @@ public class SubjectPageController {
 	public ModelAndView goWeekList(ModelAndView mv, Authentication au){
 		mv.setViewName("student/exclude/lecturePage");
 		mv.getModel().put("id", au.getName());
-
 		return mv;
 	}
 	
