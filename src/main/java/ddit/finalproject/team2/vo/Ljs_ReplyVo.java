@@ -24,9 +24,9 @@ public class Ljs_ReplyVo implements Serializable{
 	@NotNull private String reply_content;
 	@NotNull private String reply_reg;
 	
-	private String user_id;
+	private UserVo user;
+	private String user_name;
 	
 	private String remover;
-	private String editor;
 	
 }

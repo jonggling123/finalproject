@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.common.dao;
+package ddit.finalproject.team2.student.dao;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.common.dao;
+package ddit.finalproject.team2.student.dao;
 
 
 import java.util.List;
@@ -39,4 +39,6 @@ public interface Ljs_IBoardDao {
 	int deleteBoard(String board_no);
 	
 	int updateBoard(Ljs_BoardSubjectVo board);
+	
+	int selectCurrentUser(String user_id);
 }

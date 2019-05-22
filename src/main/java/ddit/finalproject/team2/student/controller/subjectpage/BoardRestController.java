@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import ddit.finalproject.team2.common.service.Ljs_BoardServiceImpl;
-import ddit.finalproject.team2.common.service.Ljs_IBoardService;
+import ddit.finalproject.team2.student.service.Ljs_BoardServiceImpl;
+import ddit.finalproject.team2.student.service.Ljs_IBoardService;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.util.exception.CommonException;
 import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;

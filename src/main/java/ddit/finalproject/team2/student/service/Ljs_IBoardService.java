@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.common.service;
+package ddit.finalproject.team2.student.service;
 
 import java.util.List;
 

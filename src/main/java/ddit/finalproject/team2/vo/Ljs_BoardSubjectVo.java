@@ -17,7 +17,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of="board_no")
 @ToString(exclude={
 	"board_content", "replyList", "deleteAttachmentNos"
-	, "attachmentList", "savedAttachmentList", "file"
+	, "attachmentList", "savedAttachmentList", "bo_files"
 })
 public class Ljs_BoardSubjectVo implements Serializable{
 	private String board_no;
@@ -30,7 +30,8 @@ public class Ljs_BoardSubjectVo implements Serializable{
 	private String attend_no;
 	private String lecture_code;
 	
-	private String user_id;
+	private UserVo user;
+	private String user_name;
 	
 	private List<Ljs_ReplyVo> replyList;
 	private int replycount;
@@ -54,5 +55,9 @@ public class Ljs_BoardSubjectVo implements Serializable{
 			if(StringUtils.isBlank(file.getOriginalFilename())) continue;
 			attachmentList.add(new AttachmentVo(file));
 		}
+	}
+	
+	public void setUserVo(String user_id){
+		user = new UserVo(user_id);
 	}
 }

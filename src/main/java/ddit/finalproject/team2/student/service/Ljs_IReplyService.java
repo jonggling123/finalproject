@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.common.service;
+package ddit.finalproject.team2.student.service;
 
 import java.util.List;
 
@@ -9,4 +9,5 @@ public interface Ljs_IReplyService {
 	List<Ljs_ReplyVo> retrieveReplyList(String board_no);
 	ServiceResult createReply(Ljs_ReplyVo reply);
 	ServiceResult removeReply(String reply_no);
+	ServiceResult modifyReply(Ljs_ReplyVo reply);
 }
