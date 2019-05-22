@@ -1,3 +1,4 @@
+
 package ddit.finalproject.team2.student.controller.subjectpage;
 
 import java.util.HashMap;
@@ -81,7 +82,7 @@ public class SubjectPageController {
 	 */
 	@GetMapping("lecturePage")
 	public ModelAndView goWeekList(ModelAndView mv, Authentication au){
-		mv.setViewName("student/lecturePage");
+		mv.setViewName("student/exclude/lecturePage");
 		mv.getModel().put("id", au.getName());
 		return mv;
 	}
