@@ -13,3 +13,4 @@
 			WHERE USER_ID = #{user_id}
 	</update>
 </mapper>
+

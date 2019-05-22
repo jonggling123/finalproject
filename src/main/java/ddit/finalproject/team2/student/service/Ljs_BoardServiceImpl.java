@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.common.service;
+package ddit.finalproject.team2.student.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
-import ddit.finalproject.team2.common.dao.Ljs_IAttachmentDao;
-import ddit.finalproject.team2.common.dao.Ljs_IAttendDao;
-import ddit.finalproject.team2.common.dao.Ljs_IBoardDao;
-import ddit.finalproject.team2.common.dao.Ljs_IReplyDao;
+import ddit.finalproject.team2.student.dao.Ljs_IAttachmentDao;
+import ddit.finalproject.team2.student.dao.Ljs_IAttendDao;
+import ddit.finalproject.team2.student.dao.Ljs_IBoardDao;
+import ddit.finalproject.team2.student.dao.Ljs_IReplyDao;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.util.exception.CommonException;
 import ddit.finalproject.team2.vo.AttachmentVo;
@@ -111,6 +111,7 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 				Ljs_BoardSubjectVo vo = boardList.get(i);
 				vo.setBoard_title(vo.getBoard_title(), vo.getBoard_no());
 				vo.setReplycount(replyDao.selectReplyCount(vo.getBoard_no()));
+				vo.setUser_name(vo.getUser().getUser_name());
 			}
 		}
 		
@@ -140,7 +141,7 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 	@Override
 	public ServiceResult createBoard(Ljs_BoardSubjectVo board) {
 		ServiceResult result = ServiceResult.FAILED;
-		AttendVo attend = new AttendVo(board.getUser_id(), board.getLecture_code());
+		AttendVo attend = new AttendVo(board.getUser().getUser_id(), board.getLecture_code());
 		board.setAttend_no(attendDao.selectAttendNo(attend));
 		int cnt = boardDao.insertBoard(board);
 		if(cnt>0){

@@ -18,13 +18,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import ddit.finalproject.team2.common.service.Ljs_IBoardService;
+import ddit.finalproject.team2.student.service.Ljs_BoardServiceImpl;
+import ddit.finalproject.team2.student.service.Ljs_IBoardService;
 import ddit.finalproject.team2.util.enumpack.BrowserType;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
+import ddit.finalproject.team2.util.exception.CommonException;
 import ddit.finalproject.team2.vo.AttachmentVo;
 import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;
 import ddit.finalproject.team2.vo.UserVo;
@@ -97,6 +103,7 @@ public class BoardController {
 		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		List<Ljs_BoardSubjectVo> boardList = boardService.retrieveBoard(board_no);
 		mv.getModel().put("boardList", boardList);
+		mv.getModel().put("bo_no", board_no);
 		
 		return mv;
 	}
@@ -104,7 +111,7 @@ public class BoardController {
 	@PostMapping("board/create")
 	public ModelAndView create(@PathVariable String lecture_code, @ModelAttribute("board") Ljs_BoardSubjectVo board
 			, Authentication au, HttpServletResponse resp, ModelAndView mv) throws IOException{
-		board.setUser_id(au.getName());
+		board.setUser((UserVo)au.getPrincipal());
 		ServiceResult result = boardService.createBoard(board);
 		
 		if(ServiceResult.FAILED.equals(result)){

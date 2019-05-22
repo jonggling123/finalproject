@@ -20,8 +20,11 @@
 </style>
 
 <!--    메뉴 소개 영역 -->
-<c:set var="board"
-	value="${(not empty boardList[2] || not empty boardList[1]) ? boardList[1] : boardList[0] }" />
+<c:forEach items="${boardList }" var="b">
+	<c:if test="${bo_no eq b.board_no}">
+		<c:set var="board" value="${ b}" />
+	</c:if>
+</c:forEach>
 <div class="breadcomb-area">
 	<div class="container">
 		<div class="row">
@@ -54,7 +57,7 @@
 			<div class="view-mail-list sm-res-mg-t-30">
 				<div class="mail-ads mail-vw-ph">
 					<input type="hidden" class="modifyInputs" name="board_no" value="${board.board_no }">
-					<c:if test="${user.user_id == board.user_id}">
+					<c:if test="${user.user_id == board.user.user_id}">
 						<button type="button" id="modifyBtn">수정</button>
 						<button type="button" id="removeBtn">삭제</button>
 					</c:if>
@@ -62,7 +65,7 @@
 						<b>분류 : ${board.board_type} </b>
 					</p>
 					<p>
-						<b>작성자 : ${board.user_id }</b>
+						<b>작성자 : ${board.user.user_name }</b>
 					</p>
 					<p>
 						<b id="boardTitle">제목 : ${board.board_title}</b>
@@ -105,21 +108,13 @@
 				
 				<div id="contentDiv" class="view-mail-atn">${board.board_content }</div>
 				
-				<div class="vw-ml-action-ls text-left mg-t-20">
-					<div class="btn-group ib-btn-gp active-hook nk-email-inbox">
-						<button class="btn btn-default btn-sm waves-effect">
-							<i class="notika-icon notika-next"></i> 댓글
-						</button>
-						<!--                                 <button class="btn btn-default btn-sm waves-effect"><i class="notika-icon notika-trash"></i> Remove</button> -->
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-element-list mg-t-30">
 							<div class="row">
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<div class="form-group">
-										<div class="nk-int-st">
+										<div id="replyDiv" class="nk-int-st">
 											<textarea id="replyContent" class="form-control" rows="5"
 												placeholder="댓글을 작성해주세요."
 												style="width: 80%; display: inline;"></textarea>
@@ -134,20 +129,21 @@
 				</div>
 				<button type="button" id="confirm" class="modifyTags" style="display:none;">확인</button>
 				<button type="button" id="cancel"  class="modifyTags" style="display:none;">취소</button>
-				
-				<table id="replyTable" class="table table-striped dataTable"
-					role="grid" aria-describedby="data-table-basic_info">
-					<thead>
-						<tr>
-							<th>작성자</th>
-							<th>내용</th>
-							<th>작성일</th>
-							<th>삭제</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+				<div id="tableDiv">
+					<table id="replyTable" class="table table-striped dataTable"
+						role="grid" aria-describedby="data-table-basic_info">
+						<thead>
+							<tr>
+								<th>작성자</th>
+								<th>내용</th>
+								<th>작성일</th>
+								<th>수정/삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-element-list mg-t-30">
@@ -164,7 +160,7 @@
 												style="margin-left: 3px;">이전글</a> <a
 												href="${pageContext.request.contextPath }/${prev.lecture_code}/board/${prev.board_no}"
 												style="margin-left: 40px;">${prev.board_title}</a> <span
-												style="margin-left: 300px;">${prev.user_id }</span> <span
+												style="margin-left: 300px;">${prev.user.user_name }</span> <span
 												style="margin-left: 100px;">${prev.board_date }</span>
 											</span>
 										</c:if>
@@ -187,7 +183,7 @@
 												style="margin-left: 3px;">다음글</a> <a
 												href="${pageContext.request.contextPath }/${next.lecture_code}/board/${next.board_no}"
 												style="margin-left: 40px;">${next.board_title }</a> <span
-												style="margin-left: 300px;">${next.user_id }</span> <span
+												style="margin-left: 300px;">${next.user.user_name }</span> <span
 												style="margin-left: 100px;">${next.board_date }</span>
 											</span>
 										</c:if>
@@ -225,7 +221,7 @@
 			"dataType" : "JSON"
 		},
 		columns : [
-			{data : "user_id"}
+			{data : "user_name"}
 			, {data : "reply_content"}
 			, {data : "reply_reg"}
 			, {data : "remover"} 
@@ -242,6 +238,7 @@
 			"attend_no" : "${board.attend_no}",
 			"reply_content" : $('#replyContent').val()
 		};
+		
 		var jsonData = JSON.stringify(sendData);
 		$.ajax({
 			url : "${pageContext.request.contextPath}/${board.board_no}/reply/create",
@@ -252,7 +249,7 @@
 			success : function(resp) {
 				alert(resp);
 				if(resp=="성공"){
-					$('#replyContent').text("");
+					$('#replyContent').val("");
 					replyTable.ajax.reload();
 				}
 			}
@@ -273,27 +270,52 @@
 				dataType : "text",
 				success : function(resp) {
 					alert(resp);
-					if(resp.equals("성공")){
+					if(resp=="성공"){
 						replyTable.ajax.reload();
 					}
 				}
 			});
 		}else{
-			sendData = {};
-			btn.parent.
-			$.ajax({
-				url : "${pageContext.request.contextPath}/${board.board_no}/reply/edit",
-				method : "put",
-				dataType : "text",
-				success : function(resp) {
-					alert(resp);
-					if(resp.equals("성공")){
-						replyTable.ajax.reload();
-					}
-				}
-			});
+			var td = btn.parent().prev().prev();
+			var content = btn.parent().prev().prev().text();
+			td.text("").append(
+				$("input").attr({
+					type : "hidden",
+					value : content,
+					id : "modInp"
+				})
+			);
+			$(this).after(
+				$('button').attr({
+					type : 'button',
+					id : 'modCancel'
+				}).text("취소")
+			);
+			btn.next().next().prop('style', 'display:none;');
 		}
 	});
+	
+// 	$('#modInp').on('click', function(){
+// 		var sendData = {
+// 			"reply_no" : $(this).val(),
+// 			"reply_content" : content
+// 		};
+// 		var jsonData = JSON.stringify(sendData);
+		
+// 		$.ajax({
+// 			url : "${pageContext.request.contextPath}/${board.board_no}/reply/edit",
+// 			method : "put",
+// 			data : jsonData,
+// 			contentType : "application/json;charset=UTF-8",
+// 			dataType : "text",
+// 			success : function(resp) {
+// 				alert(resp);
+// 				if(resp.equals("성공")){
+// 					replyTable.ajax.reload();
+// 				}
+// 			}
+// 		});
+// 	});
 	
 	$('#removeBtn').on('click', function(){
 		var sendData = {
@@ -312,19 +334,24 @@
 		});
 	});
 	
-	var modifyMode = function(){
+	$('#modifyBtn').on('click', function(){
 		$('.modifyTags').prop('style', null);
 		
 		$('#contentDiv').after('<textarea id="contextArea" rows="20" cols="50" style="display:none;"></textarea>');
 		CKEDITOR.replace("contextArea", {
 			filebrowserImageUploadUrl:"<c:url value='/board/imageUpload.do'/>?sample=test"
 		});
+		CKEDITOR.instances.contextArea.setData('${board.board_content}');
 		
 		$('#contentDiv').prop("style", "display:none;");
 		$('#boardTitle').prop("style", "display:none;");
-	}
+		$('#removeBtn').prop('style', 'display:none;');
+		$(this).prop('style', 'display:none;');
+		$('#replyDiv').prop('style', 'display:none;');
+		$('#tableDiv').prop('style', 'display:none;');
+	});
 	
-	var viewMode = function(){
+	$('#cancel').on('click', function(){
 		$('.modifyTags').prop('style', 'display:none;');
 		for(name in CKEDITOR.instances)
 		{
@@ -334,11 +361,11 @@
 		
 		$('#contentDiv').prop("style", null);
 		$('#boardTitle').prop("style", null);
-	}
-	
-	$('#modifyBtn').on('click', modifyMode);
-	
-	$('#cancel').on('click', viewMode);
+		$('#removeBtn').prop('style', null);
+		$('#modifyBtn').prop('style', null);
+		$('#replyDiv').prop('style', null);
+		$('#tableDiv').prop('style', null);
+	});
 	
 	$('#confirm').on('click', function(){
 		var form = new FormData(document.getElementById('boardForm'));
@@ -416,5 +443,5 @@
 		);
 		$(this).parent("span").remove();
 	});
-
+	
 </script>

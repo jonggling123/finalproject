@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ddit.finalproject.team2.common.service.Ljs_IReplyService;
+import ddit.finalproject.team2.student.service.Ljs_IReplyService;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.vo.Ljs_ReplyVo;
 
@@ -33,7 +34,7 @@ public class ReplyRestController {
 		return map;
 	}
 	
-	@PostMapping("create")
+	@PostMapping(value="create", produces="text/plain;charset=UTF-8")
 	public String newReply(@RequestBody Ljs_ReplyVo reply){
 		String msg = "실패";
 		ServiceResult result = service.createReply(reply);
@@ -43,7 +44,7 @@ public class ReplyRestController {
 		return msg;
 	}
 	
-	@DeleteMapping("remove/{reply_no}")
+	@DeleteMapping(value="remove/{reply_no}", produces="text/plain;charset=UTF-8")
 	public String remove(@PathVariable String board_no, @PathVariable String reply_no){
 		String msg = "실패";
 		ServiceResult result = service.removeReply(reply_no);
@@ -53,9 +54,13 @@ public class ReplyRestController {
 		return msg;
 	}
 	
-	@PutMapping("edit/{reply_no}")
-	public String edit(@PathVariable String board_no, @PathVariable String reply_no){
+	@PutMapping(value="edit", produces="text/plain;charset=UTF-8")
+	public String edit(@RequestBody Ljs_ReplyVo reply){
 		String msg = "실패";
+		ServiceResult result = service.modifyReply(reply);
+		if(ServiceResult.OK.equals(result)){
+			msg = "성공";
+		}
 		return msg;
 	}
 }

@@ -5,9 +5,6 @@
 
 <!-- dropzone CSS
 		============================================ -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/notika/css/dropzone/dropzone.css">
-
 <style>
 .sangyup {
 	display: inline;
@@ -96,7 +93,7 @@
 					<input type="file" name="bo_files">
 				</c:forEach>
 				
-				<textarea id="contextArea" rows="20" cols="50">${not empty board ? board.board_content : "" }</textarea>
+				<textarea id="contextArea" rows="20" cols="50"></textarea>
 				<input type="hidden" name="user_id" value="${user.user_id }">
 				<input type="hidden" name="lecture_code" value="${lecture_code }">
 				
@@ -111,8 +108,6 @@
 <!-- dropzone JS
    ============================================ -->
 <script
-	src="${pageContext.request.contextPath }/notika/js/dropzone/dropzone.js"></script>
-<script
 	src="${pageContext.request.contextPath }/res/js/ckeditor/ckeditor.js"></script>
 <script>
 	CKEDITOR.replace('contextArea');
@@ -121,7 +116,7 @@
 		var content = CKEDITOR.instances.contextArea.getData();
 		$('#boardForm').append(
 			$("<input>").attr({
-				type:"text"
+				type:"hidden"
 				, name:"board_content"
 				, value:content
 			})		

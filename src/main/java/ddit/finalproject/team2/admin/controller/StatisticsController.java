@@ -1,9 +1,15 @@
 package ddit.finalproject.team2.admin.controller;
 
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import ddit.finalproject.team2.admin.service.KJE_IStatisticsService;
+import ddit.finalproject.team2.vo.OrganizationVo;
 
 /**
  * @author 이종선
@@ -23,13 +29,18 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/statistics")
 public class StatisticsController {
+	@Inject
+	KJE_IStatisticsService statisticsService;
 	
 	/**
 	 * 과목통계 화면으로 이동하기 위한 command handler
 	 * @return
 	 */
 	@GetMapping("subject")
-	public ModelAndView goSubject(ModelAndView mv){
+	public ModelAndView goSubject(ModelAndView mv, Model model){
+		model.addAttribute("upperOrganizationList", statisticsService.getUpperOrganization());
+		model.addAttribute("lowerOrganizationList", statisticsService.getLowerOrganization());
+		model.addAttribute("lectureList", statisticsService.getStLecture());
 		mv.setViewName("admin/subjectStats");
 		return mv;
 	}

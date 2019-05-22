@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ddit.finalproject.team2.common.dao.Ljs_IBoardDao">
+<mapper namespace="ddit.finalproject.team2.student.dao.Ljs_IBoardDao">
 
-	<select id="selectBoardList" parameterType="string" resultType="ddit.finalproject.team2.vo.Ljs_BoardSubjectVo">
+	<resultMap type="ddit.finalproject.team2.vo.Ljs_BoardSubjectVo" id="boardListMap" autoMapping="true">
+		<id property="board_no" column="BOARD_NO"/>
+		<association property="user" autoMapping="true" column="USER_ID" javaType="ddit.finalproject.team2.vo.UserVo" select="ddit.finalproject.team2.common.dao.IUserDao.selectUser"></association>
+	</resultMap>
+	<select id="selectBoardList" parameterType="string" resultMap="boardListMap">
 		SELECT BOARD_NO, BOARD_TYPE, BOARD_DATE, BOARD_TITLE
         , BOARD_HIT, T.USER_ID
 		FROM ATTEND T LEFT OUTER JOIN BOARD B
 		ON(T.LECTURE_CODE = B.LECTURE_CODE)
 		WHERE B.LECTURE_CODE = #{lecture_code}
-        ORDER BY DECODE(BOARD_TYPE, 'notice', 1, BOARD_NO, 2), BOARD_NO DESC
+        ORDER BY DECODE(BOARD_TYPE, 'notice', 1, BOARD_NO, 2), BOARD_NO
 	</select>
 	
 	<resultMap type="ddit.finalproject.team2.vo.Ljs_BoardSubjectVo" id="boardMap" autoMapping="true">
 		<id property="board_no" column="BOARD_NO"/>
+		<association property="user" autoMapping="true" column="USER_ID" javaType="ddit.finalproject.team2.vo.UserVo" select="ddit.finalproject.team2.common.dao.IUserDao.selectUser"></association>
 		<collection property="savedAttachmentList" autoMapping="true" ofType="ddit.finalproject.team2.vo.AttachmentVo">
 			<id property="attachment_no" column="ATTACHMENT_NO"/>
 		</collection>
 	</resultMap>
+	
 	<select id="selectboard" parameterType="string" resultMap="boardMap">
 		SELECT A.BOARD_NO, BOARD_TYPE, BOARD_TITLE, BOARD_DATE
 				, BOARD_TITLE, BOARD_HIT, BOARD_CONTENT, A.LECTURE_CODE, A.ATTEND_NO

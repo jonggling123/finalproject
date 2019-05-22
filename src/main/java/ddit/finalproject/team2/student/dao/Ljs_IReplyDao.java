@@ -1,4 +1,4 @@
-package ddit.finalproject.team2.common.dao;
+package ddit.finalproject.team2.student.dao;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import ddit.finalproject.team2.vo.Ljs_ReplyVo;
+import ddit.finalproject.team2.vo.UserVo;
 
 @Repository
 @Transactional
@@ -29,5 +30,7 @@ public interface Ljs_IReplyDao {
 	
 	int deleteAllReply(String board_no);
 	
-	int updateReply(String reply_no);
+	int updateReply(Ljs_ReplyVo reply);
+	
+	UserVo selectCurrentUser(String user_id);
 }

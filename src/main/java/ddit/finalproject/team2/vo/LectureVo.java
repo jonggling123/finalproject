@@ -16,14 +16,8 @@ import lombok.ToString;
 @ToString
 public class LectureVo implements Serializable{
 	@NotNull private String lecture_code;
-	@NotNull private String subject_code;
 	@NotNull private String user_id;
-	@NotNull private String lecture_coursetype;
+	@NotNull private String user_name;
 	@NotNull private String lecture_name;
-	@NotNull private String lecture_credit;
-	@NotNull private String lecture_target;
-	@NotNull private String openseme_no;
-	@NotNull private String lecture_capacity;
-	@NotNull private Date mid_date;
-	@NotNull private Date final_date;
+	
 }

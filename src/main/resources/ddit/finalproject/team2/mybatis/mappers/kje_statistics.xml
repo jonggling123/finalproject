@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ddit.finalproject.team2.admin.dao.KJE_IStatisticsDao">
+
+	<select id="selectUpperOrganization" resultType="ddit.finalproject.team2.vo.OrganizationVo">
+		SELECT
+		LOWER_ORGANIZATION
+		FROM
+		ORGANIZATION
+		WHERE UPPER_ORGANIZATION is Null
+	</select>
+
+	<select id="selectLowerOrganization" resultType="ddit.finalproject.team2.vo.OrganizationVo">
+		SELECT
+		LOWER_ORGANIZATION,
+		UPPER_ORGANIZATION
+		FROM
+		ORGANIZATION
+		WHERE
+		UPPER_ORGANIZATION is NOT Null
+	</select>
+
+	<select id="selectStLecture" resultType="ddit.finalproject.team2.vo.KJE_StlectureVo">
+		SELECT
+		LECTURE_CODE,
+		U.USER_ID,
+		U.USER_NAME,
+		LECTURE_NAME,
+		LOWER_ORGANIZATION
+		FROM
+		LECTURE L
+		INNER JOIN USERS U ON(L.USER_ID=U.USER_ID)
+	</select>
+
+	<select id="selectAttend" resultType="ddit.finalproject.team2.vo.AttendVo">
+		SELECT
+		USER_ID,
+		ATTEND_NO,
+		LECTURE_CODE
+		FROM
+		ATTEND
+		WHERE USER_ID=#{user_id}
+		AND
+		LECTURE_CODE=#{lecture_code}
+	</select>
+
+
+	<insert id="insertLectureAccessStats" parameterType="ddit.finalproject.team2.vo.LectureAccessStatsVo">
+		<selectKey resultType="string" keyProperty="lec_acc_sta_no"
+			order="BEFORE">
+			SELECT TO_CHAR(LECTUREACCESSSTATISTICS_SEQ.NEXTVAL) FROM DUAL
+		</selectKey>
+		INSERT INTO LECTUREACCESSSTATISTICS (
+		LEC_ACC_STA_NO, CONNECTION_TIME, ACC_IP, ATTEND_NO
+		) VALUES (
+		#{lec_acc_sta_no},
+		SYSDATE,
+		#{acc_ip},
+		#{attend_no}
+		)
+	</insert>
+
+
+</mapper>
+

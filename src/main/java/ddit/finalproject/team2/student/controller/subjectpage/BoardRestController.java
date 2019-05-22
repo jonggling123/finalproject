@@ -1,22 +1,32 @@
 package ddit.finalproject.team2.student.controller.subjectpage;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
-import ddit.finalproject.team2.common.service.Ljs_IBoardService;
+import ddit.finalproject.team2.student.service.Ljs_BoardServiceImpl;
+import ddit.finalproject.team2.student.service.Ljs_IBoardService;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
+import ddit.finalproject.team2.util.exception.CommonException;
 import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;
+import oracle.jdbc.proxy.annotation.Post;
 
 /**
  * @author 이종선

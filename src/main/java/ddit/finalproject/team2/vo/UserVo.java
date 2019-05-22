@@ -68,4 +68,9 @@ public class UserVo implements Serializable, UserDetails{
 		return true;
 	}
 
+	
+	
+	public UserVo(String user_id){
+		this.user_id = user_id;
+	}
 }
