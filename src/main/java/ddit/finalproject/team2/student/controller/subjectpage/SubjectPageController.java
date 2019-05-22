@@ -1,6 +1,11 @@
 package ddit.finalproject.team2.student.controller.subjectpage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ddit.finalproject.team2.admin.service.KJE_IStatisticsService;
 import ddit.finalproject.team2.util.AuthorityUtil;
 import ddit.finalproject.team2.util.constant.AuthConstants;
 import ddit.finalproject.team2.vo.UserVo;
@@ -31,13 +37,28 @@ import ddit.finalproject.team2.vo.UserVo;
 @Controller
 @RequestMapping("/subjectPage/{lecture_code}")
 public class SubjectPageController {
-
+	
+	@Inject
+	KJE_IStatisticsService statisticsService;
+	
 	/**
 	 * 교육목표 화면으로 이동하기 위한 command handler
 	 * @return
 	 */
 	@GetMapping("eduGoal")
-	public ModelAndView goGoal(ModelAndView mv){
+	public ModelAndView goGoal(
+			ModelAndView mv, 
+			Authentication authentication,
+			@PathVariable String lecture_code,
+			HttpServletRequest request){
+		
+		Map<String, String>userinfo = new HashMap<>();
+		userinfo.put("user_id", authentication.getName());
+		userinfo.put("lecture_code", lecture_code);
+		userinfo.put("acc_ip", request.getRemoteAddr());
+		
+		statisticsService.recodeLectureAccessStats(userinfo);
+		
 		mv.setViewName("student/eduGoal");
 		return mv;
 	}

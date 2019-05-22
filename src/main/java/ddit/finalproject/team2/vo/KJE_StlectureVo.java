@@ -1,21 +1,23 @@
 package ddit.finalproject.team2.vo;
 
-import lombok.EqualsAndHashCode;
-
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(of="lower_organization")
+@EqualsAndHashCode(of="lecture_code")
 @ToString
-public class OrganizationVo implements Serializable{
+public class KJE_StlectureVo {
+	@NotNull private String lecture_code;
+	@NotNull private String user_id;
+	@NotNull private String user_name;
+	@NotNull private String lecture_name;
 	@NotNull private String lower_organization;
-	@NotNull private String upper_organization;
+	
 }
