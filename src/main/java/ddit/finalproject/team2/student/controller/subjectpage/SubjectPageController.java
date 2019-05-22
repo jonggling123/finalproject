@@ -1,7 +1,5 @@
 package ddit.finalproject.team2.student.controller.subjectpage;
 
-import java.util.List;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ddit.finalproject.team2.util.AuthorityUtil;
-import ddit.finalproject.team2.util.constant.AuthConstants;
 import ddit.finalproject.team2.vo.UserVo;
 
 /**
@@ -60,8 +56,9 @@ public class SubjectPageController {
 	 */
 	@GetMapping("lecturePage")
 	public ModelAndView goWeekList(ModelAndView mv, Authentication au){
-		mv.setViewName("student/lecturePage");
+		mv.setViewName("student/exclude/lecturePage");
 		mv.getModel().put("id", au.getName());
+
 		return mv;
 	}
 	

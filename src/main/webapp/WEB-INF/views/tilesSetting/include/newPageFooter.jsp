@@ -59,7 +59,4 @@
 <!-- main JS
     ============================================ -->
 <script src="${pageContext.request.contextPath}/notika/js/main.js"></script>
-<!-- tawk chat JS
-    ============================================ -->
-<script src="${pageContext.request.contextPath}/notika/js/tawk-chat.js"></script>
 

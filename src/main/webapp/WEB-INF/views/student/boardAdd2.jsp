@@ -223,10 +223,7 @@
     <!-- main JS
 		============================================ -->
     <script src="${pageContext.request.contextPath }/notika/js/main.js"></script>
-	<!-- tawk chat JS
-		============================================ -->
-		
-    <script src="${pageContext.request.contextPath }/notika/js/tawk-chat.js"></script>
+
     <script src="${pageContext.request.contextPath }/notika/js/dropzone/dropzone.js"></script>   
 	<script src="${pageContext.request.contextPath }/notika/js/datapicker/bootstrap-datepicker.js"></script>   
 	<script src="${pageContext.request.contextPath }/notika/js/datapicker/datepicker-active.js"></script>
