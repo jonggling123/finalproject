@@ -10,7 +10,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class KJE_TimeStatisticsVo {
-	@NotNull private String noa;
-	@NotNull private String time;
+public class KJE_BoardTypeCntVo {
+	@NotNull private String board_type;
+	@NotNull private String board_cnt;
+	
 }
