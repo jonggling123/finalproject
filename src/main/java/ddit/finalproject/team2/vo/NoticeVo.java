@@ -20,5 +20,5 @@ public class NoticeVo implements Serializable{
 	@NotNull private String notice_content;
 	@NotNull private Date notice_date;
 	@NotNull private String notice_hit;
-	@NotNull private String notice_writer;
+	@NotNull private String notice_writer = "관리자";
 }

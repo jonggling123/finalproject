@@ -159,8 +159,6 @@
                     </div>
                     <div id="portal" class="tab-pane notika-tab-menu-bg animated flipInX">
                         <ul class="notika-main-menu-dropdown">
-                            <li><a href="${pageContext.request.contextPath }/portal/popup">팝업공지</a>
-                            </li>
                             <li><a href="#">일정</a>
                             </li>
                             <li><a href="${pageContext.request.contextPath }/portal/system">시스템관리</a>

@@ -231,7 +231,7 @@
 			"board_no" : "${board.board_no}",
 			"lecture_code" : "${board.lecture_code}",
 			"reply_content" : $('#replyContent').val(),
-			"user" : "${user.user_id}"
+			"user" : "${user}"
 		};
 		
 		var jsonData = JSON.stringify(sendData);

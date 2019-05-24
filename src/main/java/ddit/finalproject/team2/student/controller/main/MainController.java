@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
  *      </pre>
  */
 @Controller("studentController")
-@RequestMapping("/main")
+@RequestMapping("/studentMain")
 public class MainController {
 
 	/**

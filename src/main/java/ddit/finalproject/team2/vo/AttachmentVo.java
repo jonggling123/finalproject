@@ -28,6 +28,10 @@ public class AttachmentVo implements Serializable{
 	private String file_path;
 	@NotNull
 	private String file_order;
+	@NotNull
+	private String board_no;
+	@NotNull
+	private String lecture_code;
 	
 	private MultipartFile fileItem;
 	

@@ -32,5 +32,7 @@ public interface Ljs_IReplyDao {
 	
 	int updateReply(Ljs_ReplyVo reply);
 	
-	UserVo selectCurrentUser(String user_id);
+	UserVo selectWriterIdByLectureCode(String lecture_code);
+	UserVo selectWriterIdByAttendNo(String attend_no);
+	
 }

@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import ddit.finalproject.team2.util.hint.InsertHint;
+import ddit.finalproject.team2.util.hint.UpdateHint;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,27 +21,27 @@ import lombok.ToString;
 @EqualsAndHashCode(of="board_no")
 @ToString(exclude={
 	"board_content", "replyList", "deleteAttachmentNos"
-	, "attachmentList", "savedAttachmentList", "bo_files"
+	, "attachmentList", "savedAttachmentList", "bo_files", "user"
 })
-public class Ljs_BoardSubjectVo implements Serializable{
+public class Ljs_BoardVo implements Serializable{
 	private String board_no;
-	private String board_type;
+	@NotNull(groups=InsertHint.class) private String board_type;
 	private String board_attachmentcount;
 	private String board_date;
-	private String board_title;
-	private String board_content;
+	@NotNull(groups={InsertHint.class, UpdateHint.class}) private String board_title;
+	@NotNull(groups=InsertHint.class) private String writer;
+	@NotNull(groups={InsertHint.class, UpdateHint.class}) private String board_content;
 	private String board_hit;
+	@NotNull(groups=InsertHint.class) private String lecture_code;
 	private String attend_no;
-	private String lecture_code;
-	
-	private UserVo user;
-	private String user_name;
 	
 	private List<Ljs_ReplyVo> replyList;
 	private int replycount;
 	
+	private UserVo user;
+	
 	private Integer startAttachmentNo;
-	private int[] deleteAttachmentNos;
+	private String[] deleteAttachmentNos;
 	private List<AttachmentVo> attachmentList;
 	private List<AttachmentVo> savedAttachmentList;
 	private MultipartFile[] bo_files;
@@ -57,7 +61,12 @@ public class Ljs_BoardSubjectVo implements Serializable{
 		}
 	}
 	
-	public void setUserVo(String user_id){
+	public void setUser(String user_id){
 		user = new UserVo(user_id);
+	}
+
+	public Ljs_BoardVo(String user_id, String lecture_code) {
+		this.user = new UserVo(user_id);
+		this.lecture_code = lecture_code;
 	}
 }
