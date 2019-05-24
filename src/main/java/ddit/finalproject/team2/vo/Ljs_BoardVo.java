@@ -7,7 +7,6 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
 import ddit.finalproject.team2.util.hint.InsertHint;
