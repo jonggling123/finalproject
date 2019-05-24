@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.commons.collections.map.HashedMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +35,7 @@ public class ReplyRestController {
 	}
 	
 	@PostMapping(value="create", produces="text/plain;charset=UTF-8")
-	public String newReply(@RequestBody Ljs_ReplyVo reply){
+	public String newReply(@RequestBody @Validated Ljs_ReplyVo reply, Error errors){
 		String msg = "실패";
 		ServiceResult result = service.createReply(reply);
 		if(ServiceResult.OK.equals(result)){
@@ -55,7 +55,7 @@ public class ReplyRestController {
 	}
 	
 	@PutMapping(value="edit", produces="text/plain;charset=UTF-8")
-	public String edit(@RequestBody Ljs_ReplyVo reply){
+	public String edit(@RequestBody @Validated Ljs_ReplyVo reply, Error errors){
 		String msg = "실패";
 		ServiceResult result = service.modifyReply(reply);
 		if(ServiceResult.OK.equals(result)){

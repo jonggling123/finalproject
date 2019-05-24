@@ -1,15 +1,10 @@
 package ddit.finalproject.team2.student.controller.main;
 
-import java.util.List;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import ddit.finalproject.team2.util.AuthorityUtil;
-import ddit.finalproject.team2.util.constant.AuthConstants;
 
 /**
  * @author 이종선
@@ -28,7 +23,7 @@ import ddit.finalproject.team2.util.constant.AuthConstants;
  *      </pre>
  */
 @Controller("studentController")
-@RequestMapping("/main")
+@RequestMapping("/studentMain")
 public class MainController {
 
 	/**
@@ -106,13 +101,11 @@ public class MainController {
 	 * 공지사항 화면으로 이동하는 command handler
 	 * 
 	 * @param mv
-	 * @param au
 	 * @return
 	 */
 	@GetMapping("notice")
-	public ModelAndView goNotice(ModelAndView mv, Authentication au) {
-		mv.setViewName("common/notice");
-		mv.getModel().put("id", au.getName());
+	public ModelAndView goNotice(ModelAndView mv) {
+		mv.setViewName("student/notice");
 		return mv;
 	}
 

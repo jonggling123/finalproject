@@ -7,18 +7,14 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="data-table-list">
 				<div class="table-responsive">
-					<h2>게시판관리</h2>
-					<button type="button" class="btn btn-default notika-btn-default"
-						id="createBoard">등록</button>
+					<h2>공지사항</h2>
 					<table id="data-table-basic" class="table table-striped dataTable"
 						role="grid" aria-describedby="data-table-basic_info">
 						<div id="searchDiv"></div>
 						<thead>
 							<tr>
-								<th>분류</th>
 								<th>글번호</th>
 								<th>제목</th>
-								<th>댓글수</th>
 								<th>작성자</th>
 								<th>작성일</th>
 								<th>조회수</th>
@@ -41,60 +37,42 @@
 	var table = $('#data-table-basic').DataTable({
 		ajax : {
 			"type" : "get",
-			"url" : "${pageContext.request.contextPath}/manageBoard",
+			"url" : "${pageContext.request.contextPath}/notice",
 			"dataType" : "JSON"
 		},
 		columns : [ {
-			data : "board_type"
-		}, {
 			data : "board_no"
 		}, {
 			data : "board_title"
 		}, {
-			data : "replycount"
-		}, {
-			data : "user_name"
+			data : "board_writer"
 		}, {
 			data : "board_date"
 		}, {
 			data : "board_hit"
-		} ],
+		}],
 		"order" : []
 	});
 
-	//등록 버튼
-	$('#createBoard').on('click',function() {
-		location.href = "${pageContext.request.contextPath}/manageBoard/create";
-	});
-
 	$('#data-table-basic').on('click','a',function(e) {
-		e.preventDefault();  
+		e.preventDefault();
 		var no = $(this).attr("href");
-		location.href = "${pageContext.request.contextPath}/manageBoard/"+ no;
+		location.href = "${pageContext.request.contextPath}/notice/"+ no;
 	});
 	
 	$('#data-table-basic_filter').find('label').prop('style', 'display:none;');
 	$('#data-table-basic_filter').on('click',$('#searchBtn'),function() {
 		$.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-			var chosenType = $('#types').val();
 			var searchWord = $('#searchInput').val();
-			console.log(searchWord);
 
-			var type = data[0];
-			var no = data[1];
-			var title = data[2];
-			var count = data[3];
-			var writer = data[4];
-			var date = data[5];
-			var hit = data[6];
+			var no = data[0];
+			var title = data[1];
+			var writer = data[2];
+			var date = data[3];
+			var hit = data[4];
 
-			if ((chosenType == 'all' || chosenType == type)
-					&& (searchWord == ''
-							|| searchWord == no
-							|| searchWord == title
-							|| searchWord == count
-							|| searchWord == writer
-							|| searchWord == date || searchWord == hit)) {
+			if (searchWord == '' || searchWord == no || searchWord == title
+				|| searchWord == writer || searchWord == date || searchWord == hit) {
 				return true;
 			}
 			return false;
@@ -102,9 +80,6 @@
 		table.draw();
 	});
 
-	var select = $('<select>').prop('id', 'types').append(
-			$('<option>').text('all'), $('<option>').text('notice'),
-			$('<option>').text('lecture'), $('<option>').text('popup'));
 	var button = $('<button>').prop({
 		type : 'button',
 		'class' : 'btn btn-default notika-btn-default',
@@ -113,5 +88,5 @@
 	$('#data-table-basic_filter').prepend($('<input>').prop({
 		type : 'text',
 		id : 'searchInput'
-	})).prepend(button).prepend(select);
+	})).prepend(button);
 </script>
