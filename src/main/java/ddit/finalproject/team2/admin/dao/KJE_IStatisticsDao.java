@@ -7,11 +7,14 @@ import org.springframework.stereotype.Repository;
 
 import ddit.finalproject.team2.vo.AttendVo;
 import ddit.finalproject.team2.vo.KJE_BoardTypeCntVo;
+import ddit.finalproject.team2.vo.KJE_OperationStatisticsVo;
 import ddit.finalproject.team2.vo.KJE_ProfessorVo;
 import ddit.finalproject.team2.vo.KJE_ReplyTypeCntVo;
+import ddit.finalproject.team2.vo.KJE_SemesterVo;
 import ddit.finalproject.team2.vo.KJE_StlectureVo;
 import ddit.finalproject.team2.vo.KJE_TimeStatisticsVo;
 import ddit.finalproject.team2.vo.LectureAccessStatsVo;
+import ddit.finalproject.team2.vo.OpenSemesterVo;
 import ddit.finalproject.team2.vo.OrganizationVo;
 
 @Repository
@@ -61,7 +64,7 @@ public interface KJE_IStatisticsDao {
 	 * 교수 이름 리스트를 가져오는 메서드
 	 * @return 교수 이름이 담긴 List
 	 */
-	public List<KJE_ProfessorVo> selectProfessor();
+	public List<KJE_ProfessorVo> selectProfessorList();
 	
 	/**
 	 * 과목게시판에서 type 별 교수의 게시글 수를  가져오는 메서드
@@ -75,7 +78,34 @@ public interface KJE_IStatisticsDao {
 	 * @param stinfo 과목이름, 날짜정보(통계시작일, 종료일)
 	 * @return교수가 작성한 답변 수
 	 */
-	public List<KJE_ReplyTypeCntVo>selectReplyTypeCnt(Map<String, String> stinfo);
+	public KJE_ReplyTypeCntVo selectReplyTypeCnt(Map<String, String> stinfo);
+	
+	
+	/**
+	 * 포털게시판의 시간대별 통계 정보를 가져오는 메서드
+	 * @param stinfo 날짜정보(통계시작일, 종료일)
+	 * @return 시간대별 접속 인원수
+	 */
+	public List<KJE_TimeStatisticsVo> selectPotalStatistics(Map<String, String> stinfo);
+	
+	/**
+	 * 학기 리스트를 가져오는 메서드
+	 * @return 학년도, 학기, 학기번호 
+	 */
+	public List<KJE_SemesterVo> selectSemesterList();
+	
+	/**
+	 * 운영통계 정보를 가져오는 메서드
+	 * @return 전공과목개수, 교양과목 개수, 전체과목 개수, 수강생 합계
+	 */
+	public List<KJE_OperationStatisticsVo> selectOperationStList(Map<String, String> stinfo);
+	
+	
+	/** 오늘 날짜에 해당하는 학기 정보를 반환하는 메서드
+	 * @param today 오늘 날짜
+	 * @return 학기정보 
+	 */
+	public OpenSemesterVo selectThisTimeSemester(String today);
 	
 	
 }

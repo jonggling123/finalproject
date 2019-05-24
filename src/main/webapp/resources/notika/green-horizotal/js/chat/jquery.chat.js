@@ -69,8 +69,7 @@
            			success : function(resp) {
            				var respList = resp;
            				$(respList).each(function(idx, resps){
-           					$('<li class="clearfix odd"><div class="chat-avatar"><i>' + chatTime + '</i></div><div class="conversation-text"><div class="ctext-wrap"><i>대덕인재대학교</i><p>' +  resps.scheduleName+ '</p></div></div></li>').appendTo('ul.conversation-list');
-           					$('<li class="clearfix odd"><div class="chat-avatar"><i>' + chatTime + '</i></div><div class="conversation-text"><div class="ctext-wrap"><i>대덕인재대학교</i><p>' +  resps.startSchedule+"~" + resps.endSchedule+ '</p></div></div></li>').appendTo('ul.conversation-list');
+           					$('<li class="clearfix odd"><div class="chat-avatar"><i>' + chatTime + '</i></div><div class="conversation-text"><div class="ctext-wrap"><i>대덕인재대학교</i><p>' + resps.scheduleName +resps.startSchedule+"~" + resps.endSchedule+ '</p></div></div></li>').appendTo('ul.conversation-list');
            					$('.widgets-chat-scrollbar').mCustomScrollbar("scrollTo","last");
            				})
 
