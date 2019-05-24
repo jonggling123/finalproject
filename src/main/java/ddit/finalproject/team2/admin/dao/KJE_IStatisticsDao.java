@@ -6,6 +6,9 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import ddit.finalproject.team2.vo.AttendVo;
+import ddit.finalproject.team2.vo.KJE_BoardTypeCntVo;
+import ddit.finalproject.team2.vo.KJE_ProfessorVo;
+import ddit.finalproject.team2.vo.KJE_ReplyTypeCntVo;
 import ddit.finalproject.team2.vo.KJE_StlectureVo;
 import ddit.finalproject.team2.vo.KJE_TimeStatisticsVo;
 import ddit.finalproject.team2.vo.LectureAccessStatsVo;
@@ -47,7 +50,32 @@ public interface KJE_IStatisticsDao {
 	 */
 	public int insertLectureAccessStats(LectureAccessStatsVo lectureAccessStats);
 	
+	/**
+	 * 과목의 시간대별 통계 정보를 가져오는 메서드
+	 * @param stinfo 과목이름, 날짜 정보
+	 * @return 시간대별 접속 인원수
+	 */
+	public List<KJE_TimeStatisticsVo> selectLectureStatistics(Map<String, String> stinfo);
 	
-//	public KJE_TimeStatisticsVo
+	/**
+	 * 교수 이름 리스트를 가져오는 메서드
+	 * @return 교수 이름이 담긴 List
+	 */
+	public List<KJE_ProfessorVo> selectProfessor();
+	
+	/**
+	 * 과목게시판에서 type 별 교수의 게시글 수를  가져오는 메서드
+	 * @param stinfo 과목이름, 날짜정보(통계시작일, 종료일)
+	 * @return Board type 별 게시글 수
+	 */
+	public List<KJE_BoardTypeCntVo>selectBoardTypeCnt(Map<String, String> stinfo);
+	
+	/**
+	 * 과목게시판의 reply 중 교수가 쓴 댓글 수를 반환하는 메서드  
+	 * @param stinfo 과목이름, 날짜정보(통계시작일, 종료일)
+	 * @return교수가 작성한 답변 수
+	 */
+	public List<KJE_ReplyTypeCntVo>selectReplyTypeCnt(Map<String, String> stinfo);
+	
 	
 }

@@ -17,6 +17,15 @@
 	<link rel="stylesheet" href="/res/css/MAIN.2300e926c1f7c59e6cc7.css">
 	<link rel="stylesheet" type="text/css" href="/res/css/video-js.min.css"/>
 	<script src="/res/js/video.min.js"></script>
+    <script>
+        function init(){
+            var vid=document.querySelector("video");
+            vid.onpause=function () {
+                vid.setAttribute("src","https://s3.ap-northeast-2.amazonaws.com/finalproject001/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/12.%EA%B3%84%EC%88%98+%EC%A0%95%EB%A0%AC(Counting+Sort)");
+            };
+        }
+        window.onload=init();
+    </script>
 </head>
 <script>
 	function init() {
@@ -27,6 +36,9 @@
 				type: 'video/mp4'
 			}]
 		});
+		document.querySelector("video").oncontextmenu(function(){
+			return false;
+		})
 	}
 	window.onload = init;
 </script>

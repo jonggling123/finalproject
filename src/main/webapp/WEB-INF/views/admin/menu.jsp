@@ -116,7 +116,7 @@
                     <li><a data-toggle="tab" href="#operation" ><i class="notika-icon notika-windows"></i>강의운영관리</a></li>
                     <li><a href="${pageContext.request.contextPath }/adminMain/certificate"><i class="notika-icon notika-form"></i>증명서관리</a></li>
                     <li><a href="${pageContext.request.contextPath }/adminMain/board"><i class="notika-icon notika-edit"></i>게시판관리</a></li>
-                    <li><a data-toggle="tab" href="#stats" ><i class="notika-icon notika-bar-chart"></i>통계관리(미구현)</a></li>
+                    <li><a data-toggle="tab" href="#stats" ><i class="notika-icon notika-bar-chart"></i>통계관리</a></li>
                     <li><a data-toggle="tab" href="#portal" ><i class="notika-icon notika-app"></i>포털관리(일정 미구현)</a></li>
                     <li><a data-toggle="tab" href="#sms" ><i class="notika-icon notika-mail"></i>SMS관리</a></li>
                 </ul>
@@ -153,7 +153,7 @@
                             </li>
                             <li><a href="#">시스템접속통계</a>
                             </li>
-                            <li><a href="#">교수활동통계</a>
+                            <li><a href="${pageContext.request.contextPath }/statistics/behavior">교수활동통계</a>
                             </li>
                         </ul>
                     </div>

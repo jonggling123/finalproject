@@ -5,6 +5,7 @@ import java.util.Map;
 
 import ddit.finalproject.team2.vo.AttendVo;
 import ddit.finalproject.team2.vo.KJE_StlectureVo;
+import ddit.finalproject.team2.vo.KJE_TimeStatisticsVo;
 import ddit.finalproject.team2.vo.LectureAccessStatsVo;
 import ddit.finalproject.team2.vo.OrganizationVo;
 
@@ -37,5 +38,12 @@ public interface KJE_IStatisticsService {
 	 * @return 기록성공 여부
 	 */
 	public int recodeLectureAccessStats(Map<String, String> userinfo);
+	
+	/**
+	 * 과목의 시간대별 통계 정보를 가져오는 메서드
+	 * @param stinfo 과목이름, 날짜 정보
+	 * @return 시간대별 접속 인원수
+	 */
+	public List<KJE_TimeStatisticsVo> getLectureStatistics(Map<String, String> stinfo);
 	
 }

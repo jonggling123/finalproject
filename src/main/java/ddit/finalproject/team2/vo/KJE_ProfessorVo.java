@@ -9,8 +9,10 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @Data
+@EqualsAndHashCode(of="user_id")
 @ToString
-public class KJE_TimeStatisticsVo {
-	@NotNull private String noa;
-	@NotNull private String time;
+public class KJE_ProfessorVo {
+	
+	@NotNull private String user_id;
+	@NotNull private String user_name;
 }

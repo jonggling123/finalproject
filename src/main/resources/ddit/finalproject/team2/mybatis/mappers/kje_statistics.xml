@@ -44,6 +44,35 @@
 		LECTURE_CODE=#{lecture_code}
 	</select>
 
+	<select id="selectLectureStatistics" resultType="ddit.finalproject.team2.vo.KJE_TimeStatisticsVo">
+		SELECT
+		DECODE(GROUPING(copy_t.tm1),1,'Total',copy_t.tm1||'~'||copy_t.tm2) AS TIME
+		, NVL(SUM(main_t.cnt),0) AS NOA 
+		, LECTURE_CODE
+		FROM
+		(
+		SELECT TO_CHAR(CONNECTION_TIME, 'hh24') tm, COUNT(*) cnt,
+		A.LECTURE_CODE
+		FROM LECTUREACCESSSTATISTICS L INNER JOIN ATTEND A
+		ON(L.ATTEND_NO=A.ATTEND_NO)
+		  <![CDATA[
+		WHERE CONNECTION_TIME >= to_date(#{start_date},'yyyymmddhh24miss')
+		AND CONNECTION_TIME <= to_date(#{end_date},'yyyymmddhh24miss')
+		AND LECTURE_CODE=#{lecture_code}
+		GROUP BY TO_CHAR(CONNECTION_TIME, 'hh24'),A.LECTURE_CODE
+		) main_t
+		,
+		(
+		SELECT LPAD(LEVEL -1, 2, '0') tm1
+		, LPAD(LEVEL + 0, 2, '0') tm2
+		FROM dual CONNECT BY LEVEL <= 24
+		) copy_t
+		WHERE copy_t.tm1 = main_t.tm(+)
+		GROUP BY ROLLUP((copy_t.tm1, copy_t.tm2)), LECTURE_CODE
+		ORDER BY copy_t.tm1
+		]]>
+	
+	</select>
 
 	<insert id="insertLectureAccessStats" parameterType="ddit.finalproject.team2.vo.LectureAccessStatsVo">
 		<selectKey resultType="string" keyProperty="lec_acc_sta_no"
@@ -51,7 +80,8 @@
 			SELECT TO_CHAR(LECTUREACCESSSTATISTICS_SEQ.NEXTVAL) FROM DUAL
 		</selectKey>
 		INSERT INTO LECTUREACCESSSTATISTICS (
-		LEC_ACC_STA_NO, CONNECTION_TIME, ACC_IP, ATTEND_NO
+		LEC_ACC_STA_NO, CONNECTION_TIME,
+		ACC_IP, ATTEND_NO
 		) VALUES (
 		#{lec_acc_sta_no},
 		SYSDATE,
@@ -59,6 +89,8 @@
 		#{attend_no}
 		)
 	</insert>
+
+
 
 
 </mapper>

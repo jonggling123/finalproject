@@ -21,6 +21,7 @@ import ddit.finalproject.team2.vo.OrganizationVo;
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
  * 2019. 5. 14.      이종선       최초작성
+ * 2019. 5. 21 		  김재은	 goSubject 수정
  * Copyright (c) 2019 by DDIT All right reserved
  * 
  * 통계관리 화면의 하위 항목들로 이동하기 위한 controller

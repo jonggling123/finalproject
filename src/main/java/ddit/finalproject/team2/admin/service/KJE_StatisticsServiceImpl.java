@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ddit.finalproject.team2.admin.dao.KJE_IStatisticsDao;
 import ddit.finalproject.team2.vo.AttendVo;
 import ddit.finalproject.team2.vo.KJE_StlectureVo;
+import ddit.finalproject.team2.vo.KJE_TimeStatisticsVo;
 import ddit.finalproject.team2.vo.LectureAccessStatsVo;
 import ddit.finalproject.team2.vo.OrganizationVo;
 
@@ -46,6 +47,12 @@ public class KJE_StatisticsServiceImpl implements KJE_IStatisticsService {
 		int result = statisticsDao.insertLectureAccessStats(lectureAccessStats);
 		
 		return result;
+	}
+
+	@Override
+	public List<KJE_TimeStatisticsVo> getLectureStatistics(Map<String, String> stinfo) {
+		List<KJE_TimeStatisticsVo> timeStatisticsList = statisticsDao.selectLectureStatistics(stinfo); 
+		return timeStatisticsList;
 	}
 
 	
