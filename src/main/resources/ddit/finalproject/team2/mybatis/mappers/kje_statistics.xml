@@ -20,7 +20,8 @@
 		UPPER_ORGANIZATION is NOT Null
 	</select>
 
-	<select id="selectStLecture" resultType="ddit.finalproject.team2.vo.KJE_StlectureVo">
+	<select id="selectStLecture" parameterType="String"
+		resultType="ddit.finalproject.team2.vo.KJE_StlectureVo">
 		SELECT
 		LECTURE_CODE,
 		U.USER_ID,
@@ -29,7 +30,9 @@
 		LOWER_ORGANIZATION
 		FROM
 		LECTURE L
-		INNER JOIN USERS U ON(L.USER_ID=U.USER_ID)
+		INNER JOIN USERS U
+		ON(L.USER_ID=U.USER_ID)
+		WHERE OPENSEME_NO= #{openseme_no}
 	</select>
 
 	<select id="selectAttend" resultType="ddit.finalproject.team2.vo.AttendVo">
@@ -215,5 +218,22 @@
 	</insert>
 
 
+	<insert id="insertMainAccessStats" parameterType="ddit.finalproject.team2.vo.PortalAccessStatsVo">
+		<selectKey resultType="string" keyProperty="portal_no"
+			order="BEFORE">
+			SELECT TO_CHAR(PORTALACCESSSTATISTICS_SEQ.NEXTVAL) FROM DUAL
+		</selectKey>
+		INSERT INTO PORTALACCESSSTATISTICS (
+		PORTAL_NO,
+		PORTAL_VISIT_TIME,
+		USER_ID,
+		ACCESS_IP
+		) VALUES (
+		#{portal_no},
+		SYSDATE,
+		#{user_id},
+		#{access_ip}
+		)
+	</insert>
 </mapper>
 

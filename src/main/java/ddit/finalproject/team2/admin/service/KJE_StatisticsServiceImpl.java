@@ -20,6 +20,7 @@ import ddit.finalproject.team2.vo.KJE_TimeStatisticsVo;
 import ddit.finalproject.team2.vo.LectureAccessStatsVo;
 import ddit.finalproject.team2.vo.OpenSemesterVo;
 import ddit.finalproject.team2.vo.OrganizationVo;
+import ddit.finalproject.team2.vo.PortalAccessStatsVo;
 
 @Service
 public class KJE_StatisticsServiceImpl implements KJE_IStatisticsService {
@@ -39,11 +40,7 @@ public class KJE_StatisticsServiceImpl implements KJE_IStatisticsService {
 		return lowerOrganizationList;
 	}
 
-	@Override
-	public List<KJE_StlectureVo> getStLecture() {
-		 List<KJE_StlectureVo> stLectureList = statisticsDao.selectStLecture();
-		return stLectureList;
-	}
+	
 
 	@Override
 	public int recodeLectureAccessStats(Map<String, String> userinfo) {
@@ -55,6 +52,13 @@ public class KJE_StatisticsServiceImpl implements KJE_IStatisticsService {
 		
 		return result;
 	}
+	
+	@Override
+	public int recodeMainAccessStats(PortalAccessStatsVo potalAccessStats) {
+		int result = statisticsDao.insertMainAccessStats(potalAccessStats);
+		return result;
+	}
+
 
 	@Override
 	public List<KJE_TimeStatisticsVo> getLectureStatistics(Map<String, String> stinfo) {
@@ -120,10 +124,17 @@ public class KJE_StatisticsServiceImpl implements KJE_IStatisticsService {
 
 	@Override
 	public OpenSemesterVo getThisTimeSemester(String today) {
-		OpenSemesterVo opensemester = statisticsDao.selectThisTimeSemester(today);
-		return opensemester;
+		OpenSemesterVo openseme_no = statisticsDao.selectThisTimeSemester(today);
+		return openseme_no;
 	}
 
+	@Override
+	public List<KJE_StlectureVo> getStLecture(String openseme_no) {
+		 List<KJE_StlectureVo> stLectureList = statisticsDao.selectStLecture(openseme_no);
+			return stLectureList;
+	}
+
+	
 	
 
 }

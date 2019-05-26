@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import ddit.finalproject.team2.admin.service.KJE_IStatisticsService;
 import ddit.finalproject.team2.common.service.IUserFindService;
 import ddit.finalproject.team2.common.service.KJE_IFaceIdService;
 import ddit.finalproject.team2.util.AuthorityUtil;
@@ -28,6 +29,7 @@ import ddit.finalproject.team2.util.constant.AuthConstants;
 import ddit.finalproject.team2.util.EncryptUtils;
 import ddit.finalproject.team2.util.constant.AuthConstants;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
+import ddit.finalproject.team2.vo.PortalAccessStatsVo;
 import ddit.finalproject.team2.vo.UserVo;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -63,13 +65,19 @@ public class ChooseMainSyncController {
 	@Inject
 	KJE_IFaceIdService faceIdService;
 	
+	@Inject
+	KJE_IStatisticsService statisticsService; 
+	
 	@GetMapping("/chooseMain")
-	public ModelAndView chooseMain(HttpServletResponse response, Authentication authentication, ModelAndView mv) throws IOException{
+	public ModelAndView chooseMain(HttpServletResponse response, Authentication authentication, ModelAndView mv,HttpServletRequest request) throws IOException{
 		int statusCode = 0;
 		String view = null;
 		String authority = null;
 		List<String> authorities = AuthorityUtil.getAuthorityList(authentication);
-		
+		PortalAccessStatsVo potalAccessStats = new PortalAccessStatsVo();
+			potalAccessStats.setAccess_ip(request.getRemoteAddr());
+			potalAccessStats.setUser_id(authentication.getName());
+		  statisticsService.recodeMainAccessStats(potalAccessStats);
 		if(statusCode!=0){
 			response.sendError(statusCode);
 		}else {

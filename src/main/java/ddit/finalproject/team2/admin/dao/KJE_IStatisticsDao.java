@@ -16,6 +16,7 @@ import ddit.finalproject.team2.vo.KJE_TimeStatisticsVo;
 import ddit.finalproject.team2.vo.LectureAccessStatsVo;
 import ddit.finalproject.team2.vo.OpenSemesterVo;
 import ddit.finalproject.team2.vo.OrganizationVo;
+import ddit.finalproject.team2.vo.PortalAccessStatsVo;
 
 @Repository
 public interface KJE_IStatisticsDao {
@@ -36,7 +37,7 @@ public interface KJE_IStatisticsDao {
 	 * 과목 리스트를 가져오는 메서드
 	 * @return 과목이름이 담긴 List
 	 */
-	public List<KJE_StlectureVo> selectStLecture();
+	public List<KJE_StlectureVo> selectStLecture(String openseme_no);
 	
 	
 	/**
@@ -106,6 +107,14 @@ public interface KJE_IStatisticsDao {
 	 * @return 학기정보 
 	 */
 	public OpenSemesterVo selectThisTimeSemester(String today);
+	
+	
+	/**
+	 * 메인페이지에 접속했을때 기록을 insert 하는 메서드
+	 * @param potalAccessStats 접속자 정보
+	 * @return insert 성공 여부
+	 */
+	public int insertMainAccessStats(PortalAccessStatsVo potalAccessStats);
 	
 	
 }

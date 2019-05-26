@@ -18,4 +18,11 @@ public interface KJE_IStatisticsStuService {
 	 */
 	public GradeVo getAvgStudyState(String lecture_code);
 	
+	/**
+	 * 과목코드에 해당하는 과목 이름을 반환하는 메서드
+	 * @param lecture_code
+	 * @return
+	 */
+	public String getLectureName(String lecture_code);
+	
 }

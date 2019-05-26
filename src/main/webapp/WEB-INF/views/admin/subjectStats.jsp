@@ -433,10 +433,7 @@
 </div>
 
 
-<!--  Chat JS
-		============================================ -->
-<script
-	src="${pageContext.request.contextPath }/notika/js/chat/jquery.chat.js"></script>
+
 <!-- Charts JS
 		============================================ -->
 <script

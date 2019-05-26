@@ -25,4 +25,12 @@ public class KJE_StatisticsStuServiceImpl implements KJE_IStatisticsStuService{
 		return avgGrade;
 	}
 
+	@Override
+	public String getLectureName(String lecture_code) {
+		
+		String LectureName = statisticsStuDao.selectLectureName(lecture_code);
+		
+		return LectureName;
+	}
+
 }

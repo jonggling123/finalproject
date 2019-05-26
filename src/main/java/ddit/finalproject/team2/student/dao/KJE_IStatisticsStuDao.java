@@ -22,4 +22,11 @@ public interface KJE_IStatisticsStuDao {
 	 */
 	public GradeVo selectAvgStudyState(String lecture_code);
 	
+	/**
+	 * 과목코드에 해당하는 과목 이름을 반환하는 메서드
+	 * @param lecture_code
+	 * @return
+	 */
+	public String selectLectureName(String lecture_code);
+	
 }

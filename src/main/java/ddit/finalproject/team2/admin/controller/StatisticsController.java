@@ -1,5 +1,8 @@
 package ddit.finalproject.team2.admin.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ddit.finalproject.team2.admin.service.KJE_IStatisticsService;
+import ddit.finalproject.team2.vo.OpenSemesterVo;
 import ddit.finalproject.team2.vo.OrganizationVo;
 
 /**
@@ -39,10 +43,20 @@ public class StatisticsController {
 	 * @return
 	 */
 	@GetMapping("subject")
-	public ModelAndView goSubject(ModelAndView mv, Model model){
-		model.addAttribute("upperOrganizationList", statisticsService.getUpperOrganization());
-		model.addAttribute("lowerOrganizationList", statisticsService.getLowerOrganization());
-		model.addAttribute("lectureList", statisticsService.getStLecture());
+	public ModelAndView goSubject(ModelAndView mv){
+		mv.addObject("upperOrganizationList", statisticsService.getUpperOrganization());
+		mv.addObject("lowerOrganizationList", statisticsService.getLowerOrganization());
+		
+		Date date = new Date();
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
+		
+		String todayString =sdFormat.format(date);
+		
+		OpenSemesterVo thisTimeSemester =statisticsService.getThisTimeSemester(todayString);
+		String openseme_no =thisTimeSemester.getOpenseme_no();
+		
+		mv.addObject("lectureList", statisticsService.getStLecture(openseme_no));
+		  
 		mv.setViewName("admin/subjectStats");
 		return mv;
 	}
@@ -53,9 +67,9 @@ public class StatisticsController {
 	 * @return
 	 */
 	@GetMapping("operation")
-	public ModelAndView goUser(ModelAndView mv, Model model){
-		model.addAttribute("lowerOrganizationList", statisticsService.getLowerOrganization());
-		model.addAttribute("semesterList",statisticsService.getSemesterList());
+	public ModelAndView goUser(ModelAndView mv){
+		mv.addObject("lowerOrganizationList", statisticsService.getLowerOrganization());
+		mv.addObject("semesterList",statisticsService.getSemesterList());
 		mv.setViewName("admin/operationStats");
 		return mv;
 	}
@@ -77,9 +91,16 @@ public class StatisticsController {
 	 * @return
 	 */
 	@GetMapping("behavior")
-	public ModelAndView goBehavior(ModelAndView mv,  Model model){
-		model.addAttribute("lectureList", statisticsService.getStLecture());
-		model.addAttribute("professorList", statisticsService.getProfessorList());
+	public ModelAndView goBehavior(ModelAndView mv){
+
+		Date date = new Date();
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
+		String todayString =sdFormat.format(date);
+		OpenSemesterVo thisTimeSemester =statisticsService.getThisTimeSemester(todayString);
+		String openseme_no =thisTimeSemester.getOpenseme_no();
+		
+		mv.addObject("lectureList", statisticsService.getStLecture(openseme_no));
+		mv.addObject("professorList", statisticsService.getProfessorList());
 		mv.setViewName("admin/behaviorStats");
 		return mv;
 	}
