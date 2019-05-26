@@ -35,6 +35,10 @@ public class Ljs_BoardVo implements Serializable{
 	@NotNull(groups=InsertHint.class) private String lecture_code;
 	private String attend_no;
 	
+	private LectureVo lecture;
+	private String lecture_name;
+	private String professor_id;
+	
 	private List<Ljs_ReplyVo> replyList;
 	private int replycount;
 	
@@ -68,5 +72,11 @@ public class Ljs_BoardVo implements Serializable{
 	public Ljs_BoardVo(String user_id, String lecture_code) {
 		this.user = new UserVo(user_id);
 		this.lecture_code = lecture_code;
+	}
+	
+	public void setLecture(LectureVo lecture){
+		this.lecture = lecture;
+		lecture_name = lecture.getLecture_name();
+		professor_id = lecture.getUser_id();
 	}
 }

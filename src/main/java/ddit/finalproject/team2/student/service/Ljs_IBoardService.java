@@ -1,5 +1,6 @@
 package ddit.finalproject.team2.student.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
@@ -46,8 +47,9 @@ public interface Ljs_IBoardService {
 	 * 게시글 추가 메서드
 	 * @param board
 	 * @return OK, FAILED
+	 * @throws IOException 
 	 */
-	ServiceResult createBoard(Ljs_BoardVo board);
+	ServiceResult createBoard(Ljs_BoardVo board) throws IOException;
 	
 	ServiceResult removeBoard(Ljs_BoardVo board);
 	

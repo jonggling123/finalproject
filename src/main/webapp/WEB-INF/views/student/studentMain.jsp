@@ -1,48 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<%--
-* [[개정이력(Modification Information)]]
-* 수정일                 수정자      수정내용
-* ----------  ---------  -----------------
-* 2019. 5. 2.      AA      최초작성
-* Copyright (c) 2019 by DDIT All right reserved
-*
-* 로그인에 성공하면 나타나는 메인 페이지(학생, 교수)
- --%>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>메인 페이지(학생, 교수)</title>
-
+    
+studentMain
 
 <script type="text/javascript">
-	$(function() {
-		$("#chatbot").on("click", function() {
-			$("#chatForm").submit();
-		});
+	$(function(){
+		echoTest();
 	});
+	function writeMessage(message){ 
+		alert(message);
+	}
+	
+	var sockJS;
+	function echoTest(){
+		if(window.WebSocket){
+			console.log("websocket 지원!");
+			
+			sockJS = new WebSocket("wss://localhost/projecttemplate/alert");
+			sockJS.onopen = function(event){
+				writeMessage(event.target.url + "과 연결 수립");
+			};
+			sockJS.onclose = function(closeEvt){
+				writeMessage("연결 종료, 종료코드 : " + closeEvt.code
+					+ ", 종료사유 : " + closeEvt.reason);
+			};
+			
+			sockJS.onerror = function(errorEvt){
+				console.log("에러 발생, 에러코드는 종료 후 종료코드 확인.");
+			};
+			
+			sockJS.onmessage = function(messageEvt){
+				var message = messageEvt.data;
+				console.log("수신 메세지 타입 : " + typeof message);
+				writeMessage(message);
+			};
+			
+		}else{
+				console.log("websocket 미지원...");
+		}
+	}
 </script>
-</head>
-<body>
-	<div>
-		${authority }
-	</div>
-	<form action="${pageContext.request.contextPath }/common/search">
-		<input type="text" name="keyword" />
-		<input type="submit" id="search" value="검색" />
-	</form>
-	
-	<form id="chatForm" action="${pageContext.request.contextPath }/common/chatbot">
-		<img src="${pageContext.request.contextPath }/res/images/Jellyfish.jpg" id="chatbot" />
-	</form>
-	
-	<a href="${pageContext.request.contextPath }/logout">로그아웃</a>
-	<a href="${pageContext.request.contextPath }/common/notice">공지사항</a>
-	<a href="${pageContext.request.contextPath }/main/mypage">마이페이지</a>
-	<a href="${pageContext.request.contextPath }/main/lecture">강의</a>
-	<a href="${pageContext.request.contextPath }/main/classRegistration">수강신청</a>
-	<a href="${pageContext.request.contextPath }/main/certificate">신청서</a>
-	
-</body>
-</html>

@@ -11,10 +11,9 @@
 	<select id="selectBoardList" parameterType="string" resultMap="boardMap">
 		SELECT A.BOARD_NO, A.BOARD_TYPE, A.BOARD_TITLE, BOARD_DATE, WRITER
 				, BOARD_TITLE, BOARD_HIT, BOARD_CONTENT, A.LECTURE_CODE, ATTEND_NO
-		FROM BOARD A LEFT OUTER JOIN ATTACHMENT B
-		ON(A.BOARD_NO = B.BOARD_NO)
+		FROM BOARD A
 		WHERE A.LECTURE_CODE = #{lecture_code}
-        ORDER BY DECODE(A.BOARD_TYPE, '강좌공지', 1, A.BOARD_NO, 2), A.BOARD_NO
+        ORDER BY DECODE(A.BOARD_TYPE, '강좌공지', 1, A.BOARD_NO, 2), A.BOARD_NO DESC
 	</select>
 	
 	<select id="selectboard" parameterType="string" resultMap="boardMap">

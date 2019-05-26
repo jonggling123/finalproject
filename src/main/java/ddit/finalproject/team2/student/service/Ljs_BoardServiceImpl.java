@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.Map.Entry;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
@@ -14,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import ddit.finalproject.team2.student.dao.Ljs_IAttachmentDao;
 import ddit.finalproject.team2.student.dao.Ljs_IAttendDao;
@@ -23,6 +28,7 @@ import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.util.exception.CommonException;
 import ddit.finalproject.team2.vo.AttachmentVo;
 import ddit.finalproject.team2.vo.Ljs_BoardVo;
+import ddit.finalproject.team2.vo.UserVo;
 
 @Service
 public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
@@ -43,6 +49,9 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 	
 	@Inject
 	Ljs_IAttachmentDao attachmentDao;
+	
+	@Resource(name="webSocketSessionMap")
+	Map<String, WebSocketSession> webSocketSessionMap;
 	
 	public void preProcessAttachmentList(Ljs_BoardVo board){
 		List<AttachmentVo> attachList = board.getAttachmentList();
@@ -138,13 +147,20 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 
 	@Transactional
 	@Override
-	public ServiceResult createBoard(Ljs_BoardVo board) {
+	public ServiceResult createBoard(Ljs_BoardVo board) throws IOException {
 		ServiceResult result = ServiceResult.FAILED;
 		board.setAttend_no(attendDao.selectAttendNo(board));
 		int cnt = boardDao.insertBoard(board);
 		if(cnt>0){
 			processAttachment(board);
 			result = ServiceResult.OK;
+			for(Entry<String, WebSocketSession> e : webSocketSessionMap.entrySet()){
+				UserVo user = (UserVo) e.getValue().getPrincipal();
+				String attend_no = attendDao.selectAttendNo(new Ljs_BoardVo(user.getUser_id(), board.getLecture_code()));
+				if(attend_no!=null || user.getUser_id().equals(board.getProfessor_id())){
+					e.getValue().sendMessage(new TextMessage(board.getLecture().getLecture_name()+"의 강좌 게시판에 새 글이 작성되었습니다."));
+				}
+			}
 		}
 		return result;
 	}
