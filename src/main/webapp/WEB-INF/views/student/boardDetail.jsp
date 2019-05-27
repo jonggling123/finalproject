@@ -20,9 +20,15 @@
 </style>
 
 <!--    메뉴 소개 영역 -->
-<c:forEach items="${boardList }" var="b">
-	<c:if test="${bo_no eq b.board_no}">
-		<c:set var="board" value="${ b}" />
+<c:forEach items="${boardList }" varStatus="stat">
+	<c:if test="${bo_no eq stat.current.board_no}">
+		<c:set var="board" value="${ stat.current}" />
+		<c:if test="${not empty boardList[stat.index+1] }">
+			<c:set var="next" value="${boardList[stat.index+1] }" />
+		</c:if>
+		<c:if test="${not empty notices[stat.index-1] }">
+			<c:set var="prev" value="${boardList[stat.index-1] }" />
+		</c:if>
 	</c:if>
 </c:forEach>
 <div class="breadcomb-area">
@@ -65,14 +71,14 @@
 						<b>분류 : ${board.board_type} </b>
 					</p>
 					<p>
-						<b>작성자 : ${board.user.user_name }</b>
+						<b>작성자 : ${board.writer }</b>
 					</p>
 					<p>
 						<b id="boardTitle">제목 : ${board.board_title}</b>
 						<input class="modifyTags modifyInputs" type="text" id="modTitle" name="board_title" value="${board.board_title }" style="display:none;" />
 					</p>
 					<p class="last-ph">
-						<b id="boardDate">Date : ${board.board_date}</b>
+						<b id="boardDate">작성일 : ${board.board_date}</b>
 					</p>
 				</div>
 				<div class="file-download-system">
@@ -150,40 +156,29 @@
 							<div class="row">
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<div>
-										<c:if
-											test="${not empty boardList[2] || not empty boardList[1] }">
-											<c:set var="prev" value="${boardList[0] }"></c:set>
+										<c:if test="${not empty prev }">
 											<span> <img
 												src="${pageContext.request.contextPath }/notika/images/sort_asc_disabled.png">
 												<a
-												href="${pageContext.request.contextPath }/${prev.lecture_code}/board/${prev.board_no}"
+												href="${pageContext.request.contextPath }/board/${prev.board_no}"
 												style="margin-left: 3px;">이전글</a> <a
-												href="${pageContext.request.contextPath }/${prev.lecture_code}/board/${prev.board_no}"
+												href="${pageContext.request.contextPath }/board/${prev.board_no}"
 												style="margin-left: 40px;">${prev.board_title}</a> <span
-												style="margin-left: 300px;">${prev.user.user_name }</span> <span
+												style="margin-left: 300px;">${prev.writer }</span> <span
 												style="margin-left: 100px;">${prev.board_date }</span>
 											</span>
 										</c:if>
 									</div>
 									<div>
-										<c:if
-											test="${not empty boardList[2] || not empty boardList[1] }">
-											<c:choose>
-												<c:when test="${not empty boardList[2] }">
-													<c:set var="next" value="${boardList[2] }" />
-												</c:when>
-												<c:otherwise>
-													<c:set var="next" value="${boardList[1] }"></c:set>
-												</c:otherwise>
-											</c:choose>
+										<c:if test="${not empty next }">
 											<span> <img
 												src="${pageContext.request.contextPath }/notika/images/sort_desc_disabled.png">
 												<a
-												href="${pageContext.request.contextPath }/${next.lecture_code}/board/${next.board_no}"
+												href="${pageContext.request.contextPath }/board/${next.board_no}"
 												style="margin-left: 3px;">다음글</a> <a
-												href="${pageContext.request.contextPath }/${next.lecture_code}/board/${next.board_no}"
+												href="${pageContext.request.contextPath }/board/${next.board_no}"
 												style="margin-left: 40px;">${next.board_title }</a> <span
-												style="margin-left: 300px;">${next.user.user_name }</span> <span
+												style="margin-left: 300px;">${next.writer }</span> <span
 												style="margin-left: 100px;">${next.board_date }</span>
 											</span>
 										</c:if>
@@ -235,8 +230,8 @@
 		var sendData = {
 			"board_no" : "${board.board_no}",
 			"lecture_code" : "${board.lecture_code}",
-			"attend_no" : "${board.attend_no}",
-			"reply_content" : $('#replyContent').val()
+			"reply_content" : $('#replyContent').val(),
+			"user" : "${user.user_id}"
 		};
 		
 		var jsonData = JSON.stringify(sendData);
@@ -275,24 +270,25 @@
 					}
 				}
 			});
-		}else{
-			var td = btn.parent().prev().prev();
-			var content = btn.parent().prev().prev().text();
-			td.text("").append(
-				$("input").attr({
-					type : "hidden",
-					value : content,
-					id : "modInp"
-				})
-			);
-			$(this).after(
-				$('button').attr({
-					type : 'button',
-					id : 'modCancel'
-				}).text("취소")
-			);
-			btn.next().next().prop('style', 'display:none;');
 		}
+// 		else{
+// 			var td = btn.parent().prev().prev();
+// 			var content = btn.parent().prev().prev().text();
+// 			td.text("").append(
+// 				$("input").attr({
+// 					type : "hidden",
+// 					value : content,
+// 					id : "modInp"
+// 				})
+// 			);
+// 			$(this).after(
+// 				$('button').attr({
+// 					type : 'button',
+// 					id : 'modCancel'
+// 				}).text("취소")
+// 			);
+// 			btn.next().next().prop('style', 'display:none;');
+// 		}
 	});
 	
 // 	$('#modInp').on('click', function(){
@@ -377,7 +373,7 @@
 		var content = CKEDITOR.instances.contextArea.getData();
 		
 		form.append("deleteAttachmentNos", arr);
-		form.append("board_content", content);
+		form.append("board_content", content.trim());
 		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/${board.lecture_code}/board/modify",
@@ -388,20 +384,31 @@
 			dataType : "json",
 			success : function(resp){
 				$('.modifyTags').prop('style', 'display:none;');
-				viewMode();
 				
 				$('#boardTitle').val("제목 : " + resp.board_title);
 				$('#boardDate').val("작성일 : " + resp.board_title);
 				$('#contentDiv').text("").append(resp.board_content);
+				$('.modifyTags').prop('style', 'display:none;');
+				for(name in CKEDITOR.instances)
+				{
+				    CKEDITOR.instances[name].destroy(true);
+				}
+				$('#contextArea').remove();
+				
+				$('#contentDiv').prop("style", null);
+				$('#boardTitle').prop("style", null);
+				$('#removeBtn').prop('style', null);
+				$('#modifyBtn').prop('style', null);
+				$('#replyDiv').prop('style', null);
+				$('#tableDiv').prop('style', null);
 				
 				var fileList = [];
 				var p = $('<p>').append(
 					$('<b>').text("첨부파일 :")		
 				);
 				fileList.push(p);
-				console.log(resp.board_attachmentcount);
-				for(var i=0; i<parseInt(resp.board_attachmentcount); i++){
-					var file = resp.attachmentList[i];
+				for(var i=0; i<resp.board_attachmentcount; i++){
+					var file = resp.savedAttachmentList[i];
 					var a = $('<a>').attr({
 						href : "'${pageContext.request.contextPath }/${board.lecture_code}/download/"+file.attachment_no+"'"
 						, title : "'파일명:"+file.file_size+"'"
@@ -419,11 +426,8 @@
 						fileList.push(space);
 					}
 				}
-				
-				$('#attachList').remove().html(fileList);
-			},
-			error : function(e){
-				
+				console.log(fileList);
+				$('#attachList').empty().html(fileList);
 			}
 		});
 	});

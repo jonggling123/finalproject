@@ -28,7 +28,7 @@ import java.util.Map;
  *      </pre>
  */
 @Controller("studentController")
-@RequestMapping("/main")
+@RequestMapping("/studentMain")
 public class MainController {
 
 	@Inject

@@ -122,7 +122,7 @@
                     </li>
                     <li><a data-toggle="tab" href="#cert"><i class="notika-icon notika-bar-chart"></i> 증명서</a>
                     </li>
-
+                    <li><a href="${pageContext.request.contextPath }/professorMain/notice"><i class="notika-icon notika-bar-chart"></i>공지사항</a></li>
                 </ul>
                 <div class="tab-content custom-menu-content">
                     <div id="mypage" class="tab-pane in notika-tab-menu-bg animated flipInX">
@@ -145,7 +145,7 @@
                             </li>
                             <li><a href="${pageContext.request.contextPath}/professor/lectureList">강의목록</a>
                             </li>
-                            <li><a href="code-editor.html">강의게시판</a>
+                            <li><a href="${pageContext.request.contextPath }/subjectPage/lecture_code_1/lectureBoard">강의게시판</a>
                             </li>
                             <li><a href="image-cropper.html">1:1지도</a>
                             </li>

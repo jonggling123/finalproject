@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 import ddit.finalproject.team2.student.service.Ljs_IBoardService;
 import ddit.finalproject.team2.util.enumpack.BrowserType;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
+import ddit.finalproject.team2.util.hint.InsertHint;
 import ddit.finalproject.team2.vo.AttachmentVo;
-import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;
+import ddit.finalproject.team2.vo.Ljs_BoardVo;
 import ddit.finalproject.team2.vo.UserVo;
 
 /**
@@ -95,7 +97,7 @@ public class BoardController {
 	public ModelAndView goBoardView(@PathVariable String board_no, ModelAndView mv, Authentication au){
 		mv.setViewName("student/boardDetail");
 		mv.getModel().put("user", (UserVo)au.getPrincipal());
-		List<Ljs_BoardSubjectVo> boardList = boardService.retrieveBoard(board_no);
+		List<Ljs_BoardVo> boardList = boardService.retrieveBoard(board_no);
 		mv.getModel().put("boardList", boardList);
 		mv.getModel().put("bo_no", board_no);
 		
@@ -103,9 +105,9 @@ public class BoardController {
 	}
 	
 	@PostMapping("board/create")
-	public ModelAndView create(@PathVariable String lecture_code, @ModelAttribute("board") Ljs_BoardSubjectVo board
+	public ModelAndView create(@PathVariable String lecture_code
+			, @ModelAttribute("board") @Validated(InsertHint.class) Ljs_BoardVo board, Error errors
 			, Authentication au, HttpServletResponse resp, ModelAndView mv) throws IOException{
-		board.setUser((UserVo)au.getPrincipal());
 		ServiceResult result = boardService.createBoard(board);
 		
 		if(ServiceResult.FAILED.equals(result)){

@@ -62,7 +62,7 @@
 		}, {
 			data : "replycount"
 		}, {
-			data : "user_name"
+			data : "writer"
 		}, {
 			data : "board_date"
 		}, {
@@ -97,7 +97,7 @@
 			var date = data[5];
 			var hit = data[6];
 
-			if ((chosenType == 'all' || chosenType == type)
+			if ((chosenType == '전체' || chosenType == type)
 					&& (searchWord == ''
 							|| searchWord == no
 							|| searchWord == title
@@ -112,8 +112,8 @@
 	});
 
 	var select = $('<select>').prop('id', 'types').append(
-			$('<option>').text('all'), $('<option>').text('notice'),
-			$('<option>').text('normal'), $('<option>').text('question'));
+			$('<option>').text('전체'), $('<option>').text('강좌공지'),
+			$('<option>').text('일반'), $('<option>').text('질문'));
 	var button = $('<button>').prop({
 		type : 'button',
 		'class' : 'btn btn-default notika-btn-default',

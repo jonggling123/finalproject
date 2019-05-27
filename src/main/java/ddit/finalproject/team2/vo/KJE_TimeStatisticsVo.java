@@ -11,6 +11,6 @@ import lombok.ToString;
 @Data
 @ToString
 public class KJE_TimeStatisticsVo {
-	@NotNull private String cnt;
+	@NotNull private String noa;
 	@NotNull private String time;
 }

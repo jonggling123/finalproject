@@ -1,9 +1,13 @@
 package ddit.finalproject.team2.admin.controller;
 
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import ddit.finalproject.team2.admin.service.KJE_IPolicyManagementService;
 
 /**
  * @author 이종선
@@ -15,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
  * 2019. 5. 14.      이종선       최초작성
+ * 2019.5.26         김재은       평가정책관리, 강의평가 관리 View name수정
  * Copyright (c) 2019 by DDIT All right reserved
  * 
  * 강의운영관리 화면의 하위 항목으로 이동하기 위한 controller
@@ -23,6 +28,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/operation")
 public class LectureOperationController {
+	
+	@Inject
+	KJE_IPolicyManagementService policyManagementService; 
+	
 	/**
 	 * 평가정책관리
 	 * @param mv
@@ -30,7 +39,8 @@ public class LectureOperationController {
 	 */
 	@GetMapping("policy")
 	public ModelAndView goPolicy(ModelAndView mv){
-		mv.setViewName("admin/lectureOperation");
+		mv.addObject("addSemesterList",policyManagementService.getAddSemesterList());
+		mv.setViewName("admin/policyManagement");
 		return mv;
 	}
 	
@@ -80,7 +90,7 @@ public class LectureOperationController {
 	 */
 	@GetMapping("evaluation")
 	public ModelAndView goEvaluation(ModelAndView mv){
-		mv.setViewName("admin/managePolicy");
+		mv.setViewName("admin/lectureevaluation");
 		return mv;
 	}
 }

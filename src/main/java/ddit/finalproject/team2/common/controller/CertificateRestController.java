@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ddit.finalproject.team2.common.service.KJE_CertificateServiceImpl;
 import ddit.finalproject.team2.vo.KJE_CertificateVo;
 import ddit.finalproject.team2.vo.KJE_CertificatieAdminVo;
-import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;
+import ddit.finalproject.team2.vo.Ljs_BoardVo;
 import ddit.finalproject.team2.vo.UserVo;
 
 @RestController
