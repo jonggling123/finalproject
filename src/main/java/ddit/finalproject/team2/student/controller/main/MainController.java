@@ -1,6 +1,8 @@
 package ddit.finalproject.team2.student.controller.main;
 
 import ddit.finalproject.team2.student.service.Lsh_ILectureService;
+import ddit.finalproject.team2.vo.UserVo;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +46,7 @@ public class MainController {
 	public ModelAndView goGrade(ModelAndView mv, Authentication au) {
 		mv.setViewName("student/searchGrade");
 		mv.getModel().put("id", au.getName());
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		return mv;
 	}
 
@@ -58,6 +61,7 @@ public class MainController {
 	public ModelAndView goMyInfo(ModelAndView mv, Authentication au) {
 		mv.setViewName("student/myInfo");
 		mv.getModel().put("id", au.getName());
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		return mv;
 	}
 
@@ -72,6 +76,7 @@ public class MainController {
 	public ModelAndView goSchedule(ModelAndView mv, Authentication au) {
 		mv.setViewName("student/schedule");
 		mv.getModel().put("id", au.getName());
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		return mv;
 	}
 
@@ -86,6 +91,7 @@ public class MainController {
 	public ModelAndView goAttendList(ModelAndView mv, Authentication au) {
 		mv.setViewName("student/attendList");
 		mv.getModel().put("id", au.getName());
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		return mv;
 	}
 
@@ -101,6 +107,7 @@ public class MainController {
 	public ModelAndView goCertificate(ModelAndView mv, Authentication au) {
 		mv.setViewName("student/certificate");
 		mv.getModel().put("id", au.getName());
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		return mv;
 	}
 
@@ -115,6 +122,7 @@ public class MainController {
 	public ModelAndView goNotice(ModelAndView mv, Authentication au) {
 		mv.setViewName("common/notice");
 		mv.getModel().put("id", au.getName());
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		return mv;
 	}
 
@@ -129,6 +137,7 @@ public class MainController {
 	public ModelAndView goAttendance(ModelAndView mv, Authentication au) {
 		mv.setViewName("student/attendApply");
 		mv.getModel().put("id", au.getName());
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		return mv;
 	}
 
@@ -136,6 +145,7 @@ public class MainController {
 	public ModelAndView goMyLecture(ModelAndView mv, Authentication au) {
 		mv.setViewName("student/myLecture");
 		mv.getModel().put("id", au.getName());
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
 
 		Map<String,String> map=new HashMap<>();
 		map.put("user_id",au.getName());
@@ -156,6 +166,7 @@ public class MainController {
 	public ModelAndView goAllLecture(ModelAndView mv, Authentication au) {
 		mv.setViewName("student/allLecture");
 		mv.getModel().put("id", au.getName());
+		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		return mv;
 	}
 

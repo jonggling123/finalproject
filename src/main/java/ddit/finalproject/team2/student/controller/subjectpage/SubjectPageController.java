@@ -58,6 +58,7 @@ public class SubjectPageController {
         userinfo.put("acc_ip", request.getRemoteAddr());
         statisticsService.recodeLectureAccessStats(userinfo);
         mv.setViewName("student/submenu/eduGoal");
+        mv.getModel().put("user", (UserVo)authentication.getPrincipal());
         return mv;
     }
 
@@ -67,8 +68,9 @@ public class SubjectPageController {
      * @return
      */
     @GetMapping("professorIntro")
-    public ModelAndView goIntroduction(ModelAndView mv) {
+    public ModelAndView goIntroduction(ModelAndView mv, Authentication authentication) {
         mv.setViewName("student/submenu/professorIntro");
+        mv.getModel().put("user", (UserVo)authentication.getPrincipal());
         return mv;
     }
 
@@ -97,6 +99,7 @@ public class SubjectPageController {
         }else{
             mv.getModel().put("continuePlay",lectureService.selectPlay(map));
         }
+        mv.getModel().put("user", (UserVo)au.getPrincipal());
         return mv;
     }
 
@@ -148,6 +151,7 @@ public class SubjectPageController {
     public ModelAndView goFaceChat(ModelAndView mv, Authentication au) {
         mv.setViewName("student/submenu/mantoman");
         mv.getModel().put("id", au.getName());
+        mv.getModel().put("user", (UserVo)au.getPrincipal());
         return mv;
     }
 
@@ -162,6 +166,7 @@ public class SubjectPageController {
     public ModelAndView goAssignment(ModelAndView mv, Authentication au) {
         mv.setViewName("student/submenu/lectureAssignment");
         mv.getModel().put("id", au.getName());
+        mv.getModel().put("user", (UserVo)au.getPrincipal());
         return mv;
     }
 
@@ -176,6 +181,7 @@ public class SubjectPageController {
     public ModelAndView goStudy(ModelAndView mv, Authentication au) {
         mv.setViewName("student/submenu/studyState");
         mv.getModel().put("id", au.getName());
+        mv.getModel().put("user", (UserVo)au.getPrincipal());
         return mv;
     }
 
@@ -190,6 +196,7 @@ public class SubjectPageController {
     public ModelAndView goSurvey(ModelAndView mv, Authentication au) {
         mv.setViewName("student/submenu/survey");
         mv.getModel().put("id", au.getName());
+        mv.getModel().put("user", (UserVo)au.getPrincipal());
         return mv;
     }
 }

@@ -11,8 +11,47 @@
 <script type="text/javascript">
 	$(function(){
 		echoTest();
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/ring/${user.user_id}',
+			dataType : 'json',
+			success : function(resp){
+				var num = 0;
+				$.each(resp, function(i, v){
+					if(v.ring_confirm_yn=='n'){
+						num++;
+					}
+				});
+				$('#countingDiv').append('<span>').text(num);
+			}
+		});
 	});
-	function writeMessage(message){ 
+	
+	$('#ringBell').on('click', function(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/ring/${user.user_id}',
+			dataType : 'json',
+			success : function(resp){
+				$.each(resp, function(i, v){
+					$('#ringList').children().remove();
+					$('#ringList').append(
+						$('<a>').prop('href', v.ring_move_address).append(
+							$('<div>').prop('class', 'hd-message-img').append(
+								$('<img>').prop('src', '${pageContext.request.contextPath}/notika/img/post/1.jpg')		
+							)
+							, $('<div>').prop('class', 'hd-mg-ctn').append(
+								$('<h3>').text(v.request_name)
+								, $('<p>').text(v.ring_title)
+							)
+						)
+					);
+				});				
+			}
+		});
+	});
+	
+	function writeMessage(message){
+		alert(message);
 		var num = $('#webSocketAlertNo').text();
 		if(num!=""){
 			$(num).text(parseInt(num)+1);
@@ -49,6 +88,8 @@
 				console.log("websocket 미지원...");
 		}
 	}
+	
+	
 </script>
 
 <input id ="userName" type="hidden" value="${user.user_name}"></input>
@@ -142,55 +183,34 @@
                             </div>
                         </li>
 <!--                         알림 -->
-                        <li class="nav-item nc-al"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-alarm"></i></span><div class="spinner4 spinner-4"></div><div class="ntd-ctn"><span>3</span></div></a>
+                        <li class="nav-item nc-al">
+                        	<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+	                        	<span><i id="ringBell" class="notika-icon notika-alarm"></i></span>
+	                        	<div class="spinner4 spinner-4"></div><div class="ntd-ctn">
+	                        		<span>3</span>
+	                        	</div>
+                        	</a>
                             <div role="menu" class="dropdown-menu message-dd notification-dd animated zoomIn">
                                 <div class="hd-mg-tt">
                                     <h2>알림</h2>
                                 </div>
-                                <div class="hd-message-info">
-                                    <a href="#">
-                                        <div class="hd-message-sn">
-                                            <div class="hd-message-img">
-                                                <img src="${pageContext.request.contextPath}/notika/img/post/1.jpg" alt="" />
-                                            </div>
-                                            <div class="hd-mg-ctn">
-                                                <h3>David Belle</h3>
-                                                <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                                            </div>
-                                        </div>
-                                    </a>
+                                <div id="ringList" class="hd-message-info">
+                                   
                                 </div>
                                 <div class="hd-mg-va">
                                     <a href="#">View All</a>
                                 </div>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                        	<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                        		<span><i class="notika-icon notika-menus"></i></span>
+                        		<div class="spinner4 spinner-4"></div>
+                        		<div id="countingDiv" class="ntd-ctn"></div>
+                        	</a>
                         </li>
                         
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-                        	<span><i class="notika-icon notika-menus"></i>
-                        	</span><div class="spinner4 spinner-4"></div><div class="ntd-ctn">
-									<span id="webSocketAlertNo"></span>
-								</div></a>
-                            <div role="menu" class="dropdown-menu message-dd task-dd animated zoomIn">
-                                <div class="hd-mg-tt">
-                                    <h2>알림</h2>
-                                </div>
-                                <div class="hd-message-info hd-task-info">
-                                    <div class="skill">
-                                        <div class="progress">
-                                            <div class="lead-content">
-                                                <p>HTML5 Validation Report</p>
-                                            </div>
-                                            <div class="progress-bar wow fadeInLeft" data-progress="95%" style="width: 95%;" data-wow-duration="1.5s" data-wow-delay="1.2s"> <span>95%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="hd-mg-va">
-                                    <a href="#">View All</a>
-                                </div>
-                            </div>
-                        </li>
+                        
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-chat"></i></span></a>
                             <div role="menu" class="dropdown-menu message-dd chat-dd animated zoomIn">
                              <div class="notika-chat-list notika-shadow mg-t-30 tb-res-ds-n dk-res-ds">
