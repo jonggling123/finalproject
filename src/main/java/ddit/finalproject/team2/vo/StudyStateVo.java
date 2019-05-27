@@ -18,4 +18,5 @@ public class StudyStateVo implements Serializable{
 	@NotNull private String replay_time;
 	@NotNull private String videoweek_code;
 	@NotNull private String lecture_code;
+	@NotNull private String isplaying;
 }

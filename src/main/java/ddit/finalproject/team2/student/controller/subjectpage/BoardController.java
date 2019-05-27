@@ -18,19 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import ddit.finalproject.team2.student.service.Ljs_BoardServiceImpl;
 import ddit.finalproject.team2.student.service.Ljs_IBoardService;
 import ddit.finalproject.team2.util.enumpack.BrowserType;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
-import ddit.finalproject.team2.util.exception.CommonException;
 import ddit.finalproject.team2.vo.AttachmentVo;
 import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;
 import ddit.finalproject.team2.vo.UserVo;
@@ -117,7 +111,7 @@ public class BoardController {
 		if(ServiceResult.FAILED.equals(result)){
 			resp.sendError(500);
 		}
-		mv.setViewName("student/lectureBoard");
+		mv.setViewName("student/submenu/lectureBoard");
 		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		mv.getModel().put("lectureCode", lecture_code);
 		return mv;
