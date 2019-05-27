@@ -32,7 +32,8 @@
 		
 		<logout logout-url="/logout" logout-success-url="/"/>
 		
-		<intercept-url pattern="/**" access="permitAll"/>			   
+		<intercept-url pattern="/**" access="permitAll"/>		
+			   
 		<csrf disabled="true"/>			   
 	</http>
 </beans:beans>

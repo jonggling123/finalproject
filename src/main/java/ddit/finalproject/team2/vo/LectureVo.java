@@ -1,7 +1,6 @@
 package ddit.finalproject.team2.vo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
@@ -19,5 +18,9 @@ public class LectureVo implements Serializable{
 	@NotNull private String user_id;
 	@NotNull private String user_name;
 	@NotNull private String lecture_name;
+	
+	public LectureVo(String lecture_code){
+		this.lecture_code = lecture_code;
+	}
 	
 }

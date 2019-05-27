@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(of="ring_code")
 @ToString
+@AllArgsConstructor
 public class RingVo implements Serializable{
 	@NotNull private String ring_code;
 	@NotNull private String ring_response_id;

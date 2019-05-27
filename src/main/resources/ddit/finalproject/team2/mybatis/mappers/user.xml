@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ddit.finalproject.team2.common.dao.IUserDao">
-	<select id="selectUser" parameterType="string" resultType="ddit.finalproject.team2.vo.UserVo">
-		SELECT * FROM USERS 
-		WHERE USER_ID = #{user_id}
+	<resultMap type="ddit.finalproject.team2.vo.UserVo" id="userMap" autoMapping="true">
+		<id property="user_id" column="USER_ID"/>
+		<collection property="attendList" autoMapping="true" ofType="ddit.finalproject.team2.vo.AttendVo">
+			<id property="attend_no" column="ATTEND_NO"/>
+		</collection>
+		<collection property="lectureList" autoMapping="true" ofType="ddit.finalproject.team2.vo.LectureVo">
+			<id property="lecture_code" column="LECTURE_CODE"/>
+		</collection>
+	</resultMap>
+
+	<select id="selectUser" parameterType="string" resultMap="userMap">
+		SELECT USER_PASS, USER_NAME, USER_REGNO
+		, USER_HP, USER_MAIL
+		, USER_ADD1, USER_ADD2
+		, A.USER_ID, USER_PROFILE_PATH
+		, ATTEND_NO, B.LECTURE_CODE
+		, LECTURE_NAME
+		FROM USERS A LEFT OUTER JOIN ATTEND B
+		ON(A.USER_ID = B.USER_ID)
+		LEFT OUTER JOIN LECTURE C
+		ON(B.LECTURE_CODE = C.LECTURE_CODE)
+		WHERE A.USER_ID = #{user_id}
 	</select>
 	
 	<select id="selectUserList" resultType="ddit.finalproject.team2.vo.UserVo">

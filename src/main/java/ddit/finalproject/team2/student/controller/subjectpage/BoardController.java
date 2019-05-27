@@ -91,7 +91,7 @@ public class BoardController {
 	
 	@GetMapping("board/create")
 	public ModelAndView goCreate(@PathVariable String lecture_code, ModelAndView mv, Authentication au){
-		mv.setViewName("student/boardAdd");
+		mv.setViewName("new/boardAdd");
 		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		mv.getModel().put("lectureCode", lecture_code);
 		mv.getModel().put("lecture", lectureService.retrieveLecture(lecture_code));
@@ -100,7 +100,7 @@ public class BoardController {
 	
 	@GetMapping("board/{board_no}")
 	public ModelAndView goBoardView(@PathVariable String board_no, ModelAndView mv, Authentication au){
-		mv.setViewName("student/boardDetail");
+		mv.setViewName("new/boardDetail");
 		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		List<Ljs_BoardVo> boardList = boardService.retrieveBoard(board_no);
 		mv.getModel().put("boardList", boardList);
@@ -118,7 +118,7 @@ public class BoardController {
 		if(ServiceResult.FAILED.equals(result)){
 			resp.sendError(500);
 		}
-		mv.setViewName("student/lectureBoard");
+		mv.setViewName("new/lectureBoard");
 		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		mv.getModel().put("lectureCode", lecture_code);
 		return mv;

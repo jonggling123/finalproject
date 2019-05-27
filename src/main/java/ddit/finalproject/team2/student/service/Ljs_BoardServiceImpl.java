@@ -13,6 +13,9 @@ import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import ddit.finalproject.team2.common.dao.Ljs_IRingDao;
 import ddit.finalproject.team2.student.dao.Ljs_IAttachmentDao;
 import ddit.finalproject.team2.student.dao.Ljs_IAttendDao;
 import ddit.finalproject.team2.student.dao.Ljs_IBoardDao;
@@ -27,7 +31,9 @@ import ddit.finalproject.team2.student.dao.Ljs_IReplyDao;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.util.exception.CommonException;
 import ddit.finalproject.team2.vo.AttachmentVo;
+import ddit.finalproject.team2.vo.LectureVo;
 import ddit.finalproject.team2.vo.Ljs_BoardVo;
+import ddit.finalproject.team2.vo.RingVo;
 import ddit.finalproject.team2.vo.UserVo;
 
 @Service
@@ -52,6 +58,9 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 	
 	@Resource(name="webSocketSessionMap")
 	Map<String, WebSocketSession> webSocketSessionMap;
+	
+	@Inject
+	Ljs_IRingDao ringDao;
 	
 	public void preProcessAttachmentList(Ljs_BoardVo board){
 		List<AttachmentVo> attachList = board.getAttachmentList();
@@ -154,11 +163,13 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 		if(cnt>0){
 			processAttachment(board);
 			result = ServiceResult.OK;
+			UserVo user = (UserVo) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
 			for(Entry<String, WebSocketSession> e : webSocketSessionMap.entrySet()){
-				UserVo user = (UserVo) e.getValue().getPrincipal();
-				String attend_no = attendDao.selectAttendNo(new Ljs_BoardVo(user.getUser_id(), board.getLecture_code()));
-				if(attend_no!=null || user.getUser_id().equals(board.getProfessor_id())){
-					e.getValue().sendMessage(new TextMessage(board.getLecture().getLecture_name()+"의 강좌 게시판에 새 글이 작성되었습니다."));
+				if(user.getLectureList().contains(new LectureVo(board.getLecture_code())) || user.getUser_id().equals(board.getProfessor_id())){
+					ringDao.insertRing(
+						new RingVo(null, user.getUser_id(), "admin", "강좌게시판", null
+							, "${pageContext.request.contextPath}/"+board.getLecture_code()+"/board/"+board.getBoard_no(), null, null, "N"));
+					e.getValue().sendMessage(new TextMessage(board.getLecture_name()+"의 강좌 게시판에 새 글이 작성되었습니다."));
 				}
 			}
 		}

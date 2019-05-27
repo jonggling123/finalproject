@@ -56,7 +56,7 @@ public class SubjectPageController {
 		
 		statisticsService.recodeLectureAccessStats(userinfo);
 		
-		mv.setViewName("student/eduGoal");
+		mv.setViewName("new/eduGoal");
 		return mv;
 	}
 	
@@ -91,7 +91,7 @@ public class SubjectPageController {
 	 */
 	@GetMapping("lectureBoard")
 	public ModelAndView goBoard(@PathVariable String lecture_code, ModelAndView mv, Authentication au){
-		mv.setViewName("student/lectureBoard");
+		mv.setViewName("new/lectureBoard");
 		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		mv.getModel().put("lectureCode", lecture_code);
 		return mv;
