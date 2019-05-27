@@ -9,6 +9,7 @@
 <!-- 			로거의 설정에 따라 현재 로거에 설정된 이벤트 등급보다 낮은 등급으로 -->
 <!-- 			로그 메시지를 전달하는 경우, 메시지는 무시됨. -->
 <!-- 	4) logger : 로그 메시지 전달자, 로그 메시지의 기록 여부를 결정할때 logger 의 level에 따라 결정됨.			  -->
+
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{1.} - %msg%n"/>

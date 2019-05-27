@@ -113,7 +113,7 @@ public class BoardController {
 		if(ServiceResult.FAILED.equals(result)){
 			resp.sendError(500);
 		}
-		mv.setViewName("student/lectureBoard");
+		mv.setViewName("student/submenu/lectureBoard");
 		mv.getModel().put("user", (UserVo)au.getPrincipal());
 		mv.getModel().put("lectureCode", lecture_code);
 		return mv;
