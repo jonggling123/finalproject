@@ -1,15 +1,15 @@
 package ddit.finalproject.team2.student.controller.main;
 
-import java.util.List;
-
+import ddit.finalproject.team2.student.service.Lsh_ILectureService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ddit.finalproject.team2.util.AuthorityUtil;
-import ddit.finalproject.team2.util.constant.AuthConstants;
+import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 이종선
@@ -28,9 +28,11 @@ import ddit.finalproject.team2.util.constant.AuthConstants;
  *      </pre>
  */
 @Controller("studentController")
-@RequestMapping("/main")
+@RequestMapping("/studentMain")
 public class MainController {
 
+	@Inject
+	Lsh_ILectureService lectureService;
 	/**
 	 * 성적조회 화면으로 이동하기 위한 command handler
 	 * 
@@ -134,6 +136,12 @@ public class MainController {
 	public ModelAndView goMyLecture(ModelAndView mv, Authentication au) {
 		mv.setViewName("student/myLecture");
 		mv.getModel().put("id", au.getName());
+
+		Map<String,String> map=new HashMap<>();
+		map.put("user_id",au.getName());
+		map.put("openseme_year","2019");
+		map.put("openseme_semester","1");
+		mv.getModel().put("lectures",lectureService.selectLectureListbyOpenseme(map));
 		return mv;
 	}
 

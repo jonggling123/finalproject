@@ -13,7 +13,7 @@
 		WHERE ATTACHMENT_NO = #{attachment_no}
 	</select>
 	
-	<select id="selectAttachmentList" parameterType="ddit.finalproject.team2.vo.Ljs_BoardSubjectVo" resultType="ddit.finalproject.team2.vo.AttachmentVo">
+	<select id="selectAttachmentList" parameterType="ddit.finalproject.team2.vo.Ljs_BoardVo" resultType="ddit.finalproject.team2.vo.AttachmentVo">
 		SELECT ATTACHMENT_NO, FILE_PATH
 		FROM ATTACHMENT
 		WHERE ATTACHMENT_NO IN
@@ -22,7 +22,7 @@
 		</foreach>
 	</select>
 	
-	<insert id="insertAttachmentAll" parameterType="ddit.finalproject.team2.vo.Ljs_BoardSubjectVo">
+	<insert id="insertAttachmentAll" parameterType="ddit.finalproject.team2.vo.Ljs_BoardVo">
 		<selectKey resultType="int" keyProperty="startAttachmentNo" order="BEFORE">
 			SELECT NVL(MAX(ATTACHMENT_NO), 0) + 1 FROM ATTACHMENT
 		</selectKey>
@@ -39,7 +39,7 @@
 		SELECT * FROM DUAL
 	</insert>
 	
-	<delete id="deleteAttachmentAll" parameterType="ddit.finalproject.team2.vo.Ljs_BoardSubjectVo">
+	<delete id="deleteAttachmentAll" parameterType="ddit.finalproject.team2.vo.Ljs_BoardVo">
 		DELETE FROM ATTACHMENT
 		WHERE ATTACHMENT_NO IN
 		<foreach collection="deleteAttachmentNos" item="delAttachNo" open="(" close=")" separator=",">

@@ -7,22 +7,10 @@
 		WHERE BOARD_NO = #{board_no}
 	</select>
 	
-	<resultMap type="ddit.finalproject.team2.vo.Ljs_ReplyVo" id="replyListMap" autoMapping="true">
-		<id property="reply_no" column="REPLY_NO"/>
-		<association property="user" autoMapping="true" column="USER_ID" javaType="ddit.finalproject.team2.vo.UserVo" select="selectCurrentUser">
-			<id property="user_id" column="USER_ID"/>
-		</association>
-	</resultMap>
-	<select id="selectCurrentUser" parameterType="string" resultType="ddit.finalproject.team2.vo.UserVo">
-		SELECT USER_ID, USER_NAME, USER_PROFILE_PATH
-		FROM USERS
-		WHERE USER_ID = #{user_id}
-	</select>
-	<select id="selectReplyList" parameterType="string" resultMap="replyListMap">
-		SELECT REPLY_NO, A.USER_ID
+	<select id="selectReplyList" parameterType="string" resultType="ddit.finalproject.team2.vo.Ljs_ReplyVo">
+		SELECT REPLY_NO, ATTEND_NO, LECTURE_CODE
 			, REPLY_CONTENT, REPLY_REG
-		FROM REPLY R INNER JOIN ATTEND A
-		ON(R.ATTEND_NO = A.ATTEND_NO)
+		FROM REPLY
 		WHERE BOARD_NO = #{board_no}
 	</select>
 	
@@ -31,7 +19,7 @@
 			BOARD_NO, LECTURE_CODE, REPLY_NO, ATTEND_NO
 			, REPLY_CONTENT, REPLY_REG
 		) VALUES (
-			#{board_no}, #{lecture_code}, REPLY_SEQ.NEXTVAL, #{attend_no}
+			#{board_no}, #{lecture_code}, REPLY_SEQ.NEXTVAL, #{attend_no, jdbcType=VARCHAR}
 			, #{reply_content}, SYSDATE
 		)
 	</insert>
@@ -51,4 +39,19 @@
 		SET REPLY_CONTENT = #{reply_content}
 		WHERE REPLY_NO = #{reply_no}
 	</update>
+	
+	<select id="selectWriterIdByLectureCode" parameterType="string" resultType="ddit.finalproject.team2.vo.UserVo">
+		SELECT A.USER_ID, USER_NAME 
+		FROM USERS A INNER JOIN LECTURE B
+		ON(A.USER_ID = B.USER_ID)
+		WHERE LECTURE_CODE = #{lecture_code}
+	</select>
+	
+	<select id="selectWriterIdByAttendNo" parameterType="string" resultType="ddit.finalproject.team2.vo.UserVo">
+		SELECT A.USER_ID, USER_NAME
+		FROM USERS A INNER JOIN ATTEND B
+		ON(A.USER_ID = B.USER_ID)
+		WHERE ATTEND_NO = #{attend_no}
+	</select>
+	
 </mapper>

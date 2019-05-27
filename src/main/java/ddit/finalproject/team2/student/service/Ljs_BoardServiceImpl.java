@@ -3,22 +3,27 @@ package ddit.finalproject.team2.student.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.Map.Entry;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.print.attribute.standard.PDLOverrideSupported;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
+import ddit.finalproject.team2.common.dao.Ljs_IRingDao;
 import ddit.finalproject.team2.student.dao.Ljs_IAttachmentDao;
 import ddit.finalproject.team2.student.dao.Ljs_IAttendDao;
 import ddit.finalproject.team2.student.dao.Ljs_IBoardDao;
@@ -26,8 +31,10 @@ import ddit.finalproject.team2.student.dao.Ljs_IReplyDao;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.util.exception.CommonException;
 import ddit.finalproject.team2.vo.AttachmentVo;
-import ddit.finalproject.team2.vo.AttendVo;
-import ddit.finalproject.team2.vo.Ljs_BoardSubjectVo;
+import ddit.finalproject.team2.vo.LectureVo;
+import ddit.finalproject.team2.vo.Ljs_BoardVo;
+import ddit.finalproject.team2.vo.RingVo;
+import ddit.finalproject.team2.vo.UserVo;
 
 @Service
 public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
@@ -49,7 +56,13 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 	@Inject
 	Ljs_IAttachmentDao attachmentDao;
 	
-	public void preProcessAttachmentList(Ljs_BoardSubjectVo board){
+	@Resource(name="webSocketSessionMap")
+	Map<String, WebSocketSession> webSocketSessionMap;
+	
+	@Inject
+	Ljs_IRingDao ringDao;
+	
+	public void preProcessAttachmentList(Ljs_BoardVo board){
 		List<AttachmentVo> attachList = board.getAttachmentList();
 		if(attachList==null) return;
 		
@@ -63,7 +76,7 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 		}
 	}
 	
-	private void processAttachment(Ljs_BoardSubjectVo board){
+	private void processAttachment(Ljs_BoardVo board){
 		preProcessAttachmentList(board);
 		
 		List<AttachmentVo> attachList = board.getAttachmentList();
@@ -82,7 +95,7 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 			}
 		}
 		
-		int[] delAttachNos = board.getDeleteAttachmentNos();
+		String[] delAttachNos = board.getDeleteAttachmentNos();
 		if(delAttachNos!=null && delAttachNos.length>0){
 			List<AttachmentVo> delAttachList = attachmentDao.selectAttachmentList(board);
 			attachmentDao.deleteAttachmentAll(board);
@@ -103,15 +116,14 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 	}
 	
 	@Override
-	public List<Ljs_BoardSubjectVo> retrieveBoardList(String lecture_code) {
-		List<Ljs_BoardSubjectVo> boardList = boardDao.selectBoardList(lecture_code);
+	public List<Ljs_BoardVo> retrieveBoardList(String lecture_code) {
+		List<Ljs_BoardVo> boardList = boardDao.selectBoardList(lecture_code);
 		
 		if(boardList.size()>0){
 			for(int i=0; i<boardList.size(); i++){
-				Ljs_BoardSubjectVo vo = boardList.get(i);
+				Ljs_BoardVo vo = boardList.get(i);
 				vo.setBoard_title(vo.getBoard_title(), vo.getBoard_no());
 				vo.setReplycount(replyDao.selectReplyCount(vo.getBoard_no()));
-				vo.setUser_name(vo.getUser().getUser_name());
 			}
 		}
 		
@@ -119,13 +131,18 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 	}
 
 	@Override
-	public List<Ljs_BoardSubjectVo> retrieveBoard(String board_no) {
+	public List<Ljs_BoardVo> retrieveBoard(String board_no) {
 		boardDao.incrementHit(board_no);
 		
-		List<Ljs_BoardSubjectVo> board = boardDao.selectboard(board_no);
+		List<Ljs_BoardVo> board = boardDao.selectboard(board_no);
 		if(board.size()>0){
-			for(Ljs_BoardSubjectVo b : board){
+			for(Ljs_BoardVo b : board){
 				b.setBoard_attachmentcount(b.getSavedAttachmentList().size()+"");
+				if(b.getAttend_no()==null){
+					b.setUser(boardDao.selectWriterIdByLectureCode(b.getLecture_code()));
+				}else{
+					b.setUser(boardDao.selectWriterIdByAttendNo(b.getAttend_no()));
+				}
 			}
 		}
 		return board;
@@ -139,27 +156,35 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 
 	@Transactional
 	@Override
-	public ServiceResult createBoard(Ljs_BoardSubjectVo board) {
+	public ServiceResult createBoard(Ljs_BoardVo board) throws IOException {
 		ServiceResult result = ServiceResult.FAILED;
-		AttendVo attend = new AttendVo(board.getUser().getUser_id(), board.getLecture_code());
-		board.setAttend_no(attendDao.selectAttendNo(attend));
+		board.setAttend_no(attendDao.selectAttendNo(board));
 		int cnt = boardDao.insertBoard(board);
 		if(cnt>0){
 			processAttachment(board);
 			result = ServiceResult.OK;
+			UserVo user = (UserVo) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+			for(Entry<String, WebSocketSession> e : webSocketSessionMap.entrySet()){
+				if(user.getLectureList().contains(new LectureVo(board.getLecture_code())) || user.getUser_id().equals(board.getProfessor_id())){
+					ringDao.insertRing(
+						new RingVo(null, user.getUser_id(), "admin", "강좌게시판", null
+							, "${pageContext.request.contextPath}/"+board.getLecture_code()+"/board/"+board.getBoard_no(), null, null, "N"));
+					e.getValue().sendMessage(new TextMessage(board.getLecture_name()+"의 강좌 게시판에 새 글이 작성되었습니다."));
+				}
+			}
 		}
 		return result;
 	}
 
 	@Transactional
 	@Override
-	public ServiceResult removeBoard(Ljs_BoardSubjectVo board) {
+	public ServiceResult removeBoard(Ljs_BoardVo board) {
 		ServiceResult result = ServiceResult.FAILED;
-		List<Ljs_BoardSubjectVo> savedList = boardDao.selectboard(board.getBoard_no());
+		List<Ljs_BoardVo> savedList = boardDao.selectboard(board.getBoard_no());
 		if(savedList.size()==0) throw new CommonException("해당 게시글 없음");
 		
-		Ljs_BoardSubjectVo saved = null;
-		for(Ljs_BoardSubjectVo a : savedList){
+		Ljs_BoardVo saved = null;
+		for(Ljs_BoardVo a : savedList){
 			if(a.getBoard_no().equals(board.getBoard_no())){
 				saved = a;
 				break;
@@ -173,9 +198,9 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 		int cnt = 0;
 		List<AttachmentVo> attachList = saved.getSavedAttachmentList();
 		if(attachList!=null){
-			int[] delNoArr = new int[attachList.size()];
+			String[] delNoArr = new String[attachList.size()];
 			for(int i=0; i<attachList.size(); i++){
-				delNoArr[i] = Integer.parseInt(attachList.get(i).getAttachment_no());
+				delNoArr[i] = attachList.get(i).getAttachment_no();
 			}
 			saved.setDeleteAttachmentNos(delNoArr);
 			attachmentDao.deleteAttachmentAll(saved);
@@ -196,14 +221,14 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 
 	@Transactional
 	@Override
-	public Ljs_BoardSubjectVo modifyBoard(Ljs_BoardSubjectVo board) {
-		Ljs_BoardSubjectVo modified = null;
-   		List<Ljs_BoardSubjectVo> savedList = boardDao.selectboard(board.getBoard_no());
+	public Ljs_BoardVo modifyBoard(Ljs_BoardVo board) {
+		Ljs_BoardVo modified = null;
+   		List<Ljs_BoardVo> savedList = retrieveBoard(board.getBoard_no());
 		if(savedList.size()==0) throw new CommonException("해당 게시글 없음");
 		int cnt = boardDao.updateBoard(board);
 		if(cnt>0){
 			processAttachment(board);
-			for(Ljs_BoardSubjectVo a : retrieveBoard(board.getBoard_no())){
+			for(Ljs_BoardVo a : retrieveBoard(board.getBoard_no())){
 				if(a.getBoard_no().equals(board.getBoard_no())){
 					modified = a;
 					break;

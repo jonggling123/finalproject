@@ -49,12 +49,6 @@ public class PortalController {
 		return mv;
 	}
 	
-	@GetMapping("popup")
-	public ModelAndView goPopup(ModelAndView mv){
-		mv.setViewName("admin/portal");
-		return mv;
-	}
-	
 	@GetMapping("system")
 	public ModelAndView goSystem(ModelAndView mv){
 		mv.setViewName("admin/system");
