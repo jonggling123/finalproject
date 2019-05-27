@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script type="text/javascript">
-	function openMine(a){
-		var name = $(a).attr("name");
-		window.open("${pageContext.request.contextPath }/subjectPage/lecture_code_1/eduGoal", "상세강의보기", "width=1000, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes");
+	function newTab(a){
+		window.open("lecture_code_1/eduGoal", "상세강의보기", "width=1000, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes");
 	}
 </script>
 
@@ -33,8 +32,8 @@
                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="breadcomb-wp">
                            <div class="breadcomb-ctn">
-                              <h2>나의강의dd</h2>
-                              <p>나의강의 조회 페이지dd <span class="bread-ntd"></span></p>
+                              <h2>나의강의</h2>
+                              <p>나의강의 조회 페이지<span class="bread-ntd"></span></p>
                            </div>
                         </div>
                      </div>
@@ -76,20 +75,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-	                                <tr role="row" class="odd">
-	                                    <td class="sorting_1"><a href="#" onClick="javascript:openMine(this);">초급자바</a></td>
-	                                    <td>교양</td>
-	                                    <td>2</td>
-	                                    <td>65/70</td>
-	                                    <td><button class="btn btn-default notika-btn-default">보기</button></td>
-	                                </tr>
-	                                <tr role="row" class="odd">
-	                                  <td class="sorting_1">초급자바</td>
-	                                  <td>교양</td>
-	                                  <td>2</td>
-	                                  <td>65/70</td>
-	                                  <td><button class="btn btn-default notika-btn-default">보기</button></td>
-	                                </tr>
+                                <c:forEach items="${lectures}" var="lecture">
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1"><a target="_blank" href=${pageContext.request.contextPath}/subjectPage/${lecture.lecture_code}/eduGoal>${lecture.lecture_name}</a></td>
+                                        <td>${lecture.lecture_coursetype}</td>
+                                        <td>${lecture.lecture_credit}</td>
+                                        <td>${lecture.lecture_current}/${lecture.lecture_credit}</td>
+                                        <td><button class="btn btn-default notika-btn-default">보기</button></td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
