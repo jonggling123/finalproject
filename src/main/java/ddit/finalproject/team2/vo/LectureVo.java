@@ -27,5 +27,8 @@ public class LectureVo implements Serializable{
 	@NotNull private String lecture_capacity;
 	@NotNull private Date mid_date;
 	@NotNull private Date final_date;
-
+	
+	public LectureVo(String lecture_code){
+		this.lecture_code = lecture_code;
+	}
 }
