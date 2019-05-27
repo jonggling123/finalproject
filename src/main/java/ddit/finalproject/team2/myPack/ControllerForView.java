@@ -38,19 +38,56 @@ public class ControllerForView {
 		@GetMapping("/professor/register")
 		public ModelAndView dadsdad(ModelAndView mav, @Validated @ModelAttribute Lsy_QuizQuestionVO quizVo) {
 			mav.setViewName("professor/registerLecture");
-			System.out.println(quizVo.getClass_identifying_code());
-			System.out.println(quizVo.getLecture_code());
-			System.out.println(quizVo.getQuestion_answer());
-			System.out.println(quizVo.getQuestion_content());
-			System.out.println(quizVo.getQuestion_no());
 			return mav;
 		}
 		
-		@GetMapping("/professor/quiz")
-		public ModelAndView sda(ModelAndView mav){
-			mav.addObject("identifier", "quiz");
-			mav.setViewName("professor/quizz");
-			return mav;
+		//quiz 보기 클릭했을 때
+				@GetMapping("/professor/quiz")
+				public String sda(@Validated @ModelAttribute Lsy_QuizQuestionVO quizVo, Model model){
+					quizVo.setClass_identifying_code("11");
+					quizVo.setLecture_code("lecture_code_1");
+					model.addAttribute("btnType", "quiz");
+//					mav.addObject("btnType", "quiz");
+					model.addAttribute("start", 1);
+					model.addAttribute("end", 5);
+					List<String> otherType = new ArrayList<String>();
+					otherType.add("①"); otherType.add("②"); otherType.add("③"); otherType.add("④");
+					model.addAttribute("number", 0);
+					List<Lsy_QuizQuestionVO> thisQuiz = service.retreiveQuiz(quizVo);
+					model.addAttribute("quizList", thisQuiz);
+					model.addAttribute("numList", otherType);
+//					mav.addObject("oneQuiz", thisQuiz);
+//					mav.setViewName("new/showQuiz");
+					return "new/quiz";
+				}
+				
+				//quiz 보기 클릭했을 때
+				@GetMapping("/professor/quiz2")
+				public String sdda(@Validated @ModelAttribute Lsy_QuizQuestionVO quizVo, Model model){
+					quizVo.setClass_identifying_code("11");
+					quizVo.setLecture_code("lecture_code_1");
+					model.addAttribute("btnType", "quiz");
+					model.addAttribute("start", 0);
+					model.addAttribute("end", 5);
+					List<String> otherType = new ArrayList<String>();
+					otherType.add("①"); otherType.add("②"); otherType.add("③"); otherType.add("④");
+					model.addAttribute("numList", otherType);
+					return "new/createQuiz";
+				}
+		
+		//문제 하나를 수정했을 때 발생하는 post 이벤트
+		@PostMapping(value="/professor/resetOneQuiz", produces="application/json;charset=utf-8")
+		@ResponseBody
+		public Lsy_QuizQuestionVO resetOneQuiz(@Validated @RequestBody Lsy_QuizQuestionVO quizVo, BindingResult errors) {
+			if(errors.hasErrors()) {
+				System.out.println("에러가 있다.");
+			}
+			int result = service.updateQuiz(quizVo);
+			Lsy_QuizQuestionVO thisQuiz = new Lsy_QuizQuestionVO();
+			if(result > 0) {
+				thisQuiz = service.retrieveOneQuiz(quizVo);
+			}
+			return thisQuiz;
 		}
 		
 		@PostMapping("/professor/addQuiz")
@@ -58,18 +95,32 @@ public class ControllerForView {
 			if(error.hasErrors()) {
 				System.out.println(error);
 			}
-			System.out.println(allQuestion);
+			System.out.println(allQuestion.getQuizList().get(0).getQuestion_no());
 			service.insertQuiz(allQuestion);
 			return "professor/quizz";
 		}
 		
 		@GetMapping("/professor/showQuiz")
-		public ModelAndView showQuiz(@Validated @ModelAttribute Lsy_QuizQuestionVO quizVo, ModelAndView mav) {
-//			EmbraceQuizVo thisQuiz = service.retreiveQuiz(quizVo.getClass_identifying_code());
+		public String showQuiz(@Validated @ModelAttribute Lsy_QuizQuestionVO quizVo, Model model) {
+			quizVo.setClass_identifying_code("11");
+			quizVo.setLecture_code("lecture_code_1");
+			model.addAttribute("btnType", "quiz");
+//			mav.addObject("btnType", "quiz");
+			List<Lsy_QuizQuestionVO> thisQuiz = service.retreiveQuiz(quizVo);
+			model.addAttribute("oneQuiz", thisQuiz);
+//			mav.addObject("oneQuiz", thisQuiz);
+//			mav.setViewName("new/showQuiz");
+			return "new/showQuiz";
+		}
+		
+		@GetMapping("/professor/show")
+		public ModelAndView showQuiz2222(@Validated @ModelAttribute Lsy_QuizQuestionVO quizVo, ModelAndView mav) {
+			quizVo.setClass_identifying_code("11");
+			quizVo.setLecture_code("lecture_code_1");
 			mav.addObject("btnType", "quiz");
-			List<Lsy_QuizQuestionVO> thisQuiz = service.retreiveQuiz("11");
-			mav.addObject("oneQuiz", thisQuiz);
-			mav.setViewName("professor/showQuiz");
+			List<Lsy_QuizQuestionVO> thisQuiz = service.retreiveQuiz(quizVo);
+			mav.addObject("quizList", thisQuiz);
+			mav.setViewName("professor/quizTextPage4");
 			return mav;
 		}
 		
@@ -80,23 +131,17 @@ public class ControllerForView {
 		
 		@PostMapping(value="/professor/showQuizz", produces="application/json;charset=utf-8")
 		@ResponseBody
-		public List<Lsy_QuizQuestionVO> showQuizz(ModelAndView mav, @Validated @RequestBody Lsy_QuizQuestionVO quizVo) {
-			System.out.println("클래스코드 : "+quizVo.getClass_identifying_code());
-			System.out.println("강좌코드 : " +quizVo.getLecture_code());
-			System.out.println("문제답안 : " +quizVo.getQuestion_answer());
-			System.out.println("문제 내용 : "+quizVo.getQuestion_content());
-			System.out.println("문제 번호 : "+quizVo.getQuestion_no());
-			for (int i = 0; i < quizVo.getProblemList().size(); i++) {
-				System.out.println("선택지의 문제번호 :"+quizVo.getProblemList().get(i).getQuestion_no());
-				System.out.println("선택지의 문제내용 :"+quizVo.getProblemList().get(i).getQuizProblem_content());
-				System.out.println("선택지의 번호 :"+quizVo.getProblemList().get(i).getQuizProblem_no());
+		public Lsy_QuizQuestionVO showQuizz(@Validated @RequestBody Lsy_QuizQuestionVO quizVo, BindingResult errors) {
+			if(errors.hasErrors()) {
+				System.out.println("에러가 있다.");
 			}
-//			int result = service.updateQuiz(quizVo);
-//			List<Lsy_QuizQuestionVO> thisQuiz = new ArrayList<Lsy_QuizQuestionVO>();
-//			if(result > 0) {
-//				thisQuiz = service.retreiveQuiz("11");
-//			}
-			return null;
+			int result = service.updateQuiz(quizVo);
+			Lsy_QuizQuestionVO thisQuiz = new Lsy_QuizQuestionVO();
+			if(result > 0) {
+				thisQuiz = service.retrieveOneQuiz(quizVo);
+				System.out.println(thisQuiz);
+			}
+			return thisQuiz;
 		}
 		
 		@GetMapping("/professor/gradeRank")
@@ -114,18 +159,13 @@ public class ControllerForView {
 			return "professor/certificate";
 		}
 		
-		@GetMapping("/professor/quizz")
-		public String quz(){
-			return "professor/quizzBackup";
-		}
-		
 		@GetMapping("/professor/searchGrade")
 		public String sda2(){
 			return "new/gradeRank";
 		}
 		@GetMapping("/professor/schedule")
 		public String sda3(){
-			return "professor/testSchedule";
+			return "professor/schedule";
 		}
 		
 		@GetMapping("/professor/modal")
@@ -136,6 +176,17 @@ public class ControllerForView {
 		@GetMapping("/student/searchGrade")
 		public String dsadsa(){
 			return "common/login";
+		}
+		
+		@GetMapping("/professor/modify")
+		public String dasda12(@Validated @ModelAttribute Lsy_QuizQuestionVO quizInfo, Model model) {
+			quizInfo.setClass_identifying_code("11");
+			quizInfo.setLecture_code("lecture_code_1");
+			List<Lsy_QuizQuestionVO> quizList = service.retreiveQuiz(quizInfo);
+			model.addAttribute("start", 1);
+			model.addAttribute("end", 5);
+			model.addAttribute("quizList", quizList);
+			return "new/modifyAndSave";
 		}
 		
 		@GetMapping(value="/professor/selectType/{btnType}", produces="application/json;charset=UTF-8")

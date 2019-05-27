@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ddit.finalproject.team2.myPack.dao.LSY_QuizDAO;
 import ddit.finalproject.team2.vo.Lsy_EmbraceQuizVo;
+import ddit.finalproject.team2.vo.Lsy_QuizProblemVo;
 import ddit.finalproject.team2.vo.Lsy_QuizQuestionVO;
 
 
@@ -22,23 +23,14 @@ public class LSY_QuizServiceImpl implements LSY_IQuizService{
 	@Override
 	@Transactional
 	public int insertQuiz(Lsy_EmbraceQuizVo quizChunk) {
+		int quizSize = quizChunk.getQuizList().size();
+		List<String> keyList = keyNextVal(quizSize);
+		
+		for (int i = 0; i < quizSize; i++) {
+			quizChunk.getQuizList().get(i).setQuestion_no(keyList.get(i));
+		}
+		
 		int result = quizDao.insertQuiz(quizChunk);
-//		if(result > 0) {
-//			EmbraceProblemListVo emProblemList = new EmbraceProblemListVo();
-//			emProblemList.setProblemList(new ArrayList<QuizProblemVo>());
-//			for (int i = 0; i < quizChunk.getQuizList().size(); i++) {
-//				for (int j = 0; j < quizChunk.getQuizList().get(i).getProblemList().size(); j++) {
-//				emProblemList.getProblemList().add(quizChunk.getQuizList().get(i).getProblemList().get(j));
-//				System.out.println(quizChunk.getQuizList().get(i).getProblemList().get(j).getQuestion_no());
-//				System.out.println(quizChunk.getQuizList().get(i).getProblemList().get(j).getQuizProblem_content());
-//				System.out.println(quizChunk.getQuizList().get(i).getProblemList().get(j).getQuizProblem_no());
-//				}
-//			}
-//			result2 += insertProblem(emProblemList);
-//		}
-//		if(result2>0) {
-//			return result2;
-//		}
 		if(result>0) {
 			return result;
 		}
@@ -46,8 +38,8 @@ public class LSY_QuizServiceImpl implements LSY_IQuizService{
 	}
 	
 	@Override
-	public List<Lsy_QuizQuestionVO> retreiveQuiz(String class_identifying_code) {
-		List<Lsy_QuizQuestionVO> thisQuiz = quizDao.selectOneQuiz(class_identifying_code);
+	public List<Lsy_QuizQuestionVO> retreiveQuiz(Lsy_QuizQuestionVO quizInfo) {
+		List<Lsy_QuizQuestionVO> thisQuiz = quizDao.selectQuizList(quizInfo);
 		if(thisQuiz!=null) {
 			return thisQuiz;
 		}
@@ -58,9 +50,39 @@ public class LSY_QuizServiceImpl implements LSY_IQuizService{
 	@Transactional
 	public int updateQuiz(Lsy_QuizQuestionVO quizChunk) {
 		int result = quizDao.updateQuiz(quizChunk);
+		int result2 = 0;
+		if(result>0) {
+			for (int i = 0; i < quizChunk.getProblemList().size(); i++) {
+				result2 += updateProblems(quizChunk.getProblemList().get(i));
+			}
+			if(result2>0) {
+				return result2;
+			}
+		}
+		return result2;
+	}
+
+	@Override
+	@Transactional
+	public int updateProblems(Lsy_QuizProblemVo problemVo) {
+		int result = 0; 
+		result = quizDao.updateProblems(problemVo);
 		if(result>0) {
 			return result;
 		}
-		return 0;
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public List<String> keyNextVal(int quizSize) {
+		List<String> keyVal = quizDao.keyNextVal(quizSize);
+		return keyVal;
+	}
+
+	@Override
+	public Lsy_QuizQuestionVO retrieveOneQuiz(Lsy_QuizQuestionVO oneQuiz) {
+		Lsy_QuizQuestionVO oneQuizz = quizDao.selectOneQuiz(oneQuiz);
+		return oneQuizz;
 	}
 }

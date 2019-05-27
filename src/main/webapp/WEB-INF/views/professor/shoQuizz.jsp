@@ -3,19 +3,6 @@
 
     
 <!doctype html>
-<html lang="ko">
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="content-language" content="ko" />
-<meta name="robots" content="all" />
-<meta name="robots" content="index,follow" />
-<meta name="keywords" content="건축기사 기출문제, 건축기사, 필기, 기출문제, 기출, 문제, CBT, 모의고사, 문제은행" />
-<meta name="subject" content="건시스템 운영 [도타비 문제은행] :: 2018년 4회 건축기사 필기 기출문제 CBT" />
-<meta name="publisher" content="건시스템(gunsys.com)" />
-<meta name="date" content="2019-02-27" />
-<meta http-equiv="cache-control" content="no-cache" />
-<meta http-equiv="pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" /> 
 
 <link rel="stylesheet" href="style_qpass.css" type="text/css" />
 <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon" />

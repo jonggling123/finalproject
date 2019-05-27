@@ -9,6 +9,14 @@
 		</collection>
 	</resultMap>
 	
+	<select id="keyNextVal" resultType="String">
+		<![CDATA[
+		select quizseq.nextval
+		from dual
+		connect by level <= #{size}
+		]]>
+	</select>
+	
 	<insert id="insertQuiz" parameterType="ddit.finalproject.team2.vo.Lsy_EmbraceQuizVo">
 		INSERT ALL
 			<foreach collection="quizList" item="quiz">
@@ -26,52 +34,44 @@
 					values
 				 		(
 						#{problem.quizProblem_no}, #{problem.quizProblem_content}, 
-						#{problem.question_no}
+						#{quiz.question_no}
 						)
 				</foreach>
 			</foreach>
 		select * from dual
 	</insert>
 	
-	<update id="updateQuiz" parameterType="ddit.finalproject.team2.vo.Lsy_QuizQuestionVO">
-		update 
-		(select q.question_no, q.question_content, q.question_answer, q.class_identifying_code, q.lecture_code
-        from quizquestion q where q.lecture_code = #{lecture_code}
-        					and q.class_identifying_code = #{class_identifying_code}) qn
-		set qn.question_content = #{question_content},
-		    qn.question_answer = #{question_answer},
-		    qn.class_identifying_code = #{class_identifying_code}
-		where qn.question_no = {question_no} and qn.class_identifying_code= #{class_identifying_code};
+	<update id="updateProblems" parameterType="ddit.finalproject.team2.vo.Lsy_QuizProblemVo">
+		update quizproblem
+		set quizProblem_content = #{quizProblem_content}
+		where question_no = #{question_no}
+		and quizProblem_no = #{quizProblem_no}
 	</update>
 	
-<!-- 	<insert id="insertProblem" parameterType="ddit.finalproject.team2.vo.EmbraceProblemListVo"> -->
-<!-- 		INSERT ALL -->
-<!-- 			<foreach collection="problemList" item="problem"> -->
-<!-- 			into QUIZPROBLEM -->
-<!-- 				( quizProblem_no, quizProblem_content, question_no ) -->
-<!-- 			values -->
-<!-- 			 		( -->
-<!-- 					#{problem.quizProblem_no}, #{problem.quizProblem_content},  -->
-<!-- 					#{problem.question_no} -->
-<!-- 					) -->
-<!-- 			</foreach> -->
-<!-- 		select * from dual -->
-<!-- 	</insert> -->
+	<update id="updateQuiz" parameterType="ddit.finalproject.team2.vo.Lsy_QuizQuestionVO">
+		update quizquestion
+		set  question_no = #{question_no}, question_content = #{question_content}, 
+			 question_answer = #{question_answer}
+		where question_no = #{question_no} 
+		and lecture_code = #{lecture_code}
+		and class_identifying_code = #{class_identifying_code}
+	</update>
 	
-	<delete id="deleteProblem">
-		delete from 
-		where
-	</delete>
+	<select id="selectOneQuiz" parameterType="ddit.finalproject.team2.vo.Lsy_QuizQuestionVO" resultMap="allQ">
+		select * 
+		from quizquestion q inner join quizproblem p
+		on q.question_no = #{question_no}
+	</select>
 	
-	<select id="selectOneQuiz" parameterType="String" resultMap="allQ">
+	<select id="selectQuizList" parameterType="ddit.finalproject.team2.vo.Lsy_QuizQuestionVO" resultMap="allQ">
 		select
 		   qn.question_no, qn.question_content, qn.question_answer, qn.class_identifying_code,
 		   qn.lecture_code,
 		   p.quizproblem_no, p.quizproblem_content, p.question_no
 		from quizproblem p,
 			(select q.question_no, q.question_content, q.question_answer, q.class_identifying_code, q.lecture_code
-			from quizquestion q where q.lecture_code = 'lecture_code_1'
-								and q.class_identifying_code = #{code}) qn
+			from quizquestion q where q.lecture_code = #{lecture_code}
+								and q.class_identifying_code = #{class_identifying_code}) qn
 		where p.question_no = qn.question_no
 	</select>
 </mapper>

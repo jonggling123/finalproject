@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="path" value="${pageContext.request.contextPath}/"></c:set>
 
 <div class="accordion-area">
 	<div class="container">
@@ -40,8 +41,8 @@
 													</div>
 													<div style="display: inline-block; padding-left: 50px;">
 														<strong>퀴즈</strong>
-														<button class="btn-sm">보기</button>
-														<button class="btn-sm">등록</button>
+														<button class="btn-sm" onClick="window.open('${path}professor/quiz', '', 'width=800, height=700'); return false;">보기</button>
+														<button class="btn-sm" onClick="window.open('${path}professor/quiz2', '', 'width=800, height=700'); return false;">등록</button>
 														<button class="btn-sm">수정</button>
 													</div>
 													<div style="display: inline-block; padding-left: 50px;">

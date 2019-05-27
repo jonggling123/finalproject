@@ -4,6 +4,8 @@
 <%--         <script src="${pageContext.request.contextPath}/res/fullCalendar/lib/jquery.min.js"></script> --%>
         <script src='${pageContext.request.contextPath}/res/fullCalendar/fullcalendar/fullcalendar.js'></script>
         <link rel='stylesheet' href="${pageContext.request.contextPath}/res/fullCalendar/fullcalendar/fullcalendar.css" />
+        <script src="${pageContext.request.contextPath }/res/modal/1.11.2_jquery-ui.min.js"></script>
+ 		<script src="${pageContext.request.contextPath }/res/modal/3.3.5_bootstrap.min.js"></script>
 <style>
 .modal
 {
@@ -27,20 +29,23 @@
 
 		<script>
 		$(document).ready(function() {
-			var date = new Date();
-			var d = date.getDate();
-			var m = date.getMonth();
-			var y = date.getFullYear();
-			var Ctitle,Cstart,Cend;
 			function modalppop(){
 				$("#myModal").modal({
-					backdrop: false,
+					backdrop: true,
 			 	    show: true	
 				});
 				$("#myModal").draggable();
 				
         	};
-        	
+			var date = new Date();
+			var d = date.getDate();
+			var m = date.getMonth();
+			var y = date.getFullYear();
+			var ok = false;
+			var start;
+			var end;
+			var allDay;
+
 			var calendar = $('#calendar').fullCalendar({
 				header: {
 					left: 'prev,next today',
@@ -49,21 +54,9 @@
 				},
 				selectable: true,
 				selectHelper: true,
-				select: function(title, start, end, allDay) {
+				select: function(start, end, allDay) {
+					console.log(calendar);
 					modalppop();
-					
-					if (Ctitle) {
-						calendar.fullCalendar('renderEvent',
-							{
-								title: Ctitle,
-								start: Cstart,
-								end: Cend,
-								allDay: allDay
-							},
-							true // make the event "stick"
-						);
-					}
-					calendar.fullCalendar('unselect');
 				},
 				editable: true,
 				events: [
@@ -111,28 +104,31 @@
 						end: new Date(y, m, 29),
 						url: 'http://google.com/'
 					}
-				]
-			});
+				]}
+			);
 			$('#ok').click(function(){
-				Ctitle = $("#calTitle").val();
-				Cstart = $("#startD").val();
-				Cend = $("#endD").val();
-				return true;
+				var title=$("#calTitle").val();
+				var start=$("#startD").val();
+				var end=$("#endD").val();
+				var modal=$(this).parent('#myModal');
+				calendar.fullCalendar('renderEvent',
+						{
+							title:title,
+							start:start,
+							end:end
+						},
+						true // make the event "stick"
+					);
+				modal.close();
+				calendar.fullCalendar('unselect');
 			});
 		});
-		
         </script>
 
 
 <c:set var="now" value="<%=new java.util.Date()%>" />
-<div class="container">
-         <div class="row">
-         <div class="col-offset-4 col-lg-8 col-md-8 col-sm-8 col-xs-8">
-         <div id='calendar'></div>
-         </div>
-         </div>
-         </div>
-        <div id="myModal" class="modal fade modeless">
+<div id='calendar'></div>
+<div id="myModal" class="modal fade modeless">
     <div class="modal-dialog" style="width:400px; height:300px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -168,7 +164,7 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="button" id="ok" class="btn btn-default" data-success="modal">확인</button>
+                <button type="button" id="ok" class="btn btn-default">확인</button>
                 <button type="button" id="cancel" class="btn btn-default" data-dismiss="modal">닫기</button>
             </div>
         </div>
@@ -179,3 +175,4 @@
         
         <script type="text/javascript" src="${pageContext.request.contextPath}/notika/js/datapicker/bootstrap-datepicker.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/notika/js/datapicker/datepicker-active.js"></script>
+		
