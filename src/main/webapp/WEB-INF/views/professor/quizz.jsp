@@ -100,7 +100,7 @@
 							  .after(twoBtn);
 					$("#survey").after(newSelect);
 				} else if($(this).attr('id')=='quiz'){
-					var result = makeQuestion("#core", "quiz", 2, 4)
+					var result = makeQuestion("#core", "quiz", 5, 4)
 					alert(result);
 					$("#survey").remove();
 					$("#test").remove();

@@ -17,7 +17,6 @@ function makeQuestion(formRange, btnNm, Qnum, Anum){
 			source += "<div id='"+buttonType+"Body' class='questionBody'>" +
 			"<span id='spanYet'></span>" +
 	//		"<button type='button' class='deleteBody'>문제삭제</button>" +
-			"<input type='hidden' class='lecture_code' name='"+buttonType+"List[questionNum].lecture_code'/>" +
 			"<input type='hidden' id='lecture_week' class='lecture_week' name='"+buttonType+"List[questionNum].lecture_week'/>" +
 			"<input type='hidden' id='lecture_class' name='"+buttonType+"List[questionNum].lecture_class'/>" +
 			"<input type='hidden' class='class_identifying_code' name='"+buttonType+"List[questionNum].class_identifying_code'/>" +
@@ -29,7 +28,7 @@ function makeQuestion(formRange, btnNm, Qnum, Anum){
 				source += "<div class='fm-checkbox'>" +
 //				problem_no번
 				"<input name='"+buttonType+"List[questionNum].question_answer' type='checkbox' class='i-checks QAnswer' value='problem_no'/></div>" +
-				"<input type='hidden' name='"+buttonType+"List[questionNum].problemList[problem_Num].question_no' value='questionNo'>" +
+				"<input type='hidden' name='"+buttonType+"List[questionNum].problemList[problem_Num].question_no'>" +
 				"<input type='hidden' name='"+buttonType+"List[questionNum].problemList[problem_Num].quizProblem_no' value='problem_no'>" +
 				"<input name='"+buttonType+"List[questionNum].problemList[problem_Num].quizProblem_content' class='PContent' type='text' placeholder='선택지를 입력하세요'/><br/>" +
 				"</div>";
