@@ -84,5 +84,58 @@ public class KJE_PolicyManagementRestController {
 	}
 	
 	
+	@RequestMapping(value="/updateGraderank", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	public String updateGraderank(
+			@RequestParam (required =true)String ratioA,
+			@RequestParam (required =true)String ratioB,
+			@RequestParam (required =true)String ratioC,
+			@RequestParam (required =true)String ratioD,
+			@RequestParam (required =true)String ratioF,
+			@RequestParam (required =true)String evalpolicy_code
+			){
+		List<GradeRankVo> gradeRankList = new ArrayList<>();
+		GradeRankVo gradeRankA = new GradeRankVo();
+		GradeRankVo gradeRankB = new GradeRankVo();
+		GradeRankVo gradeRankC = new GradeRankVo();
+		GradeRankVo gradeRankD = new GradeRankVo();
+		GradeRankVo gradeRankF = new GradeRankVo();
+		
+		gradeRankA.setGraderank_rank("A");
+		gradeRankA.setGraderank_ratio(ratioA);
+		gradeRankList.add(gradeRankA);
+		
+		
+		gradeRankB.setGraderank_rank("B");
+		gradeRankB.setGraderank_ratio(ratioB);
+		gradeRankList.add(gradeRankB);
+		
+		gradeRankC.setGraderank_rank("C");
+		gradeRankC.setGraderank_ratio(ratioC);
+		gradeRankList.add(gradeRankC);
+		
+		gradeRankD.setGraderank_rank("D");
+		gradeRankD.setGraderank_ratio(ratioD);
+		gradeRankList.add(gradeRankD);
+		
+		gradeRankF.setGraderank_rank("F");
+		gradeRankF.setGraderank_ratio(ratioF);
+		gradeRankList.add(gradeRankF);
+		
+		for(int i = 0; i<gradeRankList.size();i++){
+			gradeRankList.get(i).setEvalpolicy_code(evalpolicy_code);
+		}
+		Map<String,Object> graderankInfo = new HashMap<>();
+		graderankInfo.put("gradeRankList", gradeRankList);
+		ServiceResult result= policyManagementService.modifyGraderank(graderankInfo);
+		String resp = "fail";
+		if(ServiceResult.OK.equals(result)){
+			resp = "success";
+		}
+		return  resp;
+	}
+	
+	
+	
+	
 	
 }

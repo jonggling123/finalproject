@@ -149,7 +149,7 @@
                             </li>
                             <li><a href="image-cropper.html">1:1지도</a>
                             </li>
-                            <li><a href="wizard.html">과제물관리</a>
+                            <li><a href="${pageContext.request.contextPath}/professor/assignment">과제물관리</a>
                             </li>
                             <li><a href="wizard.html">설문지관리</a>
                             </li>

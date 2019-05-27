@@ -47,6 +47,13 @@ public interface KJE_IPolicyManagementDao {
 	 * @return
 	 */
 	public int insertGraderank(Map<String,Object> graderankMap);
+	
+	/**
+	 * 평가정책을  수정하는 메서드
+	 * @param graderank 평가정책 정보
+	 * @return
+	 */
+	public int updateGraderank(Map<String,Object> graderankMap);
 		
 	
 	

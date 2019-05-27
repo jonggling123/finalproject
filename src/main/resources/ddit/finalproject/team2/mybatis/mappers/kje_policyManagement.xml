@@ -37,6 +37,7 @@
 		OPENSEME_PERIOD1,
 		OPENSEME_PERIOD2,
 		P.EVALPOLICY_CODE
+		ORDER BY OPENSEME_PERIOD1 DESC
 	</select>
 
 	<select id="selectAddSemesterList" resultType="ddit.finalproject.team2.vo.KJE_SemesterVo">
@@ -104,4 +105,16 @@
 	</foreach>
 	SELECT * FROM DUAL 
 	</insert>
+	
+	
+	<update id="updateGraderank" parameterType="hashmap">
+	<foreach collection="gradeRankList" item="graderank" index="idx" separator=";" open="DECLARE BEGIN" close=";END;">
+		UPDATE GRADERANK 
+		SET
+		GRADERANK_RATIO=#{graderank.graderank_ratio}
+		WHERE EVALPOLICY_CODE=#{graderank.evalpolicy_code}
+		AND GRADERANK_RANK=#{graderank.graderank_rank}
+	</foreach>
+	
+	</update>
 </mapper>

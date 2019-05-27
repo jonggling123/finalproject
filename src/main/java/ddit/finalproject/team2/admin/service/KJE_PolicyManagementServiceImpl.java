@@ -30,7 +30,10 @@ public class KJE_PolicyManagementServiceImpl implements KJE_IPolicyManagementSer
 			String trem = policyManagementAllList.get(i).getOpenseme_period1()+"~"+policyManagementAllList.get(i).getOpenseme_period2();
 			policyManagementAllList.get(i).setYearSemestr(yearSemestr);
 			policyManagementAllList.get(i).setTrem(trem);
-			}
+			policyManagementAllList.get(i).setBtnUpdate("<button class='btn btn-default notika-btn-default updatebtn' name='"+
+						policyManagementAllList.get(i).getEvalpolicy_code()+"'>수정</button>");
+		
+		}
 		
 		}
 		
@@ -78,6 +81,15 @@ public class KJE_PolicyManagementServiceImpl implements KJE_IPolicyManagementSer
 		Map<String, Object> graderankMap = new HashedMap();
 		graderankMap.put("gradeRankList", gradeRankList);
 		int cnt = policyManagementDao.insertGraderank(graderankMap);
+		if(cnt>0) result = ServiceResult.OK;
+		
+		return result;
+	}
+
+	@Override
+	public ServiceResult modifyGraderank(Map<String, Object> graderankMap) {
+		ServiceResult result = ServiceResult.FAILED;
+		int cnt = policyManagementDao.updateGraderank(graderankMap);
 		if(cnt>0) result = ServiceResult.OK;
 		
 		return result;

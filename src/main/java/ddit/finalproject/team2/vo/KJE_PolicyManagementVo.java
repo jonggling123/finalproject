@@ -26,6 +26,6 @@ public class KJE_PolicyManagementVo {
     private String yearSemestr;
     private String trem;
     
-    
+    private String btnUpdate;
     
 }

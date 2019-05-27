@@ -24,11 +24,17 @@ public interface KJE_IPolicyManagementService {
 	 */
 	public List<KJE_SemesterVo> getAddSemesterList();
 	
-	
 	/**
 	 * 평가정책을  입력하는 메서드
 	 * @param graderank 평가정책 정보
 	 * @return
 	 */
 	public ServiceResult recordEvalpolicy(Map<String,Object> graderankInfo);
+	
+	/**
+	 * 평가정책을  수정하는 메서드
+	 * @param graderank 평가정책 정보
+	 * @return
+	 */
+	public ServiceResult modifyGraderank(Map<String,Object> graderankMap);
 }
