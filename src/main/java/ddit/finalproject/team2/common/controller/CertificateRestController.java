@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ddit.finalproject.team2.common.service.KJE_CertificateServiceImpl;
+import ddit.finalproject.team2.util.AuthorityUtil;
+import ddit.finalproject.team2.util.constant.AuthConstants;
 import ddit.finalproject.team2.vo.KJE_CertificateVo;
 import ddit.finalproject.team2.vo.KJE_CertificatieAdminVo;
 import ddit.finalproject.team2.vo.Ljs_BoardVo;
@@ -25,7 +27,14 @@ public class CertificateRestController {
 	@GetMapping(value="/certificateList", produces="application/json;charset=UTF-8")
 	public Map<String, Object> getList(Authentication authentication){
 		Map<String, Object> map = new HashMap<>();
-		String user_authority = ((UserVo)authentication.getPrincipal()).getUser_authority();
+		List<String> alist = AuthorityUtil.getAuthorityList(authentication);
+		String user_authority = null;
+		for(String role : alist){
+			if(AuthConstants.ROLE_STUDENT.equals(role) || AuthConstants.ROLE_PROFESSOR.equals(role)){
+				user_authority = role;
+				break;
+			}
+		}
 		List<KJE_CertificateVo> list = certificateService.retriveCertificateList(user_authority);
 		map.put("data", list);
 		return map;

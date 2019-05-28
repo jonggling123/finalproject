@@ -178,10 +178,11 @@ public class SubjectPageController {
      * @return
      */
     @GetMapping("studyState")
-    public ModelAndView goStudy(ModelAndView mv, Authentication au) {
+    public ModelAndView goStudy(ModelAndView mv, Authentication au ,@PathVariable String lecture_code) {
         mv.setViewName("student/submenu/studyState");
         mv.getModel().put("id", au.getName());
         mv.getModel().put("user", (UserVo)au.getPrincipal());
+        mv.getModel().put("lecture_code", lecture_code);
         return mv;
     }
 

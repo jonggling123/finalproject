@@ -1,9 +1,11 @@
 package ddit.finalproject.team2.vo;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +16,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(of="assignment_no")
 @ToString
-public class AssignmentVo implements Serializable{
+public class KJE_AssignmentnFileVo {
 	@NotNull
 	private String assignment_no;
 	@NotNull
@@ -22,13 +24,23 @@ public class AssignmentVo implements Serializable{
 	@NotNull
 	private String assignment_date;
 	@NotNull
-	private Date submit_period1;
+	private String submit_period1;
 	@NotNull
-	private String videoweek_code;
+	private String class_identifying_code;
 	@NotNull
-	private Date submit_period2;
+	private String submit_period2;
 	@NotNull
 	private String lecture_code;
 	
 	private String assignment_content;
+	
+	MultipartFile[] ass_files;
+	
+	private List<KJE_AssignmentFileVo> assignmentFileList;
+	private List<KJE_AssignmentFileVo> saveAssFileList;
+	
+	private String[] aFileList;
+	
 }
+
+
