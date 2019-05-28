@@ -121,7 +121,9 @@
 <script
 	src="${pageContext.request.contextPath }/res/js/ckeditor/ckeditor.js"></script>
 <script>
-	CKEDITOR.replace('contextArea');
+	CKEDITOR.replace('contextArea', {
+		filebrowserImageUploadUrl:"<c:url value='/board/imageUpload'/>?sample=test"
+	});
 	
 	$('#create').on('click',function(){
 		var content = CKEDITOR.instances.contextArea.getData();

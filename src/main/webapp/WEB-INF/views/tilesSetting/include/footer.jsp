@@ -13,6 +13,10 @@
         </div>
     </div>
 </div>
+
+<div id="messageDiv" style="display:none;">알림div</div>
+
+
 <!-- bootstrap JS
     ============================================ -->
 <script src="${pageContext.request.contextPath}/notika/js/bootstrap.min.js"></script>

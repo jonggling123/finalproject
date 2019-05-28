@@ -4,20 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.socket.TextMessage;
@@ -56,11 +55,11 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 	@Inject
 	Ljs_IAttachmentDao attachmentDao;
 	
-	@Resource(name="webSocketSessionMap")
-	Map<String, WebSocketSession> webSocketSessionMap;
-	
 	@Inject
 	Ljs_IRingDao ringDao;
+	
+	@Resource(name="socketSessionMap")
+	MultiValueMap<String, WebSocketSession> socketSessionMap;
 	
 	public void preProcessAttachmentList(Ljs_BoardVo board){
 		List<AttachmentVo> attachList = board.getAttachmentList();
@@ -163,13 +162,20 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 		if(cnt>0){
 			processAttachment(board);
 			result = ServiceResult.OK;
-			UserVo user = (UserVo) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-			for(Entry<String, WebSocketSession> e : webSocketSessionMap.entrySet()){
-				if(user.getLectureList().contains(new LectureVo(board.getLecture_code())) || user.getUser_id().equals(board.getProfessor_id())){
-					ringDao.insertRing(
-						new RingVo(null, user.getUser_id(), "admin", "강좌게시판", null
-							, "${pageContext.request.contextPath}/"+board.getLecture_code()+"/board/"+board.getBoard_no(), null, null, "N"));
-					e.getValue().sendMessage(new TextMessage(board.getLecture_name()+"의 강좌 게시판에 새 글이 작성되었습니다."));
+			
+			UserVo me = (UserVo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String message = "<"+board.getLecture_name()+"> "+me.getUser_name()+" 님이 새 글을 작성했습니다.";
+			for(Entry<String, List<WebSocketSession>> e : socketSessionMap.entrySet()){
+				for(WebSocketSession session : e.getValue()){
+					UserVo user = (UserVo) ((Authentication)session.getPrincipal()).getPrincipal();
+					if((!user.getUser_id().equals(me.getUser_id()) && user.getLectureList().contains(new LectureVo(board.getLecture_code())))
+							|| user.getUser_id().equals(board.getProfessor_id())){
+						ringDao.insertRing(
+								new RingVo(null, user.getUser_id(), me.getUser_id(), "강좌게시판", null
+										, board.getLecture_code()+"/board/"+board.getBoard_no()
+										, null, null, "N", message));
+						session.sendMessage(new TextMessage(message));
+					}
 				}
 			}
 		}

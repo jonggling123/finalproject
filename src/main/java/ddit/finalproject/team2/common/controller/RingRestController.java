@@ -7,11 +7,11 @@ import javax.inject.Inject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ddit.finalproject.team2.common.service.Ljs_IRingService;
+import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.vo.RingVo;
 
 @RestController
@@ -26,9 +26,13 @@ public class RingRestController {
 		return list;
 	}
 	
-	@PutMapping(value="check", produces="application/json;charset=UTF-8")
-	public List<RingVo> readAlert(@RequestBody RingVo ring){
-		List<RingVo> list = service.modifyRing(ring);
-		return list;
+	@PutMapping("read/{ring_code}")
+	public String readAlert(@PathVariable String ring_code){
+		String msg = "실패";
+		ServiceResult result = service.modifyRing(ring_code);
+		if(ServiceResult.OK.equals(result)){
+			msg = "성공";
+		}
+		return msg;
 	}
 }

@@ -11,52 +11,72 @@
 <script type="text/javascript">
 	$(function(){
 		echoTest();
-		
+		setRingList();
+	});
+	
+	
+// 	ring
+	function setRingList(){
 		$.ajax({
 			url : '${pageContext.request.contextPath}/ring/${user.user_id}',
 			dataType : 'json',
 			success : function(resp){
 				var num = 0;
+				$('#ringList').children().remove();
 				$.each(resp, function(i, v){
-					if(v.ring_confirm_yn=='n'){
+					if(v.ring_confirm_yn=='N'){
 						num++;
+						$('#ringList').append(
+							$('<div>').prop({
+								'class' : 'hd-message-sn',
+								'id' : v.ring_code
+								}).append(
+									$('<a>').prop('href', v.ring_move_address).append(
+										$('<div>').prop('class', 'hd-message-sn').append(
+											$('<div>').prop('class', 'hd-mg-ctn').append(
+												$('<h3>').text(v.ring_type)
+												, $('<p>').text(v.ring_title)
+											)
+										)
+									)
+							)
+						);
 					}
+					
 				});
-				$('#countingDiv').append('<span>').text(num);
+				console.log('num : '+num);
+				$('#countingDiv').append('<span>').prop('id', 'webSocketAlertNo').text(num);
 			}
 		});
-	});
+	}
 	
-	$('#ringBell').on('click', function(){
+	$('#ringList').on('click', $('.hd-message-sn'), function(event){
+		var code = $(this).prop('id');
 		$.ajax({
-			url : '${pageContext.request.contextPath}/ring/${user.user_id}',
-			dataType : 'json',
+			url : '${pageContext.request.contextPath}/ring/read/'+code,
+			method : 'put',
+			dataType : 'text',
 			success : function(resp){
-				$.each(resp, function(i, v){
-					$('#ringList').children().remove();
-					$('#ringList').append(
-						$('<a>').prop('href', v.ring_move_address).append(
-							$('<div>').prop('class', 'hd-message-img').append(
-								$('<img>').prop('src', '${pageContext.request.contextPath}/notika/img/post/1.jpg')		
-							)
-							, $('<div>').prop('class', 'hd-mg-ctn').append(
-								$('<h3>').text(v.request_name)
-								, $('<p>').text(v.ring_title)
-							)
-						)
-					);
-				});				
+				console.log(resp);
 			}
-		});
+		})
 	});
 	
+	
+	
+// 	websocket
 	function writeMessage(message){
-		alert(message);
 		var num = $('#webSocketAlertNo').text();
 		if(num!=""){
 			$(num).text(parseInt(num)+1);
 		}else{
 			$(num).text("1");
+		}
+		
+		var md = $('#messageDiv');
+		md.text(message).show().animate({bottom:'+=100px'},3000).delay(1000).animate({buttom:'-=100px'},3000);
+		if($('#messageDiv:animated').length==0){
+			md.hide();
 		}
 	}
 	
@@ -67,10 +87,11 @@
 			
 			sockJS = new WebSocket("wss://localhost/projecttemplate/alert");
 			sockJS.onopen = function(event){
-				writeMessage(event.target.url + "과 연결 수립");
+				console.log(location.protocol+" 연결");
+				window.localStorage.setItem('webSocket', JSON.stringify(sockJS));
 			};
 			sockJS.onclose = function(closeEvt){
-				writeMessage("연결 종료, 종료코드 : " + closeEvt.code
+				console.log("연결 종료, 종료코드 : " + closeEvt.code
 					+ ", 종료사유 : " + closeEvt.reason);
 			};
 			
@@ -184,8 +205,8 @@
                         </li>
 <!--                         알림 -->
                         <li class="nav-item nc-al">
-                        	<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-	                        	<span><i id="ringBell" class="notika-icon notika-alarm"></i></span>
+                        	<a id="ring" href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+	                        	<span><i class="notika-icon notika-alarm"></i></span>
 	                        	<div class="spinner4 spinner-4"></div><div class="ntd-ctn">
 	                        		<span>3</span>
 	                        	</div>
