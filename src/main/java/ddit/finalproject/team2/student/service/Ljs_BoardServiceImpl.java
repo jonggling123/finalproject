@@ -30,6 +30,7 @@ import ddit.finalproject.team2.student.dao.Ljs_IReplyDao;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.util.exception.CommonException;
 import ddit.finalproject.team2.vo.AttachmentVo;
+import ddit.finalproject.team2.vo.AttendVo;
 import ddit.finalproject.team2.vo.LectureVo;
 import ddit.finalproject.team2.vo.Ljs_BoardVo;
 import ddit.finalproject.team2.vo.RingVo;
@@ -161,23 +162,9 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 		int cnt = boardDao.insertBoard(board);
 		if(cnt>0){
 			processAttachment(board);
-			result = ServiceResult.OK;
+			processRing(board);
 			
-			UserVo me = (UserVo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String message = "<"+board.getLecture_name()+"> "+me.getUser_name()+" 님이 새 글을 작성했습니다.";
-			for(Entry<String, List<WebSocketSession>> e : socketSessionMap.entrySet()){
-				for(WebSocketSession session : e.getValue()){
-					UserVo user = (UserVo) ((Authentication)session.getPrincipal()).getPrincipal();
-					if((!user.getUser_id().equals(me.getUser_id()) && user.getLectureList().contains(new LectureVo(board.getLecture_code())))
-							|| user.getUser_id().equals(board.getProfessor_id())){
-						ringDao.insertRing(
-								new RingVo(null, user.getUser_id(), me.getUser_id(), "강좌게시판", null
-										, board.getLecture_code()+"/board/"+board.getBoard_no()
-										, null, null, "N", message));
-						session.sendMessage(new TextMessage(message));
-					}
-				}
-			}
+			result = ServiceResult.OK;
 		}
 		return result;
 	}
@@ -242,6 +229,37 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 			}
 		}
 		return modified;
+	}
+	
+	private void processRing(Ljs_BoardVo board) throws IOException{
+		//알림 처리(DB)
+		UserVo me = (UserVo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String message = "<"+board.getLecture_name()+"> "+me.getUser_name()+" 님이 새 글을 작성했습니다.";
+		List<AttendVo> attendList = attendDao.selectAttendList(board.getLecture_code());
+		int a = ringDao.insertRing(
+				new RingVo(null, board.getProfessor_id(), me.getUser_id(), "강좌게시판", null
+					, "/"+board.getLecture_code()+"/board/"+board.getBoard_no()
+					, null, null, "N", message));
+		if(a>0){
+			for(AttendVo att : attendList){
+				if(!att.getUser_id().equals(me.getUser_id())){
+					ringDao.insertRing(
+							new RingVo(null, att.getUser_id(), me.getUser_id(), "강좌게시판", null
+									, "/"+board.getLecture_code()+"/board/"+board.getBoard_no()
+									, null, null, "N", message));
+				}
+			}
+		}
+		//알림 처리(푸쉬 메세지)
+		for(Entry<String, List<WebSocketSession>> e : socketSessionMap.entrySet()){
+			for(WebSocketSession session : e.getValue()){
+				UserVo user = (UserVo) ((Authentication)session.getPrincipal()).getPrincipal();
+				if((!user.getUser_id().equals(me.getUser_id()) && user.getLectureList().contains(new LectureVo(board.getLecture_code())))
+						|| user.getUser_id().equals(board.getProfessor_id())){
+					session.sendMessage(new TextMessage(message));
+				}
+			}
+		}
 	}
 	
 }
