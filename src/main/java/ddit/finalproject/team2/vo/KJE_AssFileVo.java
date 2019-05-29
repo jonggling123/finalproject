@@ -16,15 +16,14 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(of="file_no")
 @ToString
-public class KJE_AssignmentFileVo implements Serializable{
+public class KJE_AssFileVo implements Serializable{
 	
-	public KJE_AssignmentFileVo(MultipartFile fileItem){
+	public KJE_AssFileVo(MultipartFile fileItem){
 		super();
 		this.fileItem= fileItem;
 		file_name=fileItem.getOriginalFilename();
 		file_size=Long.toString(fileItem.getSize());
 	}
-	
 	
 	@NotNull
 	private String file_no;

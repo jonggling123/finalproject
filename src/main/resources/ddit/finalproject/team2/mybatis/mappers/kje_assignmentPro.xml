@@ -25,14 +25,16 @@
 	</select>
 
 
-	<resultMap type="KJE_AssignmentnFileVo" id="assignmentMap" autoMapping="true">
-		<id property="assignment_no" column="ASSIGNMENT_NO"/> 
-		
-		<collection property="assignmentFileList" ofType="KJE_AssignmentFileVo" autoMapping="true">
-			<id property="file_no" column="FILE_NO"/>
-		
+	<resultMap type="KJE_AssignmentnFileVo" id="assignmentMap"
+		autoMapping="true">
+		<id property="assignment_no" column="ASSIGNMENT_NO" />
+
+		<collection property="assignmentFileList" ofType="KJE_AssFileVo"
+			autoMapping="true">
+			<id property="file_no" column="FILE_NO" />
+
 		</collection>
-	
+
 	</resultMap>
 
 	<select id="selectAssignment" parameterType="String" resultMap="assignmentMap">
@@ -50,9 +52,55 @@
 		FILE_NAME,
 		A. ASSIGNMENT_NO
 		FROM
-		ASSIGNMENT A LEFT OUTER JOIN ASSIGNMENTFILE F ON(A.ASSIGNMENT_NO=F.ASSIGNMENT_NO)
-		WHERE A.ASSIGNMENT_NO=#{assignment_no}
+		ASSIGNMENT A LEFT
+		OUTER JOIN ASSIGNMENTFILE F ON(A.ASSIGNMENT_NO=F.ASSIGNMENT_NO)
+		WHERE
+		A.ASSIGNMENT_NO=#{assignment_no}
 
 	</select>
+
+	<insert id="insertAssignment" parameterType="AssignmentVo">
+		<selectKey resultType="string" keyProperty="assignment_no"
+			order="BEFORE">
+			SELECT ASSIGNMENT_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO ASSIGNMENT (
+		ASSIGNMENT_TITLE, ASSIGNMENT_NO,
+		ASSIGNMENT_DATE, SUBMIT_PERIOD1,
+		SUBMIT_PERIOD2,
+		CLASS_IDENTIFYING_CODE,
+		LECTURE_CODE, ASSIGNMENT_CONTENT
+		) VALUES (
+		#{assignment_title}, #{assignment_no},
+		SYSDATE, 
+		TO_DATE(#{insert_period1}, 'YYYYMMDD'),
+		TO_DATE(#{insert_period2}, 'YYYYMMDD'),
+		#{class_identifying_code},
+		#{lecture_code},
+		#{assignment_content, jdbcType=CLOB}
+		)
+	</insert>
+
+	<insert id="insertAllAssFile" parameterType="KJE_AssignmentnFileVo">
+	<selectKey resultType="int" keyProperty="startAssFileNo" order="BEFORE">
+		SELECT NVL(MAX(FILE_NO),0)+1 FROM ASSIGNMENTFILE
+	</selectKey>
+
+	INSERT ALL
+	<foreach collection="assignmentFileList" item="assFile" index="idx">
+	INTO ASSIGNMENTFILE (
+	FILE_NO, FILE_PATH,
+	FILE_SIZE, FILE_NAME,
+	ASSIGNMENT_NO
+	)VALUES(
+	#{startAssFileNo}+#{idx},
+	#{assFile.file_path},
+	#{assFile.file_size}, #{assFile.file_name},
+	#{assignment_no}
+	)
+	
+	</foreach>
+	SELECT * FROM DUAL 
+</insert>
 
 </mapper>

@@ -24,4 +24,21 @@ public interface KJE_IAssignmentDao {
 	 */
 	public KJE_AssignmentnFileVo selectAssignment(String assignment_no);
 	
+	/**
+	 * 과제 에 대한 정보를 전달받아 내용을 저장하는 메서드 
+	 * @param assignment 과제에 대한 내용
+	 * @return insert 성공여부
+	 */
+	public int insertAssignment(KJE_AssignmentnFileVo assignment);
+	
+	
+	/** 과제의 첨부파일에 대한 내용을 전달받아 저장하는 메서드 
+	 * 
+	 * @param assignment 과제에 대한 내용
+	 * @return insert 성공여부
+	 */
+	public int insertAllAssFile(KJE_AssignmentnFileVo assignmentnFileVo);
+	
+	
+	
 }
