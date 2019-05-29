@@ -24,7 +24,7 @@ public class AssignmentVo implements Serializable{
 	@NotNull
 	private Date submit_period1;
 	@NotNull
-	private String videoweek_code;
+	private String class_identifying_code;
 	@NotNull
 	private Date submit_period2;
 	@NotNull

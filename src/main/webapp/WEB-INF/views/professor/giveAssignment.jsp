@@ -24,6 +24,7 @@
 		CKEDITOR.replace("contextArea", {
          filebrowserImageUploadUrl:"<c:url value='/board/imageUpload.do'/>?sample=test"
       });
+		
 		var lecture_name=$("[name='lecture']").children(":selected").text();
 		settingDataTable();
 		function settingDataTable() {
@@ -95,7 +96,7 @@
 					title+="<p><b>과제 등록일 :</b>"+ resp.assignment_date+"</p>";
 					title+="<p><b>과제제출 기한 :</b>" +resp.submit_period1+"~"+ resp.submit_period2+"</p>";
 					$('#headerView').html(title);
-					$('#contentView').html("<pre>"+resp.assignment_content+"</pre>");
+					$('#contentView').html(resp.assignment_content);
 					
 					var assignmentFileList = resp.assignmentFileList;
 					var btnText="첨부파일 다운로드";
@@ -122,9 +123,14 @@
 		});
 		
 	$table.on('click', '.insertbtn', function() {
+		
 			var week =$($(this).parent().parent().find($('td'))[0]).text();
 			var turn =$($(this).parent().parent().find($('td'))[1]).text();
 				$('#form_title').html("<h2>"+lecture_name+" "+week+"주차"+turn+"차시 과제물</h2>")
+		
+				var lecture_code = $("[name='lecture']").val();
+		$("[name='class_identifying_code']").val(week+turn);
+		$("[name='lecture_code']").val(lecture_code);
 		
 			if (!($('.modal.in').length)) {
 				$('.modal-dialog').css({
@@ -161,11 +167,36 @@
 
 		});
 	$('#saveAssignment').on("click",function(event){
+		var content = CKEDITOR.instances.contextArea.getData();	
+		$("[name='assignment_content']").val(content.trim());
 		
-		alert("test")
+		        // Get form
+		        var form = $('#assignment')[0];
+		        // Create an FormData object 
+		        var data = new FormData(form);
+		 
+		        $.ajax({
+		            type: "POST",
+		            enctype: 'multipart/form-data',
+		            url: "${pageContext.request.contextPath}/saveAssignment",
+		            data: data,
+		            processData: false,
+		            contentType: false,
+		            cache: false,
+		            timeout: 600000,
+		            success: function (data) {
+		                alert("complete");
+						settingDataTable();
+		             
+		            },
+		            error: function (e) {
+		                console.log("ERROR : ", e);
+		               
+		                alert("fail");
+		            }
+		        });
 		
-		
-	});
+		});
 		
 	});
 </script>
@@ -301,7 +332,7 @@
                                     <div class="cmp-int-lb cmp-int-lb1 text-right">
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-10 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <div class="nk-int-st cmp-int-in cmp-email-over">
                                             <input type="text"  name="assignment_title" class="form-control" placeholder="제목을 입력해주세요" />
@@ -322,24 +353,26 @@
 									<div class="form-group nk-datapk-ctm form-elet-mg" id="data_2" name="data_2">
 										<div class="input-group date nk-int-st">
 											<span class="input-group-addon"></span> <input type="text" name="submit_period2"
-												id="ed_date" class="form-control" placeholder="제출 종료일">
+												id="ed_date" class="form-control"  placeholder="제출 종료일">
 										</div>
 									</div>
 								</div>
                             </div>
                             <div class="row">
-                                
+                                <input type="hidden" name="class_identifying_code"/>
+								<input type="hidden" name ="lecture_code"/>
                             </div>
                         </div>
                         <div class="cmp-int-box mg-t-20">
                             <div class="html-editor-cm">
-                                <textarea id="contextArea" name="assignment_content" rows="20" cols="50"></textarea>
+                                <textarea id="contextArea"  rows="20" cols="50"></textarea>
+                                <input type="hidden" name="assignment_content"/>
                             </div>
                         </div>
                         <div class="upload-sys">
-                           	<input type="file" name ="bo_files">
-							<input type="file" name ="bo_files">
-							<input type="file" name ="bo_files">
+                           	<input type="file" name ="ass_files">
+							<input type="file" name ="ass_files">
+							<input type="file" name ="ass_files">
                         </div>
                         <div class="vw-ml-action-ls text-right mg-t-20">
                             
@@ -352,9 +385,6 @@
 				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
-		<input type="hidden" name="class_identifying_code">
-		<input type="hidden" name="lecture_code">
-		
 		</form:form>
 	</div>
 </div>

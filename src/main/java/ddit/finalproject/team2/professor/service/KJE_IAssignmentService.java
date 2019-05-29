@@ -2,6 +2,7 @@ package ddit.finalproject.team2.professor.service;
 
 import java.util.List;
 
+import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.vo.KJE_AssignmentnFileVo;
 import ddit.finalproject.team2.vo.KJE_LWeekAssignmentProVo;
 
@@ -20,5 +21,12 @@ public interface KJE_IAssignmentService {
 	 */
 	public KJE_AssignmentnFileVo retriveAssignment(String assignment_no);
 	
+	
+	/**
+	 * 파라미터로 과제에 대한 내용을 전달받아 DB 에 저장하는 메서드
+	 * @return insert 성공 여부
+	 */
+	public ServiceResult createAssignment(KJE_AssignmentnFileVo assignmentnFileVo);
+		
 	
 }
