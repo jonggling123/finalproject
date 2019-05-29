@@ -3,7 +3,7 @@
 <mapper namespace="ddit.finalproject.team2.common.dao.IUserDao">
 	<resultMap type="ddit.finalproject.team2.vo.UserVo" id="userMap" autoMapping="true">
 		<id property="user_id" column="USER_ID"/>
-		<collection property="attendList" autoMapping="true" ofType="ddit.finalproject.team2.vo.AttendVo">
+		<collection property="attendNoList" autoMapping="true" ofType="ddit.finalproject.team2.vo.AttendVo">
 			<id property="attend_no" column="ATTEND_NO"/>
 		</collection>
 		<collection property="lectureList" autoMapping="true" ofType="ddit.finalproject.team2.vo.LectureVo">

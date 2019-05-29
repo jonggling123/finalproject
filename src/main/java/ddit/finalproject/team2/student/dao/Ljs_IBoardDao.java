@@ -43,10 +43,4 @@ public interface Ljs_IBoardDao {
 	String selectWriterIdByLectureCode(String lecture_code);
 	String selectWriterIdByAttendNo(String attend_no);
 	
-	
-	/**
-	 * 모든 과목게시판의 게시글 전체를 조회하는 메서드
-	 * @return
-	 */
-	List<Ljs_BoardVo> selectAllBoard();
 }

@@ -26,7 +26,7 @@ public class RingRestController {
 		return list;
 	}
 	
-	@PutMapping("read/{ring_code}")
+	@PutMapping(value="read/{ring_code}", produces="text/plain;charset=UTF-8")
 	public String readAlert(@PathVariable String ring_code){
 		String msg = "실패";
 		ServiceResult result = service.modifyRing(ring_code);

@@ -253,10 +253,12 @@ public class Ljs_BoardServiceImpl implements Ljs_IBoardService{
 		//알림 처리(푸쉬 메세지)
 		for(Entry<String, List<WebSocketSession>> e : socketSessionMap.entrySet()){
 			for(WebSocketSession session : e.getValue()){
-				UserVo user = (UserVo) ((Authentication)session.getPrincipal()).getPrincipal();
-				if((!user.getUser_id().equals(me.getUser_id()) && user.getLectureList().contains(new LectureVo(board.getLecture_code())))
-						|| user.getUser_id().equals(board.getProfessor_id())){
-					session.sendMessage(new TextMessage(message));
+				if(session.isOpen()){
+					UserVo user = (UserVo) ((Authentication)session.getPrincipal()).getPrincipal();
+					if((!user.getUser_id().equals(me.getUser_id()) && user.getLectureList().contains(new LectureVo(board.getLecture_code())))
+							|| user.getUser_id().equals(board.getProfessor_id())){
+						session.sendMessage(new TextMessage(message));
+					}
 				}
 			}
 		}

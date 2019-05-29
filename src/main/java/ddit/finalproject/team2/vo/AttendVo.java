@@ -25,4 +25,6 @@ public class AttendVo implements Serializable{
 		this.user_id = user_id;
 		this.lecture_code = lecture_code;
 	}
+	
+	private String user_name;
 }

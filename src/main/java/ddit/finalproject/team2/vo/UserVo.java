@@ -32,7 +32,7 @@ public class UserVo implements Serializable, UserDetails{
 	@NotNull private String user_authority;
 	
 	private List<GrantedAuthority> authorities;
-	private List<AttendVo> attendList;
+	private List<AttendVo> attendNoList;
 	private List<LectureVo> lectureList;
 	
 	@Override

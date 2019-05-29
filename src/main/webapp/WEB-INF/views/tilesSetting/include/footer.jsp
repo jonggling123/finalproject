@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div id="messageDiv" style="display:none;">알림div</div>
+<div id="messageDiv"></div>
 
 
 <!-- bootstrap JS
@@ -75,3 +75,6 @@
     ============================================ -->
 <script src="${pageContext.request.contextPath}/notika/js/main.js"></script>
 
+<!-- notify JS
+	============================================ -->
+<script src="${pageContext.request.contextPath }/res/js/notify.js"></script>
