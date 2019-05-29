@@ -3,6 +3,7 @@
 <mapper namespace="ddit.finalproject.team2.student.dao.Ljs_IBoardDao">
 	<resultMap type="ddit.finalproject.team2.vo.Ljs_BoardVo" id="boardMap" autoMapping="true">
 		<id property="board_no" column="BOARD_NO"/>
+		<association property="user" autoMapping="true" column="USER_ID" select="ddit.finalproject.team2.common.dao.IUserDao.selectUser" />
 		<collection property="savedAttachmentList" autoMapping="true" ofType="ddit.finalproject.team2.vo.AttachmentVo">
 			<id property="attachment_no" column="ATTACHMENT_NO"/>
 		</collection>
@@ -21,7 +22,8 @@
 				, BOARD_TITLE, BOARD_HIT, BOARD_CONTENT, A.LECTURE_CODE, A.ATTEND_NO
 				, B.ATTACHMENT_NO, FILE_NAME, FILE_TYPE
 				, FILE_SIZE, FILE_PATH, FILE_ORDER
-		FROM BOARD A LEFT OUTER JOIN ATTACHMENT B
+		FROM BOARD A
+		LEFT OUTER JOIN ATTACHMENT B
 		ON(A.BOARD_NO = B.BOARD_NO)
 		WHERE A.BOARD_NO IN(
 		    TO_NUMBER(#{board_no}),

@@ -34,6 +34,7 @@
 	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
 		p:definitions="classpath:ddit/finalproject/team2/tiles/tiles-def.xml"
 		p:preparerFactoryClass="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"
+		p:checkRefresh="true"
 	/>
 	
 	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" 
@@ -65,6 +66,7 @@
 	<bean id="servletServerContainer" class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean" 
 		p:maxBinaryMessageBufferSize="8192"
 	/>
+	
 </beans>
 
 

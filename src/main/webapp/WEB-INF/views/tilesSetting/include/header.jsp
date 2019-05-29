@@ -11,13 +11,72 @@
 <script type="text/javascript">
 	$(function(){
 		echoTest();
+		setRingList();
 	});
-	function writeMessage(message){ 
+	
+	
+// 	ring
+	function setRingList(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/ring/${user.user_id}',
+			dataType : 'json',
+			success : function(resp){
+				var num = 0;
+				$('#ringList').children().remove();
+				$.each(resp, function(i, v){
+					if(v.ring_confirm_yn=='N'){
+						num++;
+						$('#ringList').append(
+							$('<div>').prop({
+								'class' : 'hd-message-sn',
+								'id' : v.ring_code
+								}).append(
+									$('<a>').prop('href', v.ring_move_address).append(
+										$('<div>').prop('class', 'hd-message-sn').append(
+											$('<div>').prop('class', 'hd-mg-ctn').append(
+												$('<h3>').text(v.ring_type)
+												, $('<p>').text(v.ring_title)
+											)
+										)
+									)
+							)
+						);
+					}
+					
+				});
+				console.log('num : '+num);
+				$('#countingDiv').append('<span>').prop('id', 'webSocketAlertNo').text(num);
+			}
+		});
+	}
+	
+	$('#ringList').on('click', $('.hd-message-sn'), function(event){
+		var code = $(this).prop('id');
+		$.ajax({
+			url : '${pageContext.request.contextPath}/ring/read/'+code,
+			method : 'put',
+			dataType : 'text',
+			success : function(resp){
+				console.log(resp);
+			}
+		})
+	});
+	
+	
+	
+// 	websocket
+	function writeMessage(message){
 		var num = $('#webSocketAlertNo').text();
 		if(num!=""){
 			$(num).text(parseInt(num)+1);
 		}else{
 			$(num).text("1");
+		}
+		
+		var md = $('#messageDiv');
+		md.text(message).show().animate({bottom:'+=100px'},3000).delay(1000).animate({buttom:'-=100px'},3000);
+		if($('#messageDiv:animated').length==0){
+			md.hide();
 		}
 	}
 	
@@ -28,10 +87,11 @@
 			
 			sockJS = new WebSocket("wss://localhost/projecttemplate/alert");
 			sockJS.onopen = function(event){
-				writeMessage(event.target.url + "과 연결 수립");
+				console.log(location.protocol+" 연결");
+				window.localStorage.setItem('webSocket', JSON.stringify(sockJS));
 			};
 			sockJS.onclose = function(closeEvt){
-				writeMessage("연결 종료, 종료코드 : " + closeEvt.code
+				console.log("연결 종료, 종료코드 : " + closeEvt.code
 					+ ", 종료사유 : " + closeEvt.reason);
 			};
 			
@@ -49,6 +109,8 @@
 				console.log("websocket 미지원...");
 		}
 	}
+	
+	
 </script>
 
 <input id ="userName" type="hidden" value="${user.user_name}"></input>
@@ -142,55 +204,34 @@
                             </div>
                         </li>
 <!--                         알림 -->
-                        <li class="nav-item nc-al"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-alarm"></i></span><div class="spinner4 spinner-4"></div><div class="ntd-ctn"><span>3</span></div></a>
+                        <li class="nav-item nc-al">
+                        	<a id="ring" href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+	                        	<span><i class="notika-icon notika-alarm"></i></span>
+	                        	<div class="spinner4 spinner-4"></div><div class="ntd-ctn">
+	                        		<span>3</span>
+	                        	</div>
+                        	</a>
                             <div role="menu" class="dropdown-menu message-dd notification-dd animated zoomIn">
                                 <div class="hd-mg-tt">
                                     <h2>알림</h2>
                                 </div>
-                                <div class="hd-message-info">
-                                    <a href="#">
-                                        <div class="hd-message-sn">
-                                            <div class="hd-message-img">
-                                                <img src="${pageContext.request.contextPath}/notika/img/post/1.jpg" alt="" />
-                                            </div>
-                                            <div class="hd-mg-ctn">
-                                                <h3>David Belle</h3>
-                                                <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                                            </div>
-                                        </div>
-                                    </a>
+                                <div id="ringList" class="hd-message-info">
+                                   
                                 </div>
                                 <div class="hd-mg-va">
                                     <a href="#">View All</a>
                                 </div>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                        	<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                        		<span><i class="notika-icon notika-menus"></i></span>
+                        		<div class="spinner4 spinner-4"></div>
+                        		<div id="countingDiv" class="ntd-ctn"></div>
+                        	</a>
                         </li>
                         
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-                        	<span><i class="notika-icon notika-menus"></i>
-                        	</span><div class="spinner4 spinner-4"></div><div class="ntd-ctn">
-									<span id="webSocketAlertNo"></span>
-								</div></a>
-                            <div role="menu" class="dropdown-menu message-dd task-dd animated zoomIn">
-                                <div class="hd-mg-tt">
-                                    <h2>알림</h2>
-                                </div>
-                                <div class="hd-message-info hd-task-info">
-                                    <div class="skill">
-                                        <div class="progress">
-                                            <div class="lead-content">
-                                                <p>HTML5 Validation Report</p>
-                                            </div>
-                                            <div class="progress-bar wow fadeInLeft" data-progress="95%" style="width: 95%;" data-wow-duration="1.5s" data-wow-delay="1.2s"> <span>95%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="hd-mg-va">
-                                    <a href="#">View All</a>
-                                </div>
-                            </div>
-                        </li>
+                        
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-chat"></i></span></a>
                             <div role="menu" class="dropdown-menu message-dd chat-dd animated zoomIn">
                              <div class="notika-chat-list notika-shadow mg-t-30 tb-res-ds-n dk-res-ds">

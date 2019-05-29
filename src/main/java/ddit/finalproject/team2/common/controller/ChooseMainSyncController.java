@@ -73,6 +73,9 @@ public class ChooseMainSyncController {
 		int statusCode = 0;
 		String view = null;
 		String authority = null;
+		if(authentication==null){
+			return new ModelAndView("common/login");
+		}
 		List<String> authorities = AuthorityUtil.getAuthorityList(authentication);
 		PortalAccessStatsVo potalAccessStats = new PortalAccessStatsVo();
 			potalAccessStats.setAccess_ip(request.getRemoteAddr());
@@ -105,6 +108,7 @@ public class ChooseMainSyncController {
 		
 		mv.setViewName(view);
 		mv.getModel().put("authority", authority);
+		mv.getModel().put("user", (UserVo)authentication.getPrincipal());
 		
 		return mv;
 	}
