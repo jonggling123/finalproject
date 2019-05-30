@@ -1,5 +1,6 @@
 package ddit.finalproject.team2.student.controller.subjectpage;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class ReplyRestController {
 	}
 	
 	@PostMapping(value="create", produces="text/plain;charset=UTF-8")
-	public String newReply(@RequestBody @Validated(InsertHint.class) Ljs_ReplyVo reply, Error errors){
+	public String newReply(@RequestBody @Validated(InsertHint.class) Ljs_ReplyVo reply, Error errors) throws IOException{
 		String msg = "실패";
 		ServiceResult result = service.createReply(reply);
 		if(ServiceResult.OK.equals(result)){

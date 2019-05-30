@@ -2,117 +2,6 @@
 	pageEncoding="UTF-8"%>
 
 <%@ page language="java" %>
-<script type="text/javascript">
-	$(function() {
-		 var chatTime = moment().format("MM/DD hh:mm");
-		 $('<li class="clearfix odd"><div class="chat-avatar"><i>' + chatTime + '</i></div><div class="conversation-text"><div class="ctext-wrap"><i>대덕인재대학교</i><p>' + "안녕하세요.대덕인재대학교 ChatBot시스템 입니다." + '</p></div></div></li>').appendTo('ul.conversation-list');
-	});
-</script>
-<script type="text/javascript">
-	$(function(){
-		echoTest();
-		setRingList();
-	});
-	
-	
-// 	ring
-	function setRingList(){
-		$.ajax({
-			url : '${pageContext.request.contextPath}/ring/${user.user_id}',
-			dataType : 'json',
-			success : function(resp){
-				var num = 0;
-				$('#ringList').children().remove();
-				$.each(resp, function(i, v){
-					if(v.ring_confirm_yn=='N'){
-						num++;
-						$('#ringList').append(
-							$('<div>').prop({
-								'class' : 'hd-message-sn',
-								'id' : v.ring_code
-								}).append(
-									$('<a>').prop('href', v.ring_move_address).append(
-										$('<div>').prop('class', 'hd-message-sn').append(
-											$('<div>').prop('class', 'hd-mg-ctn').append(
-												$('<h3>').text(v.ring_type)
-												, $('<p>').text(v.ring_title)
-											)
-										)
-									)
-							)
-						);
-					}
-					
-				});
-				console.log('num : '+num);
-				$('#countingDiv').append('<span>').prop('id', 'webSocketAlertNo').text(num);
-			}
-		});
-	}
-	
-	$('#ringList').on('click', $('.hd-message-sn'), function(event){
-		var code = $(this).prop('id');
-		$.ajax({
-			url : '${pageContext.request.contextPath}/ring/read/'+code,
-			method : 'put',
-			dataType : 'text',
-			success : function(resp){
-				console.log(resp);
-			}
-		})
-	});
-	
-	
-	
-// 	websocket
-	function writeMessage(message){
-		var num = $('#webSocketAlertNo').text();
-		if(num!=""){
-			$(num).text(parseInt(num)+1);
-		}else{
-			$(num).text("1");
-		}
-		
-		var md = $('#messageDiv');
-		md.text(message).show().animate({bottom:'+=100px'},3000).delay(1000).animate({buttom:'-=100px'},3000);
-		if($('#messageDiv:animated').length==0){
-			md.hide();
-		}
-	}
-	
-	var sockJS;
-	function echoTest(){
-		if(window.WebSocket){
-			console.log("websocket 지원!");
-			
-			sockJS = new WebSocket("wss://localhost/projecttemplate/alert");
-			sockJS.onopen = function(event){
-				console.log(location.protocol+" 연결");
-				window.localStorage.setItem('webSocket', JSON.stringify(sockJS));
-			};
-			sockJS.onclose = function(closeEvt){
-				console.log("연결 종료, 종료코드 : " + closeEvt.code
-					+ ", 종료사유 : " + closeEvt.reason);
-			};
-			
-			sockJS.onerror = function(errorEvt){
-				console.log("에러 발생, 에러코드는 종료 후 종료코드 확인.");
-			};
-			
-			sockJS.onmessage = function(messageEvt){
-				var message = messageEvt.data;
-				console.log("수신 메세지 타입 : " + typeof message);
-				writeMessage(message);
-			};
-			
-		}else{
-				console.log("websocket 미지원...");
-		}
-	}
-	
-	
-</script>
-
 <input id ="userName" type="hidden" value="${user.user_name}"></input>
 <input id="contextPath" type="hidden" value="${pageContext.request.contextPath}"></input>
 <div class="header-top-area">
@@ -225,9 +114,9 @@
                         </li>
                         <li class="nav-item">
                         	<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-                        		<span><i class="notika-icon notika-menus"></i></span>
-                        		<div class="spinner4 spinner-4"></div>
-                        		<div id="countingDiv" class="ntd-ctn"></div>
+                        		<span id="bell"><i class="notika-icon notika-menus"></i></span>
+<!--                         		<div class="spinner4 spinner-4"></div> -->
+<!--                         		<div id="countingDiv" class="ntd-ctn"></div> -->
                         	</a>
                         </li>
                         
@@ -277,3 +166,135 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+	$(function() {
+		 var chatTime = moment().format("MM/DD hh:mm");
+		 $('<li class="clearfix odd"><div class="chat-avatar"><i>' + chatTime + '</i></div><div class="conversation-text"><div class="ctext-wrap"><i>대덕인재대학교</i><p>' + "안녕하세요.대덕인재대학교 ChatBot시스템 입니다." + '</p></div></div></li>').appendTo('ul.conversation-list');
+	});
+</script>
+<script type="text/javascript">
+	echoTest();
+	setRingList();
+	
+// 	ring
+	function setRingList(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/ring/${user.user_id}',
+			dataType : 'json',
+			success : function(resp){
+				var num = 0;
+				$('#ringList').children().remove();
+				$.each(resp, function(i, v){
+					if(v.ring_confirm_yn=='N'){
+						num++;
+						$('#ringList').append(
+							$('<div>').prop('class', 'hd-message-sn').append(
+								$('<a>').prop({
+									'href' : v.ring_move_address,
+									'id' : v.ring_code
+								}).append(
+									$('<div>').prop('class', 'hd-message-sn').append(
+										$('<div>').prop('class', 'hd-mg-ctn').append(
+											$('<h3>').text(v.ring_type)
+											, $('<p>').text(v.ring_title)
+										)
+									)
+								)
+							)
+						);
+					}
+					
+				});
+				if(num!=0){
+					$('#bell').after(
+						$('<div>').prop('class', 'spinner4 spinner-4')
+						, $('<div>').prop({
+							'id' : 'countingDiv',
+							'class' : 'ntd-ctn'
+						}).append('<span>').prop('id', 'webSocketAlertNo').text(num)
+					);
+				}
+			}
+		});
+	}
+	
+	$('#ring').on('click', function(){
+		setRingList();
+	});
+	
+	$('#ringList').on('click', 'a', function(event){
+		event.preventDefault();
+		var code = $(this).prop('id');
+		console.log(code);
+		var url = $(this).attr('href');
+		console.log(url);
+		$.ajax({
+			url : '${pageContext.request.contextPath}/ring/read/'+code,
+			method : 'put',
+			dataType : 'text',
+			success : function(resp){
+				console.log(resp);
+				location.href = '${pageContext.request.contextPath}'+url;
+			}
+		})
+	});
+	
+	
+	
+// 	websocket
+	function writeMessage(message){
+		var span = $('#webSocketAlertNo');
+		var num = $('#webSocketAlertNo').text();
+		console.log(num);
+		if(num==''){
+			$('#bell').after(
+				$('<div>').prop('class', 'spinner4 spinner-4')
+				, $('<div>').prop({
+					'id' : 'countingDiv',
+					'class' : 'ntd-ctn'
+				}).append('<span>').prop('id', 'webSocketAlertNo').text('1')
+			);
+		}else{
+			$(span).text(parseInt(num)+1);
+		}
+		
+		$.notify(
+			message,
+			{className : 'info',
+			position : 'bottom right'}
+		);
+	}
+	
+	var sockJS;
+	function echoTest(){
+		if(window.WebSocket){
+			console.log("websocket 지원!");
+			
+			sockJS = new WebSocket("wss://localhost/projecttemplate/alert");
+			sockJS.onopen = function(event){
+				console.log(location.protocol+" 연결");
+				window.localStorage.setItem('webSocket', JSON.stringify(sockJS));
+			};
+			sockJS.onclose = function(closeEvt){
+				console.log("연결 종료, 종료코드 : " + closeEvt.code
+					+ ", 종료사유 : " + closeEvt.reason);
+			};
+			
+			sockJS.onerror = function(errorEvt){
+				console.log("에러 발생, 에러코드는 종료 후 종료코드 확인.");
+			};
+			
+			sockJS.onmessage = function(messageEvt){
+				var message = messageEvt.data;
+				console.log("수신 메세지 타입 : " + typeof message);
+				writeMessage(message);
+			};
+			
+		}else{
+				console.log("websocket 미지원...");
+		}
+	}
+	
+	
+</script>

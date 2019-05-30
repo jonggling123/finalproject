@@ -28,7 +28,7 @@
 	
 	<update id="updateRing" parameterType="string">
 		UPDATE RING
-		SET RING_CONFRIM_DATE = SYSDATE,
+		SET RING_CONFIRM_DATE = SYSDATE,
 			RING_CONFIRM_YN = 'Y'
 		WHERE RING_CODE = #{ring_code}
 	</update>

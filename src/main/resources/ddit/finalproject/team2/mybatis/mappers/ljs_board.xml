@@ -3,7 +3,6 @@
 <mapper namespace="ddit.finalproject.team2.student.dao.Ljs_IBoardDao">
 	<resultMap type="ddit.finalproject.team2.vo.Ljs_BoardVo" id="boardMap" autoMapping="true">
 		<id property="board_no" column="BOARD_NO"/>
-		<association property="user" autoMapping="true" column="USER_ID" select="ddit.finalproject.team2.common.dao.IUserDao.selectUser" />
 		<collection property="savedAttachmentList" autoMapping="true" ofType="ddit.finalproject.team2.vo.AttachmentVo">
 			<id property="attachment_no" column="ATTACHMENT_NO"/>
 		</collection>
@@ -76,4 +75,5 @@
 		SELECT USER_ID FROM ATTEND
 		WHERE ATTEND_NO = #{attend_no}
 	</select>
+	
 </mapper>

@@ -104,10 +104,12 @@
 				
 				<textarea id="contextArea" rows="20" cols="50"></textarea>
 				<input type="hidden" name="writer" value="${user.user_name }">
-				<input type="hidden" name="lecture_code" value="${lecture_code }">
+				<input type="hidden" name="lecture_code" value="${lecture.lecture_code }">
 				<input type="hidden" name="user" value="${user.user_id }">
+				<input type="hidden" name="lecture_name" value="${lecture.lecture_name }">
+				<input type="hidden" name="professor_id" value="${lecture.user_id }">
 				<input id="create" type="submit" value="등록"/>
-				<button type="button">취소</button>
+				<button id="cancel" type="button">취소</button>
 				</form:form>
 			</div>
 		</div>
@@ -119,7 +121,9 @@
 <script
 	src="${pageContext.request.contextPath }/res/js/ckeditor/ckeditor.js"></script>
 <script>
-	CKEDITOR.replace('contextArea');
+	CKEDITOR.replace('contextArea', {
+		filebrowserImageUploadUrl:"<c:url value='/board/imageUpload'/>?sample=test"
+	});
 	
 	$('#create').on('click',function(){
 		var content = CKEDITOR.instances.contextArea.getData();
@@ -130,5 +134,9 @@
 				, value:content.trim()
 			})		
 		);
+	});
+	
+	$('#cancel').on('click', function() {
+		location.href = "${pageContext.request.contextPath}/subjectPage/${lecture_code}/lectureBoard";
 	});
 </script>
