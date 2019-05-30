@@ -44,9 +44,9 @@
     <definition name="newPage" template="/WEB-INF/views/tilesSetting/baseLayout.jsp">
         <put-attribute name="style" value="/WEB-INF/views/tilesSetting/include/style.jsp"/>
     	<put-attribute name="header" value=""/>
-    	<put-attribute name="menu" value=""/>
     	<put-attribute name="submenu" value=""/>
         <put-attribute name="footer" value="/WEB-INF/views/tilesSetting/include/newPageFooter.jsp" />
+    	<put-attribute name="menu" value=""/>
     </definition>
 
     <definition name="empty" template="/WEB-INF/views/tilesSetting/baseLayout.jsp">
