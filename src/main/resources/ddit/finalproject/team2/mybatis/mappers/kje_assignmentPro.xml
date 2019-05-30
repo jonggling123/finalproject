@@ -59,7 +59,7 @@
 
 	</select>
 
-	<insert id="insertAssignment" parameterType="AssignmentVo">
+	<insert id="insertAssignment" parameterType="KJE_AssignmentnFileVo">
 		<selectKey resultType="string" keyProperty="assignment_no"
 			order="BEFORE">
 			SELECT ASSIGNMENT_SEQ.NEXTVAL FROM DUAL
@@ -73,8 +73,8 @@
 		) VALUES (
 		#{assignment_title}, #{assignment_no},
 		SYSDATE, 
-		TO_DATE(#{insert_period1}, 'YYYYMMDD'),
-		TO_DATE(#{insert_period2}, 'YYYYMMDD'),
+		TO_DATE(#{submit_period1}, 'YYYY/MM/DD'),
+		TO_DATE(#{submit_period2}, 'YYYY/MM/DD'),
 		#{class_identifying_code},
 		#{lecture_code},
 		#{assignment_content, jdbcType=CLOB}
@@ -102,5 +102,19 @@
 	</foreach>
 	SELECT * FROM DUAL 
 </insert>
+
+<select id="selectAssFile" parameterType="string" resultType="KJE_AssFileVo">
+	SELECT
+	FILE_NO,
+	FILE_PATH,
+	FILE_SIZE,
+	FILE_NAME,
+	ASSIGNMENT_NO
+	FROM
+	ASSIGNMENTFILE
+	WHERE
+	FILE_NO=#{file_no}
+
+</select>
 
 </mapper>

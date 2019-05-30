@@ -3,6 +3,7 @@ package ddit.finalproject.team2.professor.service;
 import java.util.List;
 
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
+import ddit.finalproject.team2.vo.KJE_AssFileVo;
 import ddit.finalproject.team2.vo.KJE_AssignmentnFileVo;
 import ddit.finalproject.team2.vo.KJE_LWeekAssignmentProVo;
 
@@ -28,5 +29,12 @@ public interface KJE_IAssignmentService {
 	 */
 	public ServiceResult createAssignment(KJE_AssignmentnFileVo assignmentnFileVo);
 		
+	
+	/**
+	 * 과제 첨부파일 중 하나에 해당하는 정보를 반환하는 메서드
+	 * @param file_no
+	 * @return
+	 */
+	public KJE_AssFileVo retriveAssFile(String file_no);
 	
 }

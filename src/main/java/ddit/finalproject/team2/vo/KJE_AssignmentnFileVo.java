@@ -12,6 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
+import ddit.finalproject.team2.util.hint.InsertHint;
+import ddit.finalproject.team2.util.hint.UpdateHint;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,13 +28,13 @@ public class KJE_AssignmentnFileVo {
 
 	@NotNull
 	private String assignment_no;
-	@NotNull
+	@NotNull(groups={InsertHint.class, UpdateHint.class})
 	private String assignment_title;
 	@NotNull
 	private String assignment_date;
-	@NotNull
+	@NotNull(groups={InsertHint.class, UpdateHint.class})
 	private String submit_period1;
-	@NotNull
+	@NotNull(groups={InsertHint.class, UpdateHint.class})
 	private String submit_period2;
 	
 	private String insert_period1;
@@ -54,20 +56,13 @@ public class KJE_AssignmentnFileVo {
 
 	private String[] assDelFileList;
 
-	@Value("#{appInfo['assignmentPath']}") // spEL사용
-	String assignmentPath;
-
 	public void setAss_files(MultipartFile[] ass_files) {
+		if(ass_files==null)return;
 		this.ass_files = ass_files;
-		assignmentFileList = new ArrayList<KJE_AssFileVo>(ass_files.length);
+		this.assignmentFileList = new ArrayList<KJE_AssFileVo>();
 			for(MultipartFile multi: ass_files){
 				if(ass_files!=null &&StringUtils.isNotBlank(multi.getOriginalFilename())){
-					String saveName=UUID.randomUUID().toString();
-					File saveFile = new File(assignmentPath, saveName);
-					
-					KJE_AssFileVo assFileVo= new KJE_AssFileVo(multi);
-					assFileVo.setFile_path(saveFile.getAbsolutePath());
-					assignmentFileList.add(assFileVo);
+					assignmentFileList.add(new KJE_AssFileVo(multi));
 			}
 		}
 	}

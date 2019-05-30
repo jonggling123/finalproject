@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import ddit.finalproject.team2.vo.AssignmentVo;
+import ddit.finalproject.team2.vo.KJE_AssFileVo;
 import ddit.finalproject.team2.vo.KJE_AssignmentnFileVo;
 import ddit.finalproject.team2.vo.KJE_LWeekAssignmentProVo;
 
@@ -38,6 +39,14 @@ public interface KJE_IAssignmentDao {
 	 * @return insert 성공여부
 	 */
 	public int insertAllAssFile(KJE_AssignmentnFileVo assignmentnFileVo);
+	
+	
+	/**
+	 * 과제 첨부파일 중 하나에 해당하는 정보를 반환하는 메서드
+	 * @param file_no
+	 * @return
+	 */
+	public KJE_AssFileVo selectAssFile(String file_no);
 	
 	
 	

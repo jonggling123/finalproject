@@ -22,7 +22,7 @@
 
 	$(function() {
 		CKEDITOR.replace("contextArea", {
-         filebrowserImageUploadUrl:"<c:url value='/board/imageUpload.do'/>?sample=test"
+         filebrowserImageUploadUrl:"<c:url value='/assignment/imageUpload'/>"
       });
 		
 		var lecture_name=$("[name='lecture']").children(":selected").text();
@@ -106,7 +106,7 @@
 							var asfv = "<span><i class='notika-icon notika-paperclip'></i>"+ assignmentFile.file_name
 							asfv+= "<i class='notika-icon notika-arrow-right atc-sign'></i></span>"
 							
-							var asfd = "<a class='btn dw-al-ft' href='#'>첨부파일다운로드"
+							var asfd = "<a class='btn dw-al-ft' href='${pageContext.request.contextPath}/assFiledownload'>첨부파일다운로드"
 								asfd+= "<i class='notika-icon notika-file'></i></a>"
 								
 								$('#assignfile_view').append(
@@ -123,12 +123,17 @@
 		});
 		
 	$table.on('click', '.insertbtn', function() {
+		$("[name='assignment_title']").val("");
+		$("[name='submit_period1']").val("");
+		$("[name='submit_period2']").val("");
+		CKEDITOR.instances.contextArea.setData("");	
 		
-			var week =$($(this).parent().parent().find($('td'))[0]).text();
-			var turn =$($(this).parent().parent().find($('td'))[1]).text();
-				$('#form_title').html("<h2>"+lecture_name+" "+week+"주차"+turn+"차시 과제물</h2>")
-		
-				var lecture_code = $("[name='lecture']").val();
+		lecture_name=$("[name='lecture']").children(":selected").text();
+		var week =$($(this).parent().parent().find($('td'))[0]).text();
+		var turn =$($(this).parent().parent().find($('td'))[1]).text();
+		$('#form_title').html("<h2>"+lecture_name+" "+week+"주차"+turn+"차시 과제물</h2>")
+	
+		var lecture_code = $("[name='lecture']").val();
 		$("[name='class_identifying_code']").val(week+turn);
 		$("[name='lecture_code']").val(lecture_code);
 		
@@ -167,6 +172,7 @@
 
 		});
 	$('#saveAssignment').on("click",function(event){
+		
 		var content = CKEDITOR.instances.contextArea.getData();	
 		$("[name='assignment_content']").val(content.trim());
 		
@@ -336,6 +342,7 @@
                                     <div class="form-group">
                                         <div class="nk-int-st cmp-int-in cmp-email-over">
                                             <input type="text"  name="assignment_title" class="form-control" placeholder="제목을 입력해주세요" />
+                                       		<form:errors path="assignment_title" element="span" cssClass="error" />	
                                         </div>
                                     </div>
                                 </div>
@@ -346,6 +353,7 @@
 										<div class="input-group date nk-int-st">
 											<span class="input-group-addon"></span> <input type="text"
 											 name="submit_period1" id="st_date" class="form-control"  placeholder="제출 시작일">
+											 <form:errors path="submit_period1" element="span" cssClass="error" />	
 										</div>
 									</div>
 								</div>
@@ -354,6 +362,7 @@
 										<div class="input-group date nk-int-st">
 											<span class="input-group-addon"></span> <input type="text" name="submit_period2"
 												id="ed_date" class="form-control"  placeholder="제출 종료일">
+												<form:errors path="submit_period2" element="span" cssClass="error" />	
 										</div>
 									</div>
 								</div>

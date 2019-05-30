@@ -3,25 +3,45 @@ package ddit.finalproject.team2.professor.service;
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ddit.finalproject.team2.professor.dao.KJE_IAssignmentDao;
 import ddit.finalproject.team2.util.enumpack.ServiceResult;
+import ddit.finalproject.team2.vo.AttachmentVo;
 import ddit.finalproject.team2.vo.KJE_AssFileVo;
 import ddit.finalproject.team2.vo.KJE_AssignmentnFileVo;
 import ddit.finalproject.team2.vo.KJE_LWeekAssignmentProVo;
+import ddit.finalproject.team2.vo.Ljs_BoardVo;
 
 @Service
 public class KJE_AssignmentServiceImpl implements KJE_IAssignmentService {
 	
 	@Inject
 	KJE_IAssignmentDao assignmentDao; 
+	
+	@Value("#{appInfo['assignmentPath']}") // spEL사용
+	String assignmentPath ;
+	
+	public void preProcessAssignmentFileListList(KJE_AssignmentnFileVo assignmentnFileVo){
+		
+		List<KJE_AssFileVo> assignmentFileList = assignmentnFileVo.getAssignmentFileList();
+		if(assignmentFileList==null) return;
+		
+		for(KJE_AssFileVo assignmentFile: assignmentFileList){
+				String saveName=UUID.randomUUID().toString();
+				File saveFile = new File(assignmentPath, saveName);
+				assignmentFile.setFile_path(saveFile.getAbsolutePath());
+		}
+		
+	}
 	
 	@Override
 	public List<KJE_LWeekAssignmentProVo> retrieveLWeekAssignmentProList(String lecture_code){
@@ -50,10 +70,7 @@ public class KJE_AssignmentServiceImpl implements KJE_IAssignmentService {
 
 	@Override
 	public ServiceResult createAssignment(KJE_AssignmentnFileVo assignmentnFileVo) {
-		String p1= assignmentnFileVo.getSubmit_period1().replaceAll("/", "");
-		String p2= assignmentnFileVo.getSubmit_period1().replaceAll("/", "");
-		assignmentnFileVo.setInsert_period1(p1);
-		assignmentnFileVo.setInsert_period2(p2);
+		preProcessAssignmentFileListList(assignmentnFileVo);
 		
 		int rowCnt = assignmentDao.insertAssignment(assignmentnFileVo);
 		
@@ -78,6 +95,12 @@ public class KJE_AssignmentServiceImpl implements KJE_IAssignmentService {
 			result = ServiceResult.OK;
 		} // if(rowCnt > 0) end
 		return result;
+	}
+
+	@Override
+	public KJE_AssFileVo retriveAssFile(String file_no) {
+		KJE_AssFileVo assfile = assignmentDao.selectAssFile(file_no);
+		return assfile;
 	}
 
 }
