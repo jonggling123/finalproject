@@ -97,8 +97,8 @@ $(function(){
 		});
 		
 		
-			var btnType = ${not empty btnType?btnType:"no"};
-			var twoBtn = "<button type='submit' id='complete'>등록완료</button>";
+			var btnType = $('#btnType').val();
+			var twoBtn = "<button id='preview'>미리보기</button><button type='submit' id='complete'>등록완료</button>";
 			if(btnType=='quiz'){
 				var result = makeQuestion("#boddy", btnType, 5, 4)
 				alert(result);

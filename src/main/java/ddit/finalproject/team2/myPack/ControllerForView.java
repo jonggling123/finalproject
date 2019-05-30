@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import ddit.finalproject.team2.vo.Lsy_EmbraceAnswer;
 import ddit.finalproject.team2.vo.Lsy_EmbraceQuizVo;
+import ddit.finalproject.team2.vo.Lsy_QuizAnswerVo;
 import ddit.finalproject.team2.vo.Lsy_QuizQuestionVO;
+import ddit.finalproject.team2.vo.UserVo;
 
 
 @Controller
@@ -29,10 +33,20 @@ public class ControllerForView {
 	@Inject
 	LSY_IQuizService service;
 	
-		@GetMapping("/student")
-		public String chooseMain() throws IOException{
-//			return "professor/window";
-			return "new/gradeRank";
+		@PostMapping("/student/submit")
+		public String dsadada12(@Validated @ModelAttribute Lsy_EmbraceAnswer answerList, Model model, Authentication au) {
+			Lsy_QuizQuestionVO quizVo = new Lsy_QuizQuestionVO();
+			List<String> keyVal = service.stAnswerNextVal(answerList.getAnswerList().size());
+			
+			for (int idx = 0; idx < answerList.getAnswerList().size(); idx++) {
+				answerList.getAnswerList().get(idx).setQuizAnswer_code(keyVal.get(idx));
+			}
+			int result = service.createStAnswer(answerList);
+			if(result>0) {
+				model.addAttribute("close", "close");
+				return "new/quiz";
+			}
+			return null;
 		}
 		
 		@GetMapping("/professor/register")
@@ -50,6 +64,7 @@ public class ControllerForView {
 //					mav.addObject("btnType", "quiz");
 					model.addAttribute("start", 1);
 					model.addAttribute("end", 5);
+					model.addAttribute("attend_no", "1");
 					List<String> otherType = new ArrayList<String>();
 					otherType.add("①"); otherType.add("②"); otherType.add("③"); otherType.add("④");
 					model.addAttribute("number", 0);
@@ -61,8 +76,8 @@ public class ControllerForView {
 					return "new/quiz";
 				}
 				
-				//quiz 보기 클릭했을 때
-				@GetMapping("/professor/quiz2")
+				//quiz 등록 클릭했을 때
+				@GetMapping("/professor/createQuiz")
 				public String sdda(@Validated @ModelAttribute Lsy_QuizQuestionVO quizVo, Model model){
 					quizVo.setClass_identifying_code("11");
 					quizVo.setLecture_code("lecture_code_1");
@@ -96,7 +111,7 @@ public class ControllerForView {
 				System.out.println(error);
 			}
 			System.out.println(allQuestion.getQuizList().get(0).getQuestion_no());
-			service.insertQuiz(allQuestion);
+			service.createQuiz(allQuestion);
 			return "professor/quizz";
 		}
 		

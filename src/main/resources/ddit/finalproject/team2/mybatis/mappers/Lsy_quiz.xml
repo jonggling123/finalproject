@@ -17,6 +17,28 @@
 		]]>
 	</select>
 	
+	<select id="stAnswerNextVal" resultType="String">
+		<![CDATA[
+		select stQuiz_seq.nextval
+		from dual
+		connect by level <= #{size}
+		]]>
+	</select>
+	
+	<select id="markingTest" parameterType="ddit.finalproject.team2.vo.Lsy_EmbraceAnswer" resultType="ddit.finalproject.team2.vo.Lsy_QuizQuestionVO">
+		SELECT
+		    question_no,
+		    question_content,
+		    question_answer,
+		    class_identifying_code,
+		    lecture_code
+		FROM quizquestion
+		WHERE question_answer in
+		<foreach item="answer" collection="answerList" open="(" close=")" separator=",">
+			#{answer.stSelect_no}
+		</foreach>
+	</select>
+	
 	<insert id="insertQuiz" parameterType="ddit.finalproject.team2.vo.Lsy_EmbraceQuizVo">
 		INSERT ALL
 			<foreach collection="quizList" item="quiz">
@@ -41,7 +63,20 @@
 		select * from dual
 	</insert>
 	
-	<update id="updateProblems" parameterType="ddit.finalproject.team2.vo.Lsy_QuizProblemVo">
+	<insert id="insertStAnswer" parameterType="ddit.finalproject.team2.vo.Lsy_EmbraceAnswer">
+		INSERT ALL
+			<foreach collection="answerList" item="answer">
+					into QUIZSTUDENTANSWER
+						(QUESTION_NO, STSELECT_NO, ATTEND_NO, QUIZANSWER_CODE)
+					values
+						(
+						  #{answer.question_no}, #{answer.stSelect_no}, #{answer.attend_no}, #{answer.quizAnswer_code}
+						)
+			</foreach>
+			select * from dual
+	</insert>
+		
+	<update id="updateProblems" parameterType="ddit.finalproject.team2.vo.Lsy_QuizProblemVo">`
 		update quizproblem
 		set quizProblem_content = #{quizProblem_content}
 		where question_no = #{question_no}
