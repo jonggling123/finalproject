@@ -1,5 +1,8 @@
 package ddit.finalproject.team2.admin.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -8,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ddit.finalproject.team2.admin.service.KJE_IPolicyManagementService;
+import ddit.finalproject.team2.admin.service.KJE_IStatisticsService;
+import ddit.finalproject.team2.vo.OpenSemesterVo;
 
 /**
  * @author 이종선
@@ -28,6 +33,8 @@ import ddit.finalproject.team2.admin.service.KJE_IPolicyManagementService;
 @Controller
 @RequestMapping("/operation")
 public class LectureOperationController {
+	@Inject
+	KJE_IStatisticsService statisticsService;
 	
 	@Inject
 	KJE_IPolicyManagementService policyManagementService; 
@@ -70,6 +77,17 @@ public class LectureOperationController {
 	 */
 	@GetMapping("assignment")
 	public ModelAndView goAssignment(ModelAndView mv){
+		Date date = new Date();
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
+		String todayString =sdFormat.format(date);
+		OpenSemesterVo thisTimeSemester =statisticsService.getThisTimeSemester(todayString);
+		String openseme_no =thisTimeSemester.getOpenseme_no();
+		
+		mv.addObject("lectureList", statisticsService.getStLecture(openseme_no));
+		mv.addObject("professorList", statisticsService.getProfessorList());
+    	
+		mv.setViewName("professor/giveAssignment");
+		
 		mv.setViewName("admin/managehomework");
 		return mv;
 	}

@@ -40,8 +40,6 @@ public class KJE_StatisticsServiceImpl implements KJE_IStatisticsService {
 		return lowerOrganizationList;
 	}
 
-	
-
 	@Override
 	public int recodeLectureAccessStats(Map<String, String> userinfo) {
 		AttendVo attend = statisticsDao.selectAttend(userinfo);

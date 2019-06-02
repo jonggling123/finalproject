@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import ddit.finalproject.team2.admin.service.KJE_IStatisticsService;
+import ddit.finalproject.team2.student.dao.KJE_IStatisticsStuDao;
 import ddit.finalproject.team2.student.service.Lsh_ILectureService;
 import ddit.finalproject.team2.vo.UserVo;
 
@@ -43,8 +44,14 @@ public class SubjectPageController {
 
     @Inject
     KJE_IStatisticsService statisticsService;
+    
+    @Inject
+    KJE_IStatisticsStuDao statisticsstudao;
+    
     @Inject
     Lsh_ILectureService lectureService;
+    
+    
 
     /**
      * 교육목표 화면으로 이동하기 위한 command handler
@@ -166,10 +173,13 @@ public class SubjectPageController {
      * @return
      */
     @GetMapping("lectureAssignment")
-    public ModelAndView goAssignment(ModelAndView mv, Authentication au) {
+    public ModelAndView goAssignment(ModelAndView mv, Authentication au,@PathVariable String lecture_code) {
         mv.setViewName("student/submenu/lectureAssignment");
         mv.getModel().put("id", au.getName());
         mv.getModel().put("user", (UserVo)au.getPrincipal());
+        mv.getModel().put("lecture_code", lecture_code);
+        String lecture_name = statisticsstudao.selectLectureName(lecture_code);
+        mv.getModel().put("lecture_name", lecture_name);
         return mv;
     }
 

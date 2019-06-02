@@ -10,7 +10,7 @@
 *
 * 관리자 과목통계관리 화면
  --%>
-<link rel="stylesheet"href="/projecttemplate/notika/css/datapicker/datepicker3.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/notika/css/datapicker/datepicker3.css">
 <script type="text/javascript">
 	$(function() {
 		

@@ -17,7 +17,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(of="submitfile_no")
 @ToString
-public class SubmitFileVo implements Serializable{
+public class KJE_SubmitAttendstuVo implements Serializable{
 	
 	@NotNull private String submitfile_no;
 	@NotNull private String attend_no;
@@ -28,6 +28,12 @@ public class SubmitFileVo implements Serializable{
 	@NotNull private String file_name;
 	@NotNull private String file_url;
 	@NotNull private String file_size;
+	@NotNull private String user_id;
+	@NotNull private String lower_organization;
+	@NotNull private String user_name;
 	
+	public String passBtn;
+	
+
 	
 }

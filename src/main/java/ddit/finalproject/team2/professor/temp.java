@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class temp {
     }
     
     @GetMapping("/assignment") //교수-과제물관리 페이지
-	public ModelAndView goaAsignment(ModelAndView mv) {
+	public ModelAndView goaAsignment(ModelAndView mv, Authentication au) {
     	
     	Date date = new Date();
 		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
@@ -35,7 +36,7 @@ public class temp {
 		String openseme_no =thisTimeSemester.getOpenseme_no();
 		
 		mv.addObject("lectureList", statisticsService.getStLecture(openseme_no));
-		mv.addObject("professorList", statisticsService.getProfessorList());
+		mv.addObject("user_id", au.getName());
     	
 		mv.setViewName("professor/giveAssignment");
 		return mv;

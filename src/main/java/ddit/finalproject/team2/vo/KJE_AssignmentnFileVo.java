@@ -54,7 +54,7 @@ public class KJE_AssignmentnFileVo {
 	private List<KJE_AssFileVo> assignmentFileList;
 	private List<KJE_AssFileVo> savedAssFileList;
 
-	private String[] assDelFileList;
+	private String[] assDelFiles;
 
 	public void setAss_files(MultipartFile[] ass_files) {
 		if(ass_files==null)return;

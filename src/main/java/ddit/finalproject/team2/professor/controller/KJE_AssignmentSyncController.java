@@ -11,7 +11,6 @@ public class KJE_AssignmentSyncController {
 	@RequestMapping("/assignmentView")
 	public ModelAndView assignmentViewController(ModelAndView mv){
 		
-		
 		mv.setViewName("professor/assignmentView");
 		return mv;
 	}

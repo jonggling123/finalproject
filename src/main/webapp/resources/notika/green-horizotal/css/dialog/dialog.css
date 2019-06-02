@@ -1,10 +1,10 @@
 .dialog-inner{
 	padding:20px;
-	background:#fff;
+	background:#444;
 }
 .swal2-modal h2 {
     font-size: 16px;
-    color: #fff;
+    color: #444;
     line-height: 0px;
     margin-top: 20px;
 }
@@ -21,7 +21,7 @@
 }
 .swal2-modal{
 	border-radius:2px;
-	background:#444 !important;
+	background:#ffffff!important;
 }
 .dialog-pro .btn-info{
 	box-shadow: 0 2px 5px rgba(0,0,0,.16), 0 2px 10px rgba(0,0,0,.12);
@@ -30,7 +30,7 @@
     border-radius: 2px;
     font-size: 14px;
     margin-right: 20px;
-    color: #fff;
+    color: #444;
 	background: #00c292;
 }
 .dialog-pro .btn-info:hover{
@@ -39,16 +39,16 @@
 	background: #00c292;
 }
 .swal2-modal .swal2-content{
-	color: #fff;
+	color: #444;
     font-size: 14px;
     line-height: 24px;
     margin-top: 20px;
 }
 .swal2-icon.swal2-success::after, .swal2-icon.swal2-success::before{
-	background:#444;
+	background:#fff;
 }
 .swal2-icon.swal2-success .fix{
-	background:#444;
+	background:#fff;
 }
 .swal2-icon.swal2-success .line{
 	background-color: #00c292;

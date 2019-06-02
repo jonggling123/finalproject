@@ -11,7 +11,7 @@
 * 관리자 교수 활동통계 관리화면
 *
  --%>
-<link rel="stylesheet"href="/projecttemplate/notika/css/datapicker/datepicker3.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/notika/css/datapicker/datepicker3.css">
 
 <script type="text/javascript">
 $(function() {
@@ -328,8 +328,6 @@ $(function() {
 							${professor.user_name}</option>
 					</c:forEach>
 				</select> 
-				</select> 
-				
 				<select name="lecture">
 					<c:forEach var="lecture" items="${lectureList}">
 						<option class="${lecture.user_name}"
