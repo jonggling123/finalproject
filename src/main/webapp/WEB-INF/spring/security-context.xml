@@ -30,14 +30,12 @@
 			always-use-default-target="false"
 		/>
 		
-		<logout logout-url="/logout" logout-success-url="/" />
+		<logout logout-url="/logout" logout-success-url="/"/>
 		
-		<intercept-url pattern="/**" access="permitAll" requires-channel="https"/>		
+		<intercept-url pattern="/**" access="permitAll"/>		
 			   
-		<csrf disabled="true"/>		
-			   
+		<csrf disabled="true"/>			   
 	</http>
-	
 </beans:beans>
 
 

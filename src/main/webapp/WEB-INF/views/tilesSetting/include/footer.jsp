@@ -13,10 +13,6 @@
         </div>
     </div>
 </div>
-
-<div id="messageDiv"></div>
-
-
 <!-- bootstrap JS
     ============================================ -->
 <script src="${pageContext.request.contextPath}/notika/js/bootstrap.min.js"></script>
@@ -75,6 +71,3 @@
     ============================================ -->
 <script src="${pageContext.request.contextPath}/notika/js/main.js"></script>
 
-<!-- notify JS
-	============================================ -->
-<script src="${pageContext.request.contextPath }/res/js/notify.js"></script>

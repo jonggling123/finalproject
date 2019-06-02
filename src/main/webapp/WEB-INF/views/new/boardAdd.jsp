@@ -109,7 +109,7 @@
 				<input type="hidden" name="lecture_name" value="${lecture.lecture_name }">
 				<input type="hidden" name="professor_id" value="${lecture.user_id }">
 				<input id="create" type="submit" value="등록"/>
-				<button id="cancel" type="button">취소</button>
+				<button type="button">취소</button>
 				</form:form>
 			</div>
 		</div>
@@ -121,9 +121,7 @@
 <script
 	src="${pageContext.request.contextPath }/res/js/ckeditor/ckeditor.js"></script>
 <script>
-	CKEDITOR.replace('contextArea', {
-		filebrowserImageUploadUrl:"<c:url value='/board/imageUpload'/>?sample=test"
-	});
+	CKEDITOR.replace('contextArea');
 	
 	$('#create').on('click',function(){
 		var content = CKEDITOR.instances.contextArea.getData();
@@ -134,9 +132,5 @@
 				, value:content.trim()
 			})		
 		);
-	});
-	
-	$('#cancel').on('click', function() {
-		location.href = "${pageContext.request.contextPath}/subjectPage/${lecture_code}/lectureBoard";
 	});
 </script>

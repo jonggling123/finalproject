@@ -3,6 +3,16 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="path" value="${pageContext.request.contextPath}/"></c:set>
 
+<script>
+	function openNewPage(){
+		newPage = window.open('${path}professor/quiz', '', 'width=800, height=700'); return false;
+	}
+	
+	function openMakeQuestion(){
+		MakeQuestionPage = window.open('${path}professor/createQuiz', '', 'width=800, height=700'); return false;
+	}
+</script>
+
 <div class="accordion-area">
 	<div class="container">
 		<div class="row">
@@ -41,9 +51,8 @@
 													</div>
 													<div style="display: inline-block; padding-left: 50px;">
 														<strong>퀴즈</strong>
-														<button class="btn-sm" onClick="window.open('${path}professor/quiz', '', 'width=800, height=700'); return false;">보기</button>
-														<button class="btn-sm" onClick="window.open('${path}professor/quiz2', '', 'width=800, height=700'); return false;">등록</button>
-														<button class="btn-sm">수정</button>
+														<button class="btn-sm" onClick="openNewPage()">보기</button>
+														<button class="btn-sm" onClick="openMakeQuestion()">등록</button>
 													</div>
 													<div style="display: inline-block; padding-left: 50px;">
 														<strong>시험</strong>

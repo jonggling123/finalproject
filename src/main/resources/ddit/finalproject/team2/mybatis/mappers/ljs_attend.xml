@@ -5,11 +5,4 @@
 		SELECT ATTEND_NO FROM ATTEND
 		WHERE USER_ID = #{user.user_id} AND LECTURE_CODE = #{lecture_code}
 	</select>
-	<select id="selectAttendList" parameterType="string" resultType="AttendVo">
-		SELECT A.USER_ID, A.ATTEND_NO, A.LECTURE_CODE
-			, B.USER_NAME
-		FROM ATTEND A INNER JOIN USERS B
-		ON(A.USER_ID = B.USER_ID)
-		WHERE A.LECTURE_CODE = #{lecture_code}
-	</select>
 </mapper>

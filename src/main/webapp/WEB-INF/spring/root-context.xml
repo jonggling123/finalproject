@@ -28,12 +28,10 @@
 
 	<util:properties id="appInfo" 
 		location="classpath:ddit/finalproject/team2/appInfo.properties" />
+	<util:map id="webSocketSessionMap" key-type="java.lang.String" value-type="org.springframework.web.socket.WebSocketSession"
+		map-class="java.util.HashMap" />
 		
 	<bean id="filterMultipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />	
-
-	<util:map id="socketSessionMap" key-type="java.lang.String" value-type="org.springframework.web.socket.WebSocketSession" 
-		map-class="org.springframework.util.LinkedMultiValueMap"
-	/>
 </beans>
 
 

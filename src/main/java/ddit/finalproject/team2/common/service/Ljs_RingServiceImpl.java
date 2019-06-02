@@ -5,9 +5,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ddit.finalproject.team2.common.dao.Ljs_IRingDao;
-import ddit.finalproject.team2.util.enumpack.ServiceResult;
 import ddit.finalproject.team2.vo.RingVo;
 
 @Service
@@ -21,13 +21,14 @@ public class Ljs_RingServiceImpl implements Ljs_IRingService{
 	}
 
 	@Override
-	public ServiceResult modifyRing(String ring_code) {
-		ServiceResult result = ServiceResult.FAILED;
-		int cnt = dao.updateRing(ring_code);
+	@Transactional
+	public List<RingVo> modifyRing(RingVo ring) {
+		List<RingVo> list = null;
+		int cnt = dao.updateRing(ring.getRing_code());
 		if(cnt>0){
-			result = ServiceResult.OK;
+			list = dao.selectRingList(ring.getRing_response_id());
 		}
-		return result;
+		return list;
 	}
 
 }
